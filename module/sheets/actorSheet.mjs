@@ -306,7 +306,7 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
    * @param {htmlelement} _target   the capturing html element which defined a [data-action]
    * @protected
    */
-  static _roll(_event, _target) {
-    this.actor.system.spendHeatAndRoll();
+  static async _roll(_event, _target) {
+    return this.actor.system.roll_from_sheet();
   }
 }

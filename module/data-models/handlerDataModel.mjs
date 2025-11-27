@@ -1,3 +1,4 @@
+import { DialogHelper } from "../util/dialogHelper.mjs";
 import BaseActorDataModel, { Playbook } from "./baseActorDataModel.mjs";
 
 const { HTMLField, StringField } = foundry.data.fields;
@@ -24,5 +25,11 @@ export class HandlerDataModel extends BaseActorDataModel {
       assets: "asset",
     });
     return playbook;
+  }
+
+  async roll_from_sheet() {
+    const mod = await DialogHelper.rollModifierQuery();
+    if (mod === undefined) return;
+    return this.roll(mod);
   }
 }

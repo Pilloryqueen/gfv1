@@ -71,7 +71,7 @@ export default class BaseActorDataModel extends TypeDataModel {
    * @param {Number} heat
    * @param {Number} mod
    */
-  async roll(heat, mod) {
+  async roll(mod, heat = 0) {
     const roll_options = { heat, mod };
     const roll = new Roll("@heat+2d6+@mod", roll_options);
     await roll.roll();

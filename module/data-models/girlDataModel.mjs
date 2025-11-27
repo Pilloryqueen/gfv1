@@ -62,12 +62,15 @@ export class GirlDataModel extends BaseActorDataModel {
     return true;
   }
 
-  async spendHeatAndRoll() {
-    const doc = this.parent;
-    const heat = await DialogHelper.rollHeatQuery(doc.system.heat);
+  async spendHeatAndRoll(mod, heat) {
+    (await this.spendHeat(heat)) && this.roll(mod, heat);
+  }
+
+  async roll_from_sheet() {
+    const heat = await DialogHelper.rollHeatQuery(this.parent.system.heat);
     if (heat === undefined || heat < 0) return;
     const mod = await DialogHelper.rollModifierQuery();
     if (mod === undefined) return;
-    (await this.spendHeat(heat)) && this.roll(heat, mod);
+    return this.spendHeatAndRoll(mod, heat);
   }
 }
