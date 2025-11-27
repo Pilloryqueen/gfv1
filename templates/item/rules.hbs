@@ -1,0 +1,48 @@
+<section>
+  <ol class="items-list">
+    <li class="flexrow items-header">
+      <div class="item-name">
+        {{localize "GFv1.item.rule.type"}}
+      </div>
+      <div class="item-props">{{localize "GFv1.item.rule.locked"}}</div>
+      <div class="item-controls">
+      </div>
+    </li>
+    {{#each system.rules as |item id|}}
+      <li
+        class="item flex flexrow"
+        data-item-id="{{item._id}}"
+        data-index="{{id}}"
+        data-drag="true"
+      >
+        <div class="item-name">
+          {{item.name}}
+        </div>
+        <div class="item-props">
+          <input
+            type="checkbox"
+            class="item-input"
+            name="item.locked"
+            {{checked item.locked}}
+          />
+        </div>
+        <div class="item-controls">
+          <a
+            class="item-control item-edit"
+            data-tooltip="{{localize 'GFv1.item.rule.edit'}}"
+            data-action="viewDoc"
+          >
+            <i class="fas fa-edit"></i>
+          </a>
+          <a
+            class="item-control item-delete"
+            data-tooltip="{{localize 'GFv1.item.rule.delete'}}"
+            data-action="removeRule"
+          >
+            <i class="fas fa-trash"></i>
+          </a>
+        </div>
+      </li>
+    {{/each}}
+  </ol>
+</section>

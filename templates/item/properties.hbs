@@ -1,0 +1,48 @@
+<section>
+  {{#if (eq item.type "bond")}}
+    <label>{{localize "GFv1.item.bond.level"}}</label>
+    <select
+      class="bond-level-selector"
+      data-item-id="{{item.id}}"
+      name="system.level"
+    >
+      {{selectOptions config.bondLevels selected=system.level localize=true}}
+    </select>
+  {{/if}}
+  {{#if (eq item.type "identity")}}
+    <label>{{localize "GFv1.item.identity.marked"}}</label>
+    <input
+      type="checkbox"
+      name="system.marked"
+      {{checked system.marked}}
+      data-item-id="{{item.id}}"
+    />
+  {{/if}}
+  {{#if (eq item.type "tag")}}
+    <label>{{localize "GFv1.item.tag.marked"}}</label>
+    <input
+      type="checkbox"
+      name="system.marked"
+      {{checked system.marked}}
+      data-item-id="{{item.id}}"
+    />
+  {{/if}}
+  {{#if (eq item.type "rule")}}
+    <label>{{localize "GFv1.item.rule.playbookType"}}</label>
+    <select name="system.playbookType">
+      {{selectOptions (config "playbooks") selected=system.playbookType localize=true}}
+    </select>
+  {{/if}}
+  {{#if (eq item.type "playbook")}}
+    <label>{{localize "GFv1.item.playbook.playbookType"}}</label>
+    <select name="system.playbookType">
+      {{selectOptions (config "playbooks") selected=system.playbookType localize=true}}
+    </select>
+  {{/if}}
+  {{#if (eq item.type "asset")}}
+    <label>{{localize "GFv1.item.asset.playbookType"}}</label>
+    <select name="system.playbookType">
+      {{selectOptions (config "playbooks") selected=system.playbookType localize=true}}
+    </select>
+  {{/if}}
+</section>

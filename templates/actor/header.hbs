@@ -1,0 +1,24 @@
+<header class="sheet-header">
+  <img
+    class="profile-img"
+    src="{{actor.img}}"
+    data-edit="img"
+    data-action="editImage"
+    title="{{actor.name}}"
+  />
+  <div class="header-fields">
+    <div>
+      <label>{{localize "GFv1.girl.name"}}</label>
+      <input type="text" name="name" value="{{actor.name}}" />
+    </div>
+    <div>
+      <label>{{localize "GFv1.girl.pronouns"}}</label>
+      <input
+        type="text"
+        name="system.pronouns"
+        value="{{system.pronouns}}"
+        placeholder="it/its"
+      />
+    </div>
+  </div>
+</header>

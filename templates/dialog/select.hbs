@@ -1,0 +1,10 @@
+<ul>
+  {{#each names as |name id|}}
+    <li>
+      <input type="checkbox" name="checkbox-{{id}}" value="{{name}}" />
+      <label for="checkbox-{{id}}">
+        {{name}}
+      </label>
+    </li>
+  {{/each}}
+</ul>

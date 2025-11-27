@@ -1,0 +1,35 @@
+<section>
+  <ol class="items-list">
+    <li class="flexrow items-header">
+      <div class="item-name">
+        {{localize "GFv1.item.bond.type"}}
+      </div>
+      <div class="item-controls">
+        <a
+          class="item-control item-create"
+          data-action="createBond"
+          data-name="new bond"
+          data-tooltip="{{localize 'DOCUMENT.New' type="bond"}}"
+        >
+          <i class="fas fa-plus"></i>
+        </a>
+      </div>
+    </li>
+    {{#each system.bonds as |name id|}}
+      <li class="item flex flexrow" data-index="{{id}}">
+        <div class="item-name">
+          <input type="text" value="{{name}}" class="bond-name" />
+        </div>
+        <div class="item-controls">
+          <a
+            class="item-control item-delete"
+            data-tooltip="{{localize 'GFv1.item.bond.delete'}}"
+            data-action="deleteBond"
+          >
+            <i class="fas fa-trash"></i>
+          </a>
+        </div>
+      </li>
+    {{/each}}
+  </ol>
+</section>

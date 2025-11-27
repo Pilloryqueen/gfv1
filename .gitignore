@@ -1,0 +1,6 @@
+packs/
+
+.vscocde/
+*.swp
+
+.DS_Store

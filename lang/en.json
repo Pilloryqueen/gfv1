@@ -1,0 +1,125 @@
+{
+  "GFv1": {
+    "sheets": {
+      "actorSheet": "Actor Sheet",
+      "itemSheet": "Item Sheet"
+    },
+    "tab": {
+      "main": "Basic info",
+      "girl": "Girl view",
+      "frame": "Frame view",
+      "handler": "Handler view"
+    },
+    "item": {
+      "name": "Name",
+      "description": "Description",
+      "playbook": {
+        "name": "Playbook",
+        "edit": "Edit playbook",
+        "playbookType": "Playbook type"
+      },
+      "asset": {
+        "type": "Assets",
+        "playbookType": "Associated Playbook",
+        "edit": "View Asset",
+        "delete": "Delete Asset",
+        "damaged": "Damaged",
+        "void": "Void"
+      },
+      "rule": {
+        "type": "Rules",
+        "playbookType": "Associated Playbook",
+        "locked": "Locked",
+        "edit": "View Rule",
+        "delete": "Delete Rule",
+        "play": "Play? (can be rolled)",
+        "heat": "Spend heat?",
+        "high": "On a 11+",
+        "med": "On an 8-10",
+        "low": "On a 7-"
+      },
+      "tag": {
+        "type": "Tags",
+        "marked": "Marked?",
+        "edit": "Edit details",
+        "accept": "Adopt tag as identity",
+        "delete": "Reject tag",
+        "adopt": {
+          "title": "Adopt tag?",
+          "content": "Are you sure you want to adopt this tag as a new identity?"
+        }
+      },
+      "identity": {
+        "type": "Identities",
+        "marked": "Marked?",
+        "edit": "Edit details",
+        "delete": "Remove identity"
+      },
+      "bond": {
+        "type": "Bonds",
+        "level": "Level",
+        "edit": "Edit details",
+        "delete": "Remove bond"
+      }
+    },
+    "girl": {
+      "name": "Callsign",
+      "pronouns": "Pronouns",
+      "heat": "Heat",
+      "permissions": "Permissions",
+      "girlPlaybook": "Girl Playbook",
+      "framePlaybook": "Frame Playbook"
+    },
+    "settings": {
+      "showItemImages": {
+        "name": "Show Item Images on Character Sheet",
+        "hint": "Disable to reduce visual clutter in character sheets"
+      }
+    },
+    "config": {
+      "bondLevels": {
+        "npc": "NPC",
+        "low": "Cadre",
+        "med": "Personal",
+        "high": "Intense"
+      },
+      "playbooks": {
+        "girl": "Girl Playbook",
+        "frame": "Frame Playbook",
+        "handler": "Handler Playbook"
+      }
+    },
+    "roll": {
+      "low": "Failure",
+      "med": "Success",
+      "high": "Success with consequences",
+      "withHeat": "Spend heat and roll",
+      "withoutHeat": "Roll",
+      "tooltip": "Roll",
+      "spendHeat": {
+        "title": "Spend heat",
+        "label": "How much heat do you want to spend?"
+      },
+      "modifier": {
+        "title": "Other modifiers",
+        "label": "Modifiers from other sources (not Heat)?"
+      }
+    },
+    "dialog": {
+      "delete": {
+        "title": "Delete {type}?",
+        "content": "Are you sure you want to delete this {type} from {parent}?"
+      },
+      "selectImport": {
+        "title": "Select {type} to import"
+      },
+      "warnPlaybookImport": {
+        "title": "Imported rule doesn't macth playbook",
+        "content": "{rule_name} has playbook type {rule_type}, which doesn't match the type of {playbook_name} ({playbook_type}).\nThis might lead to unexpected behavior!",
+        "fix": "Change {rule_name} to {playbook_type}",
+        "abort": "Do not import",
+        "continue": "Import anyway"
+      }
+    }
+  }
+}

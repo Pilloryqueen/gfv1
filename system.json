@@ -1,0 +1,129 @@
+{
+  "id": "gfv1",
+  "version": "0.1.0",
+  "title": "GIRL FRAME",
+  "description": "Unofficial system for playing GIRL FRAME. System by Isabelle M. Ruebsaat",
+  "authors": [
+    {
+      "name": "Nova",
+      "discord": "ladynova"
+    }
+  ],
+  "esmodules": ["index.mjs"],
+  "styles": ["index.css"],
+  "packs": [
+    {
+      "name": "basicRules",
+      "label": "Basic Rules",
+      "system": "gfv1",
+      "path": "packs/basicRules",
+      "type": "Item",
+      "private": false,
+      "flags": {
+        "gfv1": {
+          "types": ["rule"]
+        }
+      }
+    },
+    {
+      "name": "rules",
+      "label": "Rules",
+      "system": "gfv1",
+      "path": "packs/rules",
+      "type": "Item",
+      "private": false,
+      "flags": {
+        "gfv1": {
+          "types": ["rule"]
+        }
+      }
+    },
+    {
+      "name": "framePlaybooks",
+      "label": "Frame Playbooks",
+      "system": "gfv1",
+      "path": "packs/framePlaybooks",
+      "type": "Item",
+      "private": false,
+      "flags": {
+        "gfv1": {
+          "types": ["playbook"]
+        }
+      }
+    },
+    {
+      "name": "girlPlaybooks",
+      "label": "Girl Playbooks",
+      "system": "gfv1",
+      "path": "packs/girlPlaybooks",
+      "type": "Item",
+      "private": false,
+      "flags": {
+        "gfv1": {
+          "types": ["playbook"]
+        }
+      }
+    },
+    {
+      "name": "handlerPlaybooks",
+      "label": "Handler Playbooks",
+      "system": "gfv1",
+      "path": "packs/handlerPlaybooks",
+      "type": "Item",
+      "private": false,
+      "flags": {
+        "gfv1": {
+          "types": ["playbook"]
+        }
+      }
+    },
+    {
+      "name": "npcPlaybooks",
+      "label": "NPC Playbooks",
+      "system": "gfv1",
+      "path": "packs/npcPlaybooks",
+      "type": "Item",
+      "private": false,
+      "flags": {
+        "gfv1": {
+          "types": ["playbook"]
+        }
+      }
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json",
+      "flags": {}
+    }
+  ],
+  "documentTypes": {
+    "Actor": {
+      "handler": {
+        "htmlFields": ["bio", "notes"]
+      },
+      "girl": {
+        "htmlFields": ["bio", "notes"]
+      },
+      "npc": {
+        "htmlFields": ["bio", "notes"]
+      }
+    },
+    "Item": {
+      "asset": { "htmlFields": ["description"] },
+      "rule": { "htmlFields": ["description"] },
+      "playbook": { "htmlFields": ["description"] },
+      "tag": { "htmlFields": ["description"] },
+      "bond": { "htmlFields": ["description"] },
+      "identity": { "htmlFields": ["description"] }
+    }
+  },
+  "compatibility": {
+    "minimum": "12",
+    "verified": "12"
+  },
+  "manifest": "",
+  "download": ""
+}

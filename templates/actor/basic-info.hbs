@@ -1,0 +1,27 @@
+<section class="basic-info">
+  <div class="flex flexrow">
+    {{#if system.heat includeZero=true}}
+      <div class="field-heat">
+        <label>{{localize "GFv1.girl.heat"}}</label>
+        {{formInput systemFields.heat value=system.heat}}
+      </div>
+    {{/if}}
+    {{#if system.heat includeZero=true}}
+      <div class="field-perm">
+        <label>{{localize "GFv1.girl.permissions"}}</label>
+        {{formInput systemFields.permissions value=system.permissions}}
+      </div>
+    {{/if}}
+  </div>
+  <a
+    class="roll-btn"
+    data-tooltip="{{localize 'GFv1.roll.tooltip'}}"
+    data-action="roll"
+  >
+    {{#if system.heat includeZero=true}}
+      <i class="fas fa-dice-d20">{{localize "GFv1.roll.withHeat"}}</i>
+    {{else}}
+      <i class="fas fa-dice-d20">{{localize "GFv1.roll.withoutHeat"}}</i>
+    {{/if}}
+  </a>
+</section>

@@ -1,0 +1,335 @@
+import { DialogHelper } from "../util/dialogHelper.mjs";
+import { DocumentHelper } from "../util/documentHelper.mjs";
+
+const HandlebarsApplicationMixin =
+  foundry.applications.api.HandlebarsApplicationMixin;
+const ItemSheetV2 = foundry.applications.sheets.ItemSheetV2;
+
+export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
+  ItemSheetV2
+) {
+  static DEFAULT_OPTIONS = {
+    tag: "form",
+    classes: ["gfv1", "sheet", "item-sheet"],
+    form: {
+      submitOnChange: true,
+      closeOnSubmit: false,
+    },
+    actions: {
+      editImage: this._onEditImage,
+      createBond: this._createBond,
+      deleteBond: this._deleteBond,
+      createAsset: this._createAsset,
+      deleteAsset: this._deleteAsset,
+      viewDoc: this._viewDoc,
+      deleteDoc: this._deleteDoc,
+      removeRule: this._removeRule,
+    },
+  };
+
+  get title() {
+    return `${this.item.type}: ${this.item.name}`;
+  }
+
+  static PARTS = {
+    header: {
+      template: "systems/gfv1/templates/item/header.hbs",
+    },
+    properties: {
+      template: "systems/gfv1/templates/item/properties.hbs",
+    },
+    description: {
+      template: "systems/gfv1/templates/item/description.hbs",
+    },
+    rules: {
+      template: "systems/gfv1/templates/item/rules.hbs",
+    },
+    assets: {
+      template: "systems/gfv1/templates/item/assets.hbs",
+    },
+    bonds: {
+      template: "systems/gfv1/templates/item/bonds.hbs",
+    },
+    playFields: {
+      template: "systems/gfv1/templates/item/playFields.hbs",
+    },
+  };
+
+  /** @override */
+  _configureRenderOptions(options) {
+    super._configureRenderOptions(options);
+    options.parts = ["header", "properties", "description"];
+
+    if (this.document.limited) return;
+
+    switch (this.item.type) {
+      case "playbook":
+        switch (this.item.system.playbookType) {
+          case "framePlaybook":
+            options.parts.push("assets");
+            options.parts.push("rules");
+            break;
+          case "girlPlaybook":
+            options.parts.push("assets");
+            options.parts.push("bonds");
+            options.parts.push("rules");
+            break;
+          case "handlerPlaybook":
+            options.parts.push("rules");
+            break;
+        }
+        break;
+      case "rule":
+        options.parts.push("playFields");
+    }
+  }
+
+  /** @inheritDoc */
+  async _prepareContext(options) {
+    return {
+      item: this.item,
+      system: this.item.system,
+    };
+  }
+
+  /** @override */
+  async _preparePartContext(partId, context) {
+    switch (partId) {
+      case "description":
+        context.enrichedDescription = await TextEditor.enrichHTML(
+          this.item.system.description,
+          {
+            secrets: this.document.isOwner,
+            rollData: this.item.getRollData(),
+            relativeTo: this.item,
+          }
+        );
+        break;
+    }
+    return context;
+  }
+
+  /** @override */
+  _onRender(context, options) {
+    this.element.querySelectorAll(".item-input").forEach((d) => {
+      d.addEventListener("change", this._onResourceChange.bind(this));
+    });
+
+    this.element.querySelectorAll(".bond-name").forEach((d) => {
+      d.addEventListener("change", this._renameBond.bind(this));
+    });
+    this.element.querySelectorAll(".asset-name").forEach((d) => {
+      d.addEventListener("change", this._renameAsset.bind(this));
+    });
+
+    new DragDrop({
+      dragSelector: "[data-drag]",
+      dropSelector: null,
+      permissions: {
+        dragStart: this._canDragStart.bind(this),
+        drop: this._canDrop.bind(this),
+      },
+      callbacks: {
+        dragstart: this._onDragStart.bind(this),
+        dragover: this._onDragOver.bind(this),
+        drop: this._onDrop.bind(this),
+      },
+    }).bind(this.element);
+  }
+
+  async _onResourceChange(event) {
+    event.preventDefault();
+    const item = DocumentHelper.getItemFromHTML(event.target, game.items);
+    let value = event.target.value;
+    if (event.target.type === "checkbox") value = event.target.checked;
+    let name = event.target.name;
+    if (name.startsWith("item.")) {
+      name = name.replace(/item\./, "");
+    } else {
+      console.warn(`Prefer disambiguated name 'item.${name}'`);
+    }
+    const updateData = {};
+    updateData[name] = value;
+    return item.update(updateData);
+  }
+
+  /**
+   * Drag and drop
+   */
+
+  _canDragStart(candidate) {
+    return true;
+  }
+
+  _canDrop(candidate) {
+    return true;
+  }
+
+  _onDragStart(event) {}
+
+  _onDragOver(event) {}
+
+  async _onDrop(event, target) {
+    if (!this.item.isOwner) return false; // Cannot drag and drop into other people's sheets
+    const data = TextEditor.getDragEventData(event);
+    const doc = await getDocumentClass(data.type).implementation.fromDropData(
+      data
+    );
+
+    switch (data.type) {
+      case "Item":
+        return this._onDropItem(doc);
+      case "Folder":
+        return this._onDropFolder(doc);
+    }
+  }
+
+  async _onDropFolder(folder) {
+    if (folder.type !== "Item")
+      return Promise.reject(`Cannot handle folder of ${folder.type}`);
+    const recur = Promise.allSettled(
+      folder.children.map((subFolder) => {
+        return this._onDropFolder(subFolder.folder);
+      })
+    );
+
+    const data = Promise.allSettled(
+      folder.contents.map((item) => {
+        return this._onDropItem(item);
+      })
+    );
+
+    return Promise.all([recur, data]).then(([recur, data]) => {
+      return data.concat(recur);
+    });
+  }
+
+  async _onDropItem(item) {
+    if (item.type === "rule") {
+      return this.item.system.addRule(item);
+    }
+  }
+
+  /**
+   * Actions
+   */
+
+  /**
+   * Handle changing a Document's image.
+   * @this Gfv1ItemSheet
+   * @param {PointerEvent} _event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @returns {Promise}
+   * @protected
+   */
+  static async _onEditImage(_event, target) {
+    if (target.nodeName !== "IMG") {
+      throw new Error(
+        "The editImage action is available only for IMG elements."
+      );
+    }
+    const attr = target.dataset.edit;
+    const current = foundry.utils.getProperty(this.document._source, attr);
+    const defaultArtwork =
+      this.document.constructor.getDefaultArtwork?.(this.document._source) ??
+      {};
+    const defaultImage = foundry.utils.getProperty(defaultArtwork, attr);
+    const fp = new FilePicker({
+      current,
+      type: "image",
+      redirectToRoot: defaultImage ? [defaultImage] : [],
+      callback: (path) => {
+        target.src = path;
+        if (this.options.form.submitOnChange) {
+          const submit = new Event("submit");
+          this.element.dispatchEvent(submit);
+        }
+      },
+      top: this.position.top + 40,
+      left: this.position.left + 10,
+    });
+    await fp.browse();
+  }
+
+  static _createBond(event, target) {
+    const bonds = this.document.system.bonds;
+    bonds.push(target.dataset.name);
+    this.document.update({ system: { bonds } });
+  }
+
+  async _renameBond(event) {
+    event.preventDefault();
+    const target = event.target;
+    const index = target.closest("li[data-index]").dataset.index;
+    const bonds = this.document.system.bonds;
+    bonds[index] = target.value;
+    return this.document.update({ system: { bonds } });
+  }
+
+  static _deleteBond(event, target) {
+    const index = target.closest("li[data-index]").dataset.index;
+    const bonds = this.document.system.bonds;
+    bonds.splice(index, 1);
+    return this.document.update({ system: { bonds } });
+  }
+  static _createAsset(event, target) {
+    const assets = this.document.system.assets;
+    assets.push(target.dataset.name);
+    this.document.update({ system: { assets } });
+  }
+
+  async _renameAsset(event) {
+    event.preventDefault();
+    const target = event.target;
+    const index = target.closest("li[data-index]").dataset.index;
+    const assets = this.document.system.assets;
+    assets[index] = target.value;
+    return this.document.update({ system: { assets } });
+  }
+
+  static _deleteAsset(event, target) {
+    const index = target.closest("li[data-index]").dataset.index;
+    const assets = this.document.system.assets;
+    assets.splice(index, 1);
+    return this.document.update({ system: { assets } });
+  }
+
+  static async _removeRule(event, target) {
+    const index = target.closest("li[data-index]").dataset.index;
+    this.document.system.deleteRule(index);
+  }
+
+  /**
+   * Renders an embedded document's sheet
+   *
+   * @this Gfv1ActorSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @protected
+   */
+  static async _viewDoc(event, target) {
+    const doc = DocumentHelper.getItemFromHTML(target);
+    doc.sheet.render(true);
+  }
+
+  /**
+   * handles item deletion
+   *
+   * @this Gfv1ItemSheet
+   * @param {pointerevent} event   the originating click event
+   * @param {htmlelement} target   the capturing html element which defined a [data-action]
+   * @protected
+   */
+  static async _deleteDoc(event, target) {
+    const doc = DocumentHelper.getItemFromHTML(target);
+    const del = () => {
+      return doc.delete();
+    };
+
+    if (event.shiftKey || target.dataset.skipConfirm) return del();
+
+    if (await DialogHelper.confirmDelete(doc.type, doc.parent.name)) {
+      return del();
+    }
+  }
+}

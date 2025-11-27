@@ -1,0 +1,35 @@
+<section>
+  <ol class="items-list">
+    <li class="flexrow items-header">
+      <div class="item-name">
+        {{localize "GFv1.item.asset.type"}}
+      </div>
+      <div class="item-controls">
+        <a
+          class="item-control item-create"
+          data-action="createAsset"
+          data-name="new asset"
+          data-tooltip="{{localize 'DOCUMENT.New' type="asset"}}"
+        >
+          <i class="fas fa-plus"></i>
+        </a>
+      </div>
+    </li>
+    {{#each system.assets as |name id|}}
+      <li class="item flex flexrow" data-index="{{id}}">
+        <div class="item-name">
+          <input type="text" value="{{name}}" class="asset-name" />
+        </div>
+        <div class="item-controls">
+          <a
+            class="item-control item-delete"
+            data-tooltip="{{localize 'GFv1.item.asset.delete'}}"
+            data-action="deleteAsset"
+          >
+            <i class="fas fa-trash"></i>
+          </a>
+        </div>
+      </li>
+    {{/each}}
+  </ol>
+</section>
