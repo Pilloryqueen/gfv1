@@ -13,7 +13,7 @@
           data-action="createDoc"
           data-type="rule"
           data-name="new rule"
-          data-system.in="{{playbook.type}}"
+          data-system.playbook-type="{{playbook.playbookType}}"
           data-tooltip="{{localize 'DOCUMENT.New' type="rule"}}"
         >
           <i class="fas fa-plus"></i>
@@ -44,6 +44,15 @@
           />
         </div>
         <div class="item-controls">
+          {{#if item.system.play}}
+            <a
+              class="item-control item-roll"
+              data-tooltip="{{localize 'GFv1.item.rule.roll'}}"
+              data-action="roll"
+            >
+              <i class="fas fa-dice"></i>
+            </a>
+          {{/if}}
           <a
             class="item-control item-edit"
             data-tooltip="{{localize 'GFv1.item.rule.edit'}}"

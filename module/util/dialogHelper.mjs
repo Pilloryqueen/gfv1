@@ -1,4 +1,5 @@
 import { GFV1 } from "../config.mjs";
+import BasicRoll from "../rolls/basicRoll.mjs";
 
 export class DialogHelper {
   static async confirmAdopt() {
@@ -89,22 +90,45 @@ export class DialogHelper {
     }
   }
 
-  static async rollHeatQuery(maxHeat) {
-    return this._queryNumber({
-      title: game.i18n.localize("GFv1.roll.spendHeat.title"),
-      label: game.i18n.localize("GFv1.roll.spendHeat.label"),
-      min: 0,
-      max: maxHeat,
+  static async rollModifierQuery({ item, actor }) {
+    console.log(item);
+    if (!actor) {
+      actor = item.actor;
+      if (!actor) throw Error("Who's rolling?!");
+    }
+    const context = { maxHeat: actor.system.heat };
+    const useHeat = (!item || item.system.heat) && actor.system.heat;
+    if (!useHeat) {
+      context.disableHeat = "disabled";
+    }
+    const content = await renderTemplate(
+      "systems/gfv1/templates/dialog/rollModifier.hbs",
+      context
+    );
+    return await foundry.applications.api.DialogV2.prompt({
+      window: {
+        title: game.i18n.localize("GFv1.dialog.rollModifier.title"),
+      },
+      content,
+      ok: {
+        confirm: game.i18n.localize("GFv1.dialog.rollModifier.confirm"),
+        callback: roll,
+      },
     });
-  }
 
-  static async rollModifierQuery() {
-    return this._queryNumber({
-      title: game.i18n.localize("GFv1.roll.modifier.title"),
-      label: game.i18n.localize("GFv1.roll.modifier.label"),
-      min: -999,
-      max: 999,
-    });
+    async function roll(_event, button, _dialog) {
+      const heat = button.form.elements.heat.valueAsNumber;
+      const mod = button.form.elements.mod.valueAsNumber;
+      const roll = new BasicRoll({
+        heat,
+        mod,
+        item,
+      });
+      if (heat) {
+        await actor.system.spendHeat(heat);
+      }
+      return roll.toMessage(actor);
+    }
   }
 
   static async confirmDelete(type, parent) {

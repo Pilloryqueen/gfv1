@@ -26,10 +26,4 @@ export class HandlerDataModel extends BaseActorDataModel {
     });
     return playbook;
   }
-
-  async roll_from_sheet() {
-    const mod = await DialogHelper.rollModifierQuery();
-    if (mod === undefined) return;
-    return this.roll(mod);
-  }
 }

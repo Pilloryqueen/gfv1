@@ -1,0 +1,14 @@
+<div class="chat-card">
+  <div class="roll-description">{{{itemDescription}}}</div>
+  {{#if heat}}
+    <div class="roll-heat">{{localize "GFv1.roll.spentHeat" heat=heat}}</div>
+  {{/if}}
+  <div class="dice-roll">
+    <div class="dice-result">
+      <div class="dice-formula">{{formula}}</div>
+      <h4 class="dice-total">{{total}}</h4>
+    </div>
+  </div>
+  <span class="roll-result-header {{resultType}}">{{resultHeader}}</span>
+  <span class="roll-result-desc {{resultType}}">{{{resultDescription}}}</span>
+</div>

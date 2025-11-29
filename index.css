@@ -40,3 +40,15 @@
   min-height: 200px;
   max-height: 400px;
 }
+.chat-card .roll-result-header {
+  font-weight: bold;
+}
+.chat-card .roll-result-header .high {
+  color: blue;
+}
+.chat-card .roll-result-header .med {
+  color: green;
+}
+.chat-card .roll-result-header .low {
+  color: red;
+}

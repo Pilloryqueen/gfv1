@@ -1,3 +1,4 @@
+import { DialogHelper } from "../util/dialogHelper.mjs";
 import { defaultPlaybook, playbookTypes } from "./playbookDataModel.mjs";
 
 const { HTMLField, BooleanField, StringField } = foundry.data.fields;
@@ -22,5 +23,8 @@ const schema = {
 export class RuleDataModel extends TypeDataModel {
   static defineSchema() {
     return schema;
+  }
+
+  async roll() {
   }
 }

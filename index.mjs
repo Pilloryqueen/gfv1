@@ -9,8 +9,8 @@ import {
 import { TagDataModel } from "./module/data-models/tagDataModel.mjs";
 import { BondDataModel } from "./module/data-models/bondDataModel.mjs";
 import { IdentityDataModel } from "./module/data-models/identityDataModel.mjs";
-import Gfv1Actor from "./module/objects/gfv1Actor.mjs";
-import Gfv1Item from "./module/objects/gfv1Item.mjs";
+import Gfv1Actor from "./module/documents/gfv1Actor.mjs";
+import Gfv1Item from "./module/documents/gfv1Item.mjs";
 import { GFV1 } from "./module/config.mjs";
 import Gfv1ItemSheet from "./module/sheets/itemSheet.mjs";
 import { AssetDataModel } from "./module/data-models/assetDataModel.mjs";
@@ -80,5 +80,9 @@ function registerHelpers() {
 
   Handlebars.registerHelper("config", function (key) {
     return CONFIG.GFV1[key];
+  });
+
+  Handlebars.registerHelper("showif", function (expr, value) {
+    if (expr) return value;
   });
 }
