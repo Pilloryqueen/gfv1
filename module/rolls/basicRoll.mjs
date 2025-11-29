@@ -36,6 +36,7 @@ export default class BasicRoll extends Roll {
 
     const chatData = {
       speaker: ChatMessage.getSpeaker({ actor }),
+      sound: CONFIG.sounds.dice,
       content: await renderTemplate(
         "systems/gfv1/templates/rolls/roll.hbs",
         this
