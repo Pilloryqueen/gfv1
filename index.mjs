@@ -81,8 +81,4 @@ function registerHelpers() {
   Handlebars.registerHelper("config", function (key) {
     return CONFIG.GFV1[key];
   });
-
-  Handlebars.registerHelper("showif", function (expr, value) {
-    if (expr) return value;
-  });
 }

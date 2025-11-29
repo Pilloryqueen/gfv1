@@ -107,7 +107,9 @@ export class DialogHelper {
     );
     return await foundry.applications.api.DialogV2.prompt({
       window: {
-        title: game.i18n.localize("GFv1.dialog.rollModifier.title"),
+        title: game.i18n.format("GFv1.dialog.rollModifier.title", {
+          name: item?.name ?? "",
+        }),
       },
       content,
       ok: {

@@ -24,7 +24,4 @@ export class RuleDataModel extends TypeDataModel {
   static defineSchema() {
     return schema;
   }
-
-  async roll() {
-  }
 }

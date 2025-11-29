@@ -259,7 +259,6 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
       if (["action", "documentClass"].includes(dataKey)) continue;
       foundry.utils.setProperty(docData, dataKey, value);
     }
-    console.log(target.dataset);
 
     // Finally, create the embedded document!
     return Item.create(docData, { parent: this.actor });
