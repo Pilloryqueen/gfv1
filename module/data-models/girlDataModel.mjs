@@ -55,22 +55,10 @@ export class GirlDataModel extends BaseActorDataModel {
    * @returns true if successful
    */
   async spendHeat(amount) {
+    if (amount < 0) throw Error("Cannot spend negative heat!");
     const doc = this.parent;
     const newHeat = doc.system.heat - amount;
-    if (newHeat < 0 || amount < 0) return false;
-    doc.update({ "system.heat": newHeat });
-    return true;
-  }
-
-  async spendHeatAndRoll(mod, heat) {
-    (await this.spendHeat(heat)) && this.roll(mod, heat);
-  }
-
-  async roll_from_sheet() {
-    const heat = await DialogHelper.rollHeatQuery(this.parent.system.heat);
-    if (heat === undefined || heat < 0) return;
-    const mod = await DialogHelper.rollModifierQuery();
-    if (mod === undefined) return;
-    return this.spendHeatAndRoll(mod, heat);
+    if (newHeat < 0) throw Error("Spent too much heat!");
+    return doc.update({ "system.heat": newHeat });
   }
 }

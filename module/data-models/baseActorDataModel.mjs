@@ -63,7 +63,7 @@ export default class BaseActorDataModel extends TypeDataModel {
     this.addItems(item.system.rules);
     const system = {};
     system[`_${item.system.playbookType}`] = item.name;
-    this.parent.update({ system });
+    return this.parent.update({ system });
   }
 
   /**

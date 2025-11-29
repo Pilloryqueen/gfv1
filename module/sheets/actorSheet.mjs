@@ -303,10 +303,11 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
    *
    * @this Gfv1ActorSheet
    * @param {pointerevent} _event   the originating click event
-   * @param {htmlelement} _target   the capturing html element which defined a [data-action]
+   * @param {htmlelement} target   the capturing html element which defined a [data-action]
    * @protected
    */
-  static async _roll(_event, _target) {
-    return this.actor.system.roll_from_sheet();
+  static async _roll(_event, target) {
+    const item = DocumentHelper.getItemFromHTML(target, this.actor.items);
+    DialogHelper.rollModifierQuery({ actor: this.actor, item });
   }
 }
