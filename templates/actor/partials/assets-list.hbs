@@ -31,7 +31,7 @@
       </div>
     </li>
     {{#each playbook.assets as |item id|}}
-      <li class="item flex flexrow" data-item-id="{{item._id}}">
+      <li class="item flexrow" data-item-uuid="{{item.uuid}}">
         <div class="item-img">
           {{#if (settings "gfv1" "showItemImages")}}
             <img src="{{item.img}}" title="{{item.name}}" />

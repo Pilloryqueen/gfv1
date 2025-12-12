@@ -1,21 +1,19 @@
-import { defaultPlaybook, playbookTypes } from "./playbookDataModel.mjs";
+import BaseItemDataModel from "./baseItemDataModel.mjs";
+import { PlaybookTypeField } from "./playbookDataModel.mjs";
 
-const { BooleanField, HTMLField, StringField } = foundry.data.fields;
+const { BooleanField, HTMLField } = foundry.data.fields;
 
-const TypeDataModel = foundry.abstract.TypeDataModel;
 
 const schema = {
   description: new HTMLField(),
-  playbookType: new StringField({
+  playbookType: new PlaybookTypeField({
     required: true,
-    initial: defaultPlaybook,
-    choices: playbookTypes,
   }),
   damaged: new BooleanField(),
   void: new BooleanField(),
 };
 
-export class AssetDataModel extends TypeDataModel {
+export class AssetDataModel extends BaseItemDataModel {
   static defineSchema() {
     return schema;
   }

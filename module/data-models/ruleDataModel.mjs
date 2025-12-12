@@ -1,17 +1,13 @@
-import { DialogHelper } from "../util/dialogHelper.mjs";
-import { defaultPlaybook, playbookTypes } from "./playbookDataModel.mjs";
+import BaseItemDataModel from "./baseItemDataModel.mjs";
+import { PlaybookTypeField } from "./playbookDataModel.mjs";
 
 const { HTMLField, BooleanField, StringField } = foundry.data.fields;
-
-const TypeDataModel = foundry.abstract.TypeDataModel;
 
 const schema = {
   description: new HTMLField(),
   play: new BooleanField({ required: true, initial: false }),
-  playbookType: new StringField({
+  playbookType: new PlaybookTypeField({
     required: true,
-    initial: defaultPlaybook,
-    choices: playbookTypes,
   }),
   locked: new BooleanField({ required: true, initial: false }),
   heat: new BooleanField({ required: true, initial: true }),
@@ -20,7 +16,7 @@ const schema = {
   low: new StringField(),
 };
 
-export class RuleDataModel extends TypeDataModel {
+export class RuleDataModel extends BaseItemDataModel {
   static defineSchema() {
     return schema;
   }

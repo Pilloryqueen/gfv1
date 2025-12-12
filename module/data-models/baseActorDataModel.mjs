@@ -2,19 +2,6 @@ import { DialogHelper } from "../util/dialogHelper.mjs";
 
 const TypeDataModel = foundry.abstract.TypeDataModel;
 
-export class Playbook {
-  constructor(parent, type, itemTypes) {
-    this.name = parent.system[`_${type}`];
-    this.playbookType = type;
-    const filter = (item) => {
-      return item.system.playbookType === type;
-    };
-    for (const k in itemTypes) {
-      this[k] = parent.itemTypes[itemTypes[k]].filter(filter);
-    }
-  }
-}
-
 export default class BaseActorDataModel extends TypeDataModel {
   addItems(items) {
     this.parent.createEmbeddedDocuments("Item", items);
@@ -60,7 +47,7 @@ export default class BaseActorDataModel extends TypeDataModel {
     await this.createAssets(item.system.assets, item);
 
     if (item.system.bonds) await this.createBonds(item.system.bonds);
-    this.addItems(item.system.rules);
+    this.addItems(await item.system.getRules());
     const system = {};
     system[`_${item.system.playbookType}`] = item.name;
     return this.parent.update({ system });

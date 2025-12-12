@@ -27,7 +27,7 @@
     },
     {
       "name": "rules",
-      "label": "Rules",
+      "label": "Rules (LEGACY)",
       "system": "gfv1",
       "path": "packs/rules",
       "type": "Item",
@@ -39,54 +39,54 @@
       }
     },
     {
-      "name": "framePlaybooks",
-      "label": "Frame Playbooks",
+      "name": "frame",
+      "label": "Frames",
       "system": "gfv1",
-      "path": "packs/framePlaybooks",
+      "path": "packs/frame",
       "type": "Item",
       "private": false,
       "flags": {
         "gfv1": {
-          "types": ["playbook"]
+          "types": ["playbook", "rule"]
         }
       }
     },
     {
-      "name": "girlPlaybooks",
-      "label": "Girl Playbooks",
+      "name": "girl",
+      "label": "Girls",
       "system": "gfv1",
-      "path": "packs/girlPlaybooks",
+      "path": "packs/girl",
       "type": "Item",
       "private": false,
       "flags": {
         "gfv1": {
-          "types": ["playbook"]
+          "types": ["playbook", "rule"]
         }
       }
     },
     {
-      "name": "handlerPlaybooks",
-      "label": "Handler Playbooks",
+      "name": "handler",
+      "label": "Handlers",
       "system": "gfv1",
-      "path": "packs/handlerPlaybooks",
+      "path": "packs/handler",
       "type": "Item",
-      "private": false,
+      "private": true,
       "flags": {
         "gfv1": {
-          "types": ["playbook"]
+          "types": ["playbook", "rule"]
         }
       }
     },
     {
-      "name": "npcPlaybooks",
-      "label": "NPC Playbooks",
+      "name": "npc",
+      "label": "NPCs",
       "system": "gfv1",
       "path": "packs/npcPlaybooks",
       "type": "Item",
-      "private": false,
+      "private": true,
       "flags": {
         "gfv1": {
-          "types": ["playbook"]
+          "types": ["playbook", "rule"]
         }
       }
     }
@@ -104,10 +104,10 @@
       "handler": {
         "htmlFields": ["bio", "notes"]
       },
-      "girl": {
+      "pilot": {
         "htmlFields": ["bio", "notes"]
       },
-      "npc": {
+      "gorgon": {
         "htmlFields": ["bio", "notes"]
       }
     },

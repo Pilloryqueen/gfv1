@@ -1,9 +1,7 @@
-import { DialogHelper } from "../util/dialogHelper.mjs";
-import BaseActorDataModel, { Playbook } from "./baseActorDataModel.mjs";
+import BaseActorDataModel from "./baseActorDataModel.mjs";
+import { Playbook } from "./playbookDataModel.mjs";
 
 const { HTMLField, StringField } = foundry.data.fields;
-
-const TypeDataModel = foundry.abstract.TypeDataModel;
 
 const schema = {
   bio: new HTMLField(),

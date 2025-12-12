@@ -17,8 +17,8 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
       {
         editImage: this._onEditImage,
         createDoc: this._createDoc,
-        viewDoc: this._viewDoc,
-        deleteDoc: this._deleteDoc,
+        viewDoc: DocumentHelper.viewDoc,
+        deleteDoc: DocumentHelper.deleteDoc,
         roll: this._roll,
       },
       this.ACTIONS
@@ -265,40 +265,6 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
   }
 
   /**
-   * Renders an embedded document's sheet
-   *
-   * @this Gfv1ActorSheet
-   * @param {PointerEvent} _event   The originating click event
-   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
-   * @protected
-   */
-  static async _viewDoc(_event, target) {
-    const doc = DocumentHelper.getItemFromHTML(target, this.actor.items);
-    doc.sheet.render(true);
-  }
-
-  /**
-   * handles item deletion
-   *
-   * @this Gfv1ActorSheet
-   * @param {pointerevent} event   the originating click event
-   * @param {htmlelement} target   the capturing html element which defined a [data-action]
-   * @protected
-   */
-  static async _deleteDoc(event, target) {
-    const doc = DocumentHelper.getItemFromHTML(target, this.actor.items);
-    const del = () => {
-      return doc.delete();
-    };
-
-    if (event.shiftKey) return del();
-
-    if (await DialogHelper.confirmDelete(doc.type, doc.parent.name)) {
-      return del();
-    }
-  }
-
-  /**
    * handles rolling
    *
    * @this Gfv1ActorSheet
@@ -307,7 +273,7 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
    * @protected
    */
   static async _roll(_event, target) {
-    const item = DocumentHelper.getItemFromHTML(target, this.actor.items);
+    const item = await DocumentHelper.getItemFromHTML(target);
     DialogHelper.rollModifierQuery({ actor: this.actor, item });
   }
 }

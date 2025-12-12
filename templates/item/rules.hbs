@@ -8,11 +8,11 @@
       <div class="item-controls">
       </div>
     </li>
-    {{#each system.rules as |item id|}}
+    {{#each rules as |item index|}}
       <li
         class="item flex flexrow"
-        data-item-id="{{item._id}}"
-        data-index="{{id}}"
+        data-item-uuid="{{item.uuid}}"
+        data-index="{{index}}"
         data-drag="true"
       >
         <div class="item-name">
@@ -22,8 +22,8 @@
           <input
             type="checkbox"
             class="item-input"
-            name="item.locked"
-            {{checked item.locked}}
+            name="item.system.locked"
+            {{checked item.system.locked}}
           />
         </div>
         <div class="item-controls">

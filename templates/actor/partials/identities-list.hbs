@@ -23,7 +23,7 @@
       </div>
     </li>
     {{#each identities as |item id|}}
-      <li class="item flexrow" data-item-id="{{item.id}}">
+      <li class="item flexrow" data-item-uuid="{{item.uuid}}">
         <div class="item-img">
           {{#if (settings "gfv1" "showItemImages")}}
             <img src="{{item.img}}" title="{{item.name}}" />

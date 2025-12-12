@@ -1,26 +1,33 @@
 import { DialogHelper } from "../util/dialogHelper.mjs";
+import fromUuid from "../util/uuid.mjs";
+import BaseItemDataModel from "./baseItemDataModel.mjs";
 
-const { HTMLField, ArrayField, StringField, DocumentIdField } =
+const { HTMLField, ArrayField, StringField, DocumentUUIDField } =
   foundry.data.fields;
 
-const TypeDataModel = foundry.abstract.TypeDataModel;
+export class PlaybookTypeField extends StringField {
+  constructor(options) {
+    options.initial = PlaybookTypeField.defaultPlaybook;
+    options.choices = PlaybookTypeField.playbookTypes;
 
-export function playbookTypes() {
-  return Object.keys(CONFIG.GFV1.playbooks);
+    return super(options);
+  }
+
+  static playbookTypes() {
+    return Object.keys(CONFIG.GFV1.playbooks);
+  }
+
+  static defaultPlaybook() {
+    return PlaybookTypeField.playbookTypes()[0];
+  }
 }
 
-export function defaultPlaybook() {
-  return playbookTypes()[0];
-}
-
-export class PlaybookDataModel extends TypeDataModel {
+export class PlaybookDataModel extends BaseItemDataModel {
   static defineSchema() {
     return {
       description: new HTMLField(),
-      playbookType: new StringField({
+      playbookType: new PlaybookTypeField({
         required: true,
-        initial: defaultPlaybook,
-        choices: playbookTypes,
       }),
       bonds: new ArrayField(new StringField({ required: true }), {
         required: true,
@@ -30,33 +37,49 @@ export class PlaybookDataModel extends TypeDataModel {
         required: true,
         initial: [],
       }),
-      _rules: new ArrayField(new DocumentIdField({ required: true }), {
+      _rules: new ArrayField(new DocumentUUIDField({ required: true }), {
         required: true,
         initial: [],
       }),
     };
   }
 
-  get rules() {
-    const rules = this.parent.system._rules.map((ref) => game.items.get(ref));
-    return rules;
+  async prepareContext(context) {
+    await super.prepareContext(context);
+
+    context.rules = await this.getRules();
   }
 
-  async addRule(rule) {
-    if (rule.system.playbookType !== this.parent.system.playbookType) {
+  async getRules() {
+    return Promise.all(this._rules.map((uuid) => fromUuid(uuid)));
+  }
+
+  async addRule(uuid) {
+    const rule = await fromUuid(uuid);
+    if (rule.system.playbookType !== this.playbookType) {
       await DialogHelper.warn_playbook_import(rule, this.parent);
     }
-    const _rules = this.parent.system._rules;
-    _rules.push(rule.id);
+    const _rules = this._rules;
+    _rules.push(rule.uuid);
     return this.parent.update({ system: { _rules } });
   }
 
   async deleteRule(index) {
-    const _rules = this.parent.system._rules;
+    const _rules = this._rules;
     _rules.splice(index, 1);
     return this.parent.update({ system: { _rules } });
   }
 }
 
-export class FramePlaybookDataModel extends PlaybookDataModel {}
-export class GirlPlaybookDataModel extends PlaybookDataModel {}
+export class Playbook {
+  constructor(item, type, itemTypes) {
+    this.name = item.system[`_${type}`];
+    this.playbookType = type;
+    const filter = (item) => {
+      return item.system.playbookType === type;
+    };
+    for (const k in itemTypes) {
+      this[k] = item.itemTypes[itemTypes[k]].filter(filter);
+    }
+  }
+}

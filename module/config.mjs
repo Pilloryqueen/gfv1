@@ -9,13 +9,14 @@ GFV1.bondLevels = {
 
 GFV1.playbooks = {
   framePlaybook: "GFv1.config.playbooks.frame",
-  girlPlaybook: "GFv1.config.playbooks.girl",
+  pilotPlaybook: "GFv1.config.playbooks.pilot",
   handlerPlaybook: "GFv1.config.playbooks.handler",
+  gorgonType: "GFv1.config.playbooks.gorgon",
 };
 
 GFV1.maxIdentities = 4;
 
 GFV1.maxAssets = {
   frame: 5,
-  girl: 4,
+  pilot: 4,
 };

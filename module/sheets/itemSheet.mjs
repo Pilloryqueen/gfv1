@@ -21,8 +21,8 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
       deleteBond: this._deleteBond,
       createAsset: this._createAsset,
       deleteAsset: this._deleteAsset,
-      viewDoc: this._viewDoc,
-      deleteDoc: this._deleteDoc,
+      viewDoc: DocumentHelper.viewDoc,
+      deleteDoc: DocumentHelper.deleteDoc,
       removeRule: this._removeRule,
     },
   };
@@ -69,7 +69,7 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
             options.parts.push("assets");
             options.parts.push("rules");
             break;
-          case "girlPlaybook":
+          case "pilotPlaybook":
             options.parts.push("assets");
             options.parts.push("bonds");
             options.parts.push("rules");
@@ -86,10 +86,9 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
 
   /** @inheritDoc */
   async _prepareContext(options) {
-    return {
-      item: this.item,
-      system: this.item.system,
-    };
+    const context = {};
+    await this.item.system.prepareContext(context);
+    return context;
   }
 
   /** @override */
@@ -175,6 +174,7 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
     const doc = await getDocumentClass(data.type).implementation.fromDropData(
       data
     );
+    console.log("Drop:", data);
 
     switch (data.type) {
       case "Item":
@@ -185,28 +185,23 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
   }
 
   async _onDropFolder(folder) {
-    if (folder.type !== "Item")
-      return Promise.reject(`Cannot handle folder of ${folder.type}`);
-    const recur = Promise.allSettled(
-      folder.children.map((subFolder) => {
-        return this._onDropFolder(subFolder.folder);
-      })
-    );
-
-    const data = Promise.allSettled(
-      folder.contents.map((item) => {
-        return this._onDropItem(item);
-      })
-    );
-
-    return Promise.all([recur, data]).then(([recur, data]) => {
-      return data.concat(recur);
+    if (folder.type !== "Item") {
+      throw new Error(`Cannot handle folder of ${folder.type}`);
+    }
+    folder.children.forEach(async (subFolder) => {
+      await this._onDropFolder(subFolder.folder);
+    });
+    folder.contents.map(async (item) => {
+      await this._onDropItem(item);
     });
   }
 
   async _onDropItem(item) {
-    if (item.type === "rule") {
-      return this.item.system.addRule(item);
+    switch (item.type) {
+      case "rule":
+        return this.item.system.addRule(item.uuid);
+      default:
+        throw new Error(`No drop handle for item type: ${item.type}`);
     }
   }
 
@@ -297,39 +292,5 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
   static async _removeRule(event, target) {
     const index = target.closest("li[data-index]").dataset.index;
     this.document.system.deleteRule(index);
-  }
-
-  /**
-   * Renders an embedded document's sheet
-   *
-   * @this Gfv1ActorSheet
-   * @param {PointerEvent} event   The originating click event
-   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
-   * @protected
-   */
-  static async _viewDoc(event, target) {
-    const doc = DocumentHelper.getItemFromHTML(target);
-    doc.sheet.render(true);
-  }
-
-  /**
-   * handles item deletion
-   *
-   * @this Gfv1ItemSheet
-   * @param {pointerevent} event   the originating click event
-   * @param {htmlelement} target   the capturing html element which defined a [data-action]
-   * @protected
-   */
-  static async _deleteDoc(event, target) {
-    const doc = DocumentHelper.getItemFromHTML(target);
-    const del = () => {
-      return doc.delete();
-    };
-
-    if (event.shiftKey || target.dataset.skipConfirm) return del();
-
-    if (await DialogHelper.confirmDelete(doc.type, doc.parent.name)) {
-      return del();
-    }
   }
 }
