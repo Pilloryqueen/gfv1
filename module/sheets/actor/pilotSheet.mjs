@@ -2,7 +2,7 @@ import { DialogHelper } from "../../util/dialogHelper.mjs";
 import { DocumentHelper } from "../../util/documentHelper.mjs";
 import Gfv1ActorSheet from "../actorSheet.mjs";
 
-export default class GirlSheet extends Gfv1ActorSheet {
+export default class PilotSheet extends Gfv1ActorSheet {
   static ACTIONS = {
     adoptTag: this._adoptTag,
   };
@@ -13,10 +13,10 @@ export default class GirlSheet extends Gfv1ActorSheet {
       group: "primary",
       label: "GFv1.tab.main",
     },
-    girl: {
+    pilot: {
       icon: "fa-venus",
       group: "primary",
-      label: "GFv1.tab.girl",
+      label: "GFv1.tab.pilot",
     },
     frame: {
       icon: "fa-car",
@@ -39,8 +39,8 @@ export default class GirlSheet extends Gfv1ActorSheet {
     main: {
       template: "systems/gfv1/templates/actor/tabs/main.hbs",
     },
-    girl: {
-      template: "systems/gfv1/templates/actor/tabs/girl.hbs",
+    pilot: {
+      template: "systems/gfv1/templates/actor/tabs/pilot.hbs",
     },
     frame: {
       template: "systems/gfv1/templates/actor/tabs/frame.hbs",
@@ -74,7 +74,7 @@ export default class GirlSheet extends Gfv1ActorSheet {
     } else {
       options.defaultTab = "main";
       options.parts.push("main");
-      options.parts.push("girl");
+      options.parts.push("pilot");
       options.parts.push("frame");
     }
   }
@@ -87,7 +87,7 @@ export default class GirlSheet extends Gfv1ActorSheet {
   /**
    * Handle adopting a tag as an identity
    *
-   * @this GirlSheet
+   * @this PilotSheet
    * @param {PointerEvent} event   The originating click event
    * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
    * @private

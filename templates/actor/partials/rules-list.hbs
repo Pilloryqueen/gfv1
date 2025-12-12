@@ -21,7 +21,7 @@
       </div>
     </li>
     {{#each playbook.rules as |item id|}}
-      <li class="item flex flexrow" data-item-id="{{item._id}}">
+      <li class="item flexrow" data-item-uuid="{{item.uuid}}">
         <div class="item-img" data-drag="true">
           {{#if (settings "gfv1" "showItemImages")}}
             <img src="{{item.img}}" title="{{item.name}}" />

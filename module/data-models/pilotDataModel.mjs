@@ -1,7 +1,7 @@
-import { DialogHelper } from "../util/dialogHelper.mjs";
-import BaseActorDataModel, { Playbook } from "./baseActorDataModel.mjs";
+import BaseActorDataModel from "./baseActorDataModel.mjs";
+import { Playbook } from "./playbookDataModel.mjs";
 
-const { BooleanField, HTMLField, NumberField, SchemaField, StringField } =
+const { BooleanField, HTMLField, NumberField, StringField } =
   foundry.data.fields;
 
 const schema = {
@@ -12,22 +12,22 @@ const schema = {
   pronouns: new StringField({ required: true, initial: "it/its" }),
   test: new BooleanField({ initial: true }),
   _framePlaybook: new StringField({ required: true, initial: "No Playbook" }),
-  _girlPlaybook: new StringField({ required: true, initial: "No Playbook" }),
+  _pilotPlaybook: new StringField({ required: true, initial: "No Playbook" }),
 };
 
-export class GirlDataModel extends BaseActorDataModel {
+export class PilotDataModel extends BaseActorDataModel {
   static defineSchema() {
     return schema;
   }
 
-  allowedPlaybookTypes = ["girlPlaybook", "framePlaybook"];
+  allowedPlaybookTypes = ["pilotPlaybook", "framePlaybook"];
 
-  get girlPlaybook() {
-    const playbook = new Playbook(this.parent, "girlPlaybook", {
+  get pilotPlaybook() {
+    const playbook = new Playbook(this.parent, "pilotPlaybook", {
       rules: "rule",
       assets: "asset",
     });
-    playbook.maxAssets = CONFIG.GFV1.maxAssets.girl;
+    playbook.maxAssets = CONFIG.GFV1.maxAssets.pilot;
     return playbook;
   }
 
@@ -41,19 +41,14 @@ export class GirlDataModel extends BaseActorDataModel {
   }
 
   async adoptTag(item) {
-    if (item.parent === this) {
+    if (item.parent !== this) {
       throw new Error(
-        `${this.name} (id: ${this.id}) is not parent of ${item} (parent.id: ${item.parent.id})`
+        `${this.name} (id: ${this.id}) is not parent of ${item} (parent.id: ${item.parent?.id})`
       );
     }
     item.update({ type: "identity", system: { marked: "false" } });
   }
 
-  /**
-   * Spend heat
-   * @param {Number} amount
-   * @returns true if successful
-   */
   async spendHeat(amount) {
     if (amount < 0) throw Error("Cannot spend negative heat!");
     const doc = this.parent;

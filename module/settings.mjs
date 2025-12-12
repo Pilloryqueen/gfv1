@@ -8,4 +8,12 @@ export function registerSettings() {
     default: false,
     requiresReload: true,
   });
+
+  game.settings.register("gfv1", "migratedVersion", {
+    name: "Last successfully migrated version",
+    scope: "world",
+    config: false,
+    type: String,
+    default: "0.0.0",
+  });
 }

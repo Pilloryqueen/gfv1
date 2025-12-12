@@ -6,7 +6,7 @@
     },
     "tab": {
       "main": "Basic info",
-      "girl": "Girl view",
+      "pilot": "Pilot view",
       "frame": "Frame view",
       "handler": "Handler view"
     },
@@ -62,12 +62,12 @@
         "delete": "Remove bond"
       }
     },
-    "girl": {
+    "pilot": {
       "name": "Callsign",
       "pronouns": "Pronouns",
       "heat": "Heat",
       "permissions": "Permissions",
-      "girlPlaybook": "Girl Playbook",
+      "pilotPlaybook": "Pilot Playbook",
       "framePlaybook": "Frame Playbook"
     },
     "settings": {
@@ -84,9 +84,10 @@
         "high": "Intense"
       },
       "playbooks": {
-        "girl": "Girl Playbook",
+        "pilot": "Pilot Playbook",
         "frame": "Frame Playbook",
-        "handler": "Handler Playbook"
+        "handler": "Handler Playbook",
+        "gorgon": "Gorgon Type"
       }
     },
     "roll": {

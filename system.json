@@ -13,80 +13,54 @@
   "styles": ["index.css"],
   "packs": [
     {
-      "name": "basicRules",
-      "label": "Basic Rules",
+      "name": "frame",
+      "label": "Frames",
       "system": "gfv1",
-      "path": "packs/basicRules",
+      "path": "packs/frame",
       "type": "Item",
       "private": false,
       "flags": {
         "gfv1": {
-          "types": ["rule"]
+          "types": ["playbook", "rule"]
         }
       }
     },
     {
-      "name": "rules",
-      "label": "Rules",
+      "name": "girl",
+      "label": "Girls",
       "system": "gfv1",
-      "path": "packs/rules",
+      "path": "packs/girl",
       "type": "Item",
       "private": false,
       "flags": {
         "gfv1": {
-          "types": ["rule"]
+          "types": ["playbook", "rule", "identity"]
         }
       }
     },
     {
-      "name": "framePlaybooks",
-      "label": "Frame Playbooks",
+      "name": "handler",
+      "label": "Handlers",
       "system": "gfv1",
-      "path": "packs/framePlaybooks",
+      "path": "packs/handler",
       "type": "Item",
-      "private": false,
+      "private": true,
       "flags": {
         "gfv1": {
-          "types": ["playbook"]
+          "types": ["playbook", "rule"]
         }
       }
     },
     {
-      "name": "girlPlaybooks",
-      "label": "Girl Playbooks",
-      "system": "gfv1",
-      "path": "packs/girlPlaybooks",
-      "type": "Item",
-      "private": false,
-      "flags": {
-        "gfv1": {
-          "types": ["playbook"]
-        }
-      }
-    },
-    {
-      "name": "handlerPlaybooks",
-      "label": "Handler Playbooks",
-      "system": "gfv1",
-      "path": "packs/handlerPlaybooks",
-      "type": "Item",
-      "private": false,
-      "flags": {
-        "gfv1": {
-          "types": ["playbook"]
-        }
-      }
-    },
-    {
-      "name": "npcPlaybooks",
-      "label": "NPC Playbooks",
+      "name": "npc",
+      "label": "NPCs",
       "system": "gfv1",
       "path": "packs/npcPlaybooks",
       "type": "Item",
-      "private": false,
+      "private": true,
       "flags": {
         "gfv1": {
-          "types": ["playbook"]
+          "types": ["playbook", "rule"]
         }
       }
     }
@@ -104,10 +78,10 @@
       "handler": {
         "htmlFields": ["bio", "notes"]
       },
-      "girl": {
+      "pilot": {
         "htmlFields": ["bio", "notes"]
       },
-      "npc": {
+      "gorgon": {
         "htmlFields": ["bio", "notes"]
       }
     },

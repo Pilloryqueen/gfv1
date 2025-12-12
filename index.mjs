@@ -1,11 +1,6 @@
-import { GirlDataModel } from "./module/data-models/girlDataModel.mjs";
+import { PilotDataModel } from "./module/data-models/pilotDataModel.mjs";
 import { HandlerDataModel } from "./module/data-models/handlerDataModel.mjs";
-import { NpcDataModel } from "./module/data-models/npcDataModel.mjs";
-import {
-  GirlPlaybookDataModel,
-  FramePlaybookDataModel,
-  PlaybookDataModel,
-} from "./module/data-models/playbookDataModel.mjs";
+import { PlaybookDataModel } from "./module/data-models/playbookDataModel.mjs";
 import { TagDataModel } from "./module/data-models/tagDataModel.mjs";
 import { BondDataModel } from "./module/data-models/bondDataModel.mjs";
 import { IdentityDataModel } from "./module/data-models/identityDataModel.mjs";
@@ -16,8 +11,9 @@ import Gfv1ItemSheet from "./module/sheets/itemSheet.mjs";
 import { AssetDataModel } from "./module/data-models/assetDataModel.mjs";
 import { RuleDataModel } from "./module/data-models/ruleDataModel.mjs";
 import { registerSettings } from "./module/settings.mjs";
-import GirlSheet from "./module/sheets/actor/girlSheet.mjs";
+import PilotSheet from "./module/sheets/actor/pilotSheet.mjs";
 import HandlerSheet from "./module/sheets/actor/handlerSheet.mjs";
+import { GorgonDataModel } from "./module/data-models/gorgonDataModel.mjs";
 
 Hooks.once("init", async () => {
   console.log("GFV1 | Initializing Girlframe System");
@@ -26,16 +22,14 @@ Hooks.once("init", async () => {
   registerSettings();
 
   CONFIG.Actor.DocumentClass = Gfv1Actor;
-  CONFIG.Actor.dataModels.girl = GirlDataModel;
-  CONFIG.Actor.dataModels.npc = NpcDataModel;
+  CONFIG.Actor.dataModels.pilot = PilotDataModel;
+  CONFIG.Actor.dataModels.gorgon = GorgonDataModel;
   CONFIG.Actor.dataModels.handler = HandlerDataModel;
 
   CONFIG.Item.DocumentClass = Gfv1Item;
   CONFIG.Item.dataModels.asset = AssetDataModel;
   CONFIG.Item.dataModels.bond = BondDataModel;
   CONFIG.Item.dataModels.playbook = PlaybookDataModel;
-  CONFIG.Item.dataModels.framePlaybook = FramePlaybookDataModel;
-  CONFIG.Item.dataModels.girlPlaybook = GirlPlaybookDataModel;
   CONFIG.Item.dataModels.identity = IdentityDataModel;
   CONFIG.Item.dataModels.rule = RuleDataModel;
   CONFIG.Item.dataModels.tag = TagDataModel;
@@ -46,12 +40,28 @@ Hooks.once("init", async () => {
   console.log("GFV1 | System Init Completed");
 });
 
+Hooks.once("ready", () => {
+  if (game.user.isGM) {
+    checkMigratons();
+  }
+});
+
+async function checkMigratons() {
+  const previousVersion = game.settings.get("gfv1", "migratedVersion");
+  const currentVersion = game.system.version;
+
+  if (currentVersion !== previousVersion) {
+    await migrateWorld(previousVersion);
+    game.settings.set("gfv1", "migratedVersion", currentVersion);
+  }
+}
+
 function registerSheets() {
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("gfv1", GirlSheet, {
+  Actors.registerSheet("gfv1", PilotSheet, {
     makeDefault: true,
-    types: ["girl"],
-    label: "GFV1.sheets.girlSheet",
+    types: ["pilot"],
+    label: "GFV1.sheets.pilotSheet",
   });
   Actors.registerSheet("gfv1", HandlerSheet, {
     makeDefault: true,
