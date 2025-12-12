@@ -13,32 +13,6 @@
   "styles": ["index.css"],
   "packs": [
     {
-      "name": "basicRules",
-      "label": "Basic Rules",
-      "system": "gfv1",
-      "path": "packs/basicRules",
-      "type": "Item",
-      "private": false,
-      "flags": {
-        "gfv1": {
-          "types": ["rule"]
-        }
-      }
-    },
-    {
-      "name": "rules",
-      "label": "Rules (LEGACY)",
-      "system": "gfv1",
-      "path": "packs/rules",
-      "type": "Item",
-      "private": false,
-      "flags": {
-        "gfv1": {
-          "types": ["rule"]
-        }
-      }
-    },
-    {
       "name": "frame",
       "label": "Frames",
       "system": "gfv1",
@@ -60,7 +34,7 @@
       "private": false,
       "flags": {
         "gfv1": {
-          "types": ["playbook", "rule"]
+          "types": ["playbook", "rule", "identity"]
         }
       }
     },
