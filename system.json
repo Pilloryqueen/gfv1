@@ -75,10 +75,10 @@
   ],
   "documentTypes": {
     "Actor": {
-      "handler": {
+      "pilot": {
         "htmlFields": ["bio", "notes"]
       },
-      "pilot": {
+      "handler": {
         "htmlFields": ["bio", "notes"]
       },
       "gorgon": {
@@ -86,8 +86,8 @@
       }
     },
     "Item": {
-      "asset": { "htmlFields": ["description"] },
       "rule": { "htmlFields": ["description"] },
+      "asset": { "htmlFields": ["description"] },
       "playbook": { "htmlFields": ["description"] },
       "tag": { "htmlFields": ["description"] },
       "bond": { "htmlFields": ["description"] },
