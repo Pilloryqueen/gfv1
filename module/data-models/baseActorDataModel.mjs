@@ -3,7 +3,7 @@ import { DialogHelper } from "../util/dialogHelper.mjs";
 const TypeDataModel = foundry.abstract.TypeDataModel;
 
 export default class BaseActorDataModel extends TypeDataModel {
-  addItems(items) {
+  async addItems(items) {
     this.parent.createEmbeddedDocuments("Item", items);
   }
 

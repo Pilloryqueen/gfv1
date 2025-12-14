@@ -41,9 +41,9 @@ export class PilotDataModel extends BaseActorDataModel {
   }
 
   async adoptTag(item) {
-    if (item.parent !== this) {
+    if (item.parent !== this.parent) {
       throw new Error(
-        `${this.name} (id: ${this.id}) is not parent of ${item} (parent.id: ${item.parent?.id})`
+        `${this.name} (id: ${this.id}) is not parent of ${item.id} (parent.id: ${item.parent?.id})`
       );
     }
     item.update({ type: "identity", system: { marked: "false" } });

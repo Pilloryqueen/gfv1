@@ -1,4 +1,3 @@
-import { DialogHelper } from "../util/dialogHelper.mjs";
 import { DocumentHelper } from "../util/documentHelper.mjs";
 
 const HandlebarsApplicationMixin =
@@ -86,7 +85,9 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
 
   /** @inheritDoc */
   async _prepareContext(options) {
-    const context = {};
+    const context = {
+      config: CONFIG.GFV1,
+    };
     await this.item.system.prepareContext(context);
     return context;
   }
@@ -138,7 +139,7 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
 
   async _onResourceChange(event) {
     event.preventDefault();
-    const item = DocumentHelper.getItemFromHTML(event.target, game.items);
+    const item = await DocumentHelper.getItemFromHTML(event.target, game.items);
     let value = event.target.value;
     if (event.target.type === "checkbox") value = event.target.checked;
     let name = event.target.name;
