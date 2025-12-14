@@ -93,7 +93,7 @@ export default class PilotSheet extends Gfv1ActorSheet {
    * @private
    */
   static async _adoptTag(event, target) {
-    const doc = DocumentHelper.getItemFromHTML(target, this.actor.items);
+    const doc = await DocumentHelper.getItemFromHTML(target, this.actor.items);
     if (event.shiftKey) return this.actor.system.adoptTag(doc);
 
     if (await DialogHelper.confirmAdopt()) {

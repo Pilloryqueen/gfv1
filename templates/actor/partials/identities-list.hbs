@@ -24,9 +24,11 @@
     </li>
     {{#each identities as |item id|}}
       <li class="item flexrow" data-item-uuid="{{item.uuid}}">
-        <div class="item-img">
+        <div class="item-img" data-drag="true">
           {{#if (settings "gfv1" "showItemImages")}}
             <img src="{{item.img}}" title="{{item.name}}" />
+          {{else}}
+            <i class="fas fa-bars"></i>
           {{/if}}
         </div>
         <div class="item-name">

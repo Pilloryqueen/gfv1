@@ -1,5 +1,6 @@
 import { DialogHelper } from "../util/dialogHelper.mjs";
 import { DocumentHelper } from "../util/documentHelper.mjs";
+import fromUuid from "../util/uuid.mjs";
 
 const HandlebarsApplicationMixin =
   foundry.applications.api.HandlebarsApplicationMixin;
@@ -102,7 +103,10 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
 
   async _onResourceChange(event) {
     event.preventDefault();
-    const item = DocumentHelper.getItemFromHTML(event.target, this.actor.items);
+    const item = await DocumentHelper.getItemFromHTML(
+      event.target,
+      this.actor.items
+    );
     let value = event.target.value;
     if (event.target.type === "checkbox") value = event.target.checked;
     let name = event.target.name;
@@ -144,41 +148,43 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
     return true;
   }
 
-  _onDragStart(event) {}
+  async _onDragStart(event) {
+    const data = await DocumentHelper.getItemFromHTML(event.currentTarget);
+    console.log(data);
+    event.dataTransfer.setData("text/plain", JSON.stringify(data.toDragData()));
+  }
 
   _onDragOver(event) {}
 
   async _onDrop(event, target) {
     if (!this.actor.isOwner) return false; // Cannot drag and drop into other people's sheets
-    const data = await TextEditor.getDragEventData(event);
-    const docClass = await getDocumentClass(data.type);
-    const doc = await docClass.implementation.fromDropData(data);
+    const data = TextEditor.getDragEventData(event);
+    console.log(data, event, target);
+    const doc = await getDocumentClass(data.type).implementation.fromDropData(
+      data
+    );
+    console.log("Drop:", data);
 
     switch (data.type) {
       case "Item":
         return this._onDropItem(doc);
       case "Folder":
         return this._onDropFolder(doc);
+      default:
+        throw new Error(`Unhandled data type: ${data.type}`);
     }
   }
 
   async _onDropFolder(folder) {
-    if (folder.type !== "Item")
-      return Promise.reject(`Cannot handle folder of ${folder.type}`);
-    const recur = Promise.allSettled(
-      folder.children.map((subFolder) => {
-        return this._onDropFolder(subFolder.folder);
-      })
-    );
-
-    const data = Promise.allSettled(
-      folder.contents.map((item) => {
-        return this._onDropItem(item);
-      })
-    );
-
-    return Promise.all([recur, data]).then(([recur, data]) => {
-      return data.concat(recur);
+    if (folder.type !== "Item") {
+      throw new Error(`Cannot handle folder of ${folder.type}`);
+    }
+    folder.children.forEach(async (subFolder) => {
+      await this._onDropFolder(subFolder.folder);
+    });
+    folder.contents.map(async (item) => {
+      item = await fromUuid(item.uuid);
+      await this._onDropItem(item);
     });
   }
 
@@ -192,8 +198,9 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
         return this.actor.system.addItems([item]);
       case "playbook":
         return this.actor.system.importPlaybook(item);
+      default:
+        throw new Error(`No drop handle for item type: ${item.type}`);
     }
-    return Promise.reject(`no handler for item ${item.name} (${item.type})`);
   }
 
   /**
