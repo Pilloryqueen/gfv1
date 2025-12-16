@@ -79,11 +79,6 @@ export default class PilotSheet extends Gfv1ActorSheet {
     }
   }
 
-  async _prepareContext(options) {
-    const context = await super._prepareContext(options);
-    return context;
-  }
-
   /**
    * Handle adopting a tag as an identity
    *

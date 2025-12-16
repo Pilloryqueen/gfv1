@@ -41,16 +41,19 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
       template: "systems/gfv1/templates/item/description.hbs",
     },
     rules: {
-      template: "systems/gfv1/templates/item/rules.hbs",
+      template: "systems/gfv1/templates/item/partials/rules-list.hbs",
     },
     assets: {
-      template: "systems/gfv1/templates/item/assets.hbs",
+      template: "systems/gfv1/templates/item/partials/assets-list.hbs",
     },
     bonds: {
-      template: "systems/gfv1/templates/item/bonds.hbs",
+      template: "systems/gfv1/templates/item/partials/bonds-list.hbs",
     },
     playFields: {
-      template: "systems/gfv1/templates/item/playFields.hbs",
+      template: "systems/gfv1/templates/item/partials/playFields.hbs",
+    },
+    playbook: {
+      template: "systems/gfv1/templates/item/playbook.hbs",
     },
   };
 
@@ -63,32 +66,23 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
 
     switch (this.item.type) {
       case "playbook":
-        switch (this.item.system.playbookType) {
-          case "framePlaybook":
-            options.parts.push("assets");
-            options.parts.push("rules");
-            break;
-          case "pilotPlaybook":
-            options.parts.push("assets");
-            options.parts.push("bonds");
-            options.parts.push("rules");
-            break;
-          case "handlerPlaybook":
-            options.parts.push("rules");
-            break;
-        }
+        options.parts.push("playbook");
         break;
       case "rule":
         options.parts.push("playFields");
+        break;
     }
   }
 
   /** @inheritDoc */
   async _prepareContext(options) {
-    const context = {
-      config: CONFIG.GFV1,
-    };
+    const context = await super._prepareContext(options);
     await this.item.system.prepareContext(context);
+
+    context.fields = this.document.schema.fields;
+    context.systemFields = this.document.system.schema.fields;
+
+    context.config = CONFIG.GFV1;
     return context;
   }
 
@@ -268,6 +262,7 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
     bonds.splice(index, 1);
     return this.document.update({ system: { bonds } });
   }
+
   static _createAsset(event, target) {
     const assets = this.document.system.assets;
     assets.push(target.dataset.name);

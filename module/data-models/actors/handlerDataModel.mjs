@@ -1,5 +1,5 @@
-import BaseActorDataModel from "./baseActorDataModel.mjs";
-import { Playbook } from "./playbookDataModel.mjs";
+import BaseActorDataModel from "../baseActorDataModel.mjs";
+import { Playbook } from "../items/playbookDataModel.mjs";
 
 const { HTMLField, StringField } = foundry.data.fields;
 
@@ -10,7 +10,7 @@ const schema = {
   _handlerPlaybook: new StringField({ required: true, initial: "No Playbook" }),
 };
 
-export class HandlerDataModel extends BaseActorDataModel {
+export default class HandlerDataModel extends BaseActorDataModel {
   static defineSchema() {
     return schema;
   }

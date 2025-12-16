@@ -1,18 +1,11 @@
 import Gfv1ActorSheet from "../actorSheet.mjs";
 
-export default class HandlerSheet extends Gfv1ActorSheet {
-  static ACTIONS = {};
-
+export default class GorgonSheet extends Gfv1ActorSheet {
   tabs = {
-    main: {
-      icon: "fa-house",
-      group: "primary",
-      label: "GFv1.tab.main",
-    },
-    handler: {
+    gorgon: {
       icon: "fa-venus",
       group: "primary",
-      label: "GFv1.tab.handler",
+      label: "GFv1.tab.gorgon",
     },
   };
 
@@ -27,13 +20,13 @@ export default class HandlerSheet extends Gfv1ActorSheet {
       template: "systems/gfv1/templates/actor/basic-info.hbs",
     },
     // Tabs:
-    main: {
-      template: "systems/gfv1/templates/actor/tabs/main.hbs",
-    },
-    handler: {
-      template: "systems/gfv1/templates/actor/tabs/handler.hbs",
+    gorgon: {
+      template: "systems/gfv1/templates/actor/tabs/gorgon.hbs",
     },
     // Partials:
+    gorgonClass: {
+      template: "systems/gfv1/templates/actor/partials/gorgonClass.hbs",
+    },
     playbook: {
       template: "systems/gfv1/templates/actor/partials/playbook.hbs",
     },
@@ -60,9 +53,17 @@ export default class HandlerSheet extends Gfv1ActorSheet {
     if (this.document.limited) {
       // Any limited view only tabs
     } else {
-      options.defaultTab = "main";
-      options.parts.push("main");
-      options.parts.push("handler");
+      options.defaultTab = "gorgon";
+      options.parts.push("gorgon");
+    }
+  }
+
+  async _onDropItem(item) {
+    switch (item.type) {
+      case "gorgonClass":
+        return this.actor.system.setClass(item);
+      default:
+        return super._onDropItem(item);
     }
   }
 }

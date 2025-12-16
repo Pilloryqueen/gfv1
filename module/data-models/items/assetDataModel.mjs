@@ -1,8 +1,7 @@
-import BaseItemDataModel from "./baseItemDataModel.mjs";
+import BaseItemDataModel from "../baseItemDataModel.mjs";
 import { PlaybookTypeField } from "./playbookDataModel.mjs";
 
 const { BooleanField, HTMLField } = foundry.data.fields;
-
 
 const schema = {
   description: new HTMLField(),
@@ -13,8 +12,10 @@ const schema = {
   void: new BooleanField(),
 };
 
-export class AssetDataModel extends BaseItemDataModel {
+export default class AssetDataModel extends BaseItemDataModel {
   static defineSchema() {
     return schema;
   }
+
+  _properties = ["damaged", "void", "playbookType"];
 }

@@ -8,17 +8,14 @@
   />
   <div class="header-fields">
     <div>
-      <label>{{localize "GFv1.pilot.name"}}</label>
-      <input type="text" name="name" value="{{actor.name}}" />
+      <label>{{localize (concat "GFv1.actor." actor.type ".name")}}</label>
+      {{formInput fields.name value=actor.name}}
     </div>
-    <div>
-      <label>{{localize "GFv1.pilot.pronouns"}}</label>
-      <input
-        type="text"
-        name="system.pronouns"
-        value="{{system.pronouns}}"
-        placeholder="it/its"
-      />
-    </div>
+    {{#if (defined system.pronouns)}}
+      <div>
+        <label>{{localize "GFv1.actor.pronouns"}}</label>
+        {{formInput systemFields.pronouns value=system.pronouns}}
+      </div>
+    {{/if}}
   </div>
 </header>

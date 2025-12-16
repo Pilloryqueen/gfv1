@@ -1,4 +1,4 @@
-export function registerSettings() {
+export default function registerSettings() {
   game.settings.register("gfv1", "showItemImages", {
     name: "GFv1.settings.showItemImages.name",
     hint: "GFv1.settings.showItemImages.hint",

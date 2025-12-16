@@ -1,6 +1,7 @@
-import { DialogHelper } from "../util/dialogHelper.mjs";
-import fromUuid from "../util/uuid.mjs";
-import BaseItemDataModel from "./baseItemDataModel.mjs";
+import BaseItemDataModel from "../baseItemDataModel.mjs";
+import { DialogHelper } from "../../util/dialogHelper.mjs";
+import fromUuid from "../../util/uuid.mjs";
+import { GFV1 } from "../../config.mjs";
 
 const { HTMLField, ArrayField, StringField, DocumentUUIDField } =
   foundry.data.fields;
@@ -14,15 +15,15 @@ export class PlaybookTypeField extends StringField {
   }
 
   static playbookTypes() {
-    return Object.keys(CONFIG.GFV1.playbooks);
+    return GFV1.playbooks;
   }
 
   static defaultPlaybook() {
-    return PlaybookTypeField.playbookTypes()[0];
+    return GFV1.defaultPlaybook;
   }
 }
 
-export class PlaybookDataModel extends BaseItemDataModel {
+export default class PlaybookDataModel extends BaseItemDataModel {
   static defineSchema() {
     return {
       description: new HTMLField(),
@@ -69,6 +70,8 @@ export class PlaybookDataModel extends BaseItemDataModel {
     _rules.splice(index, 1);
     return this.parent.update({ system: { _rules } });
   }
+
+  _properties = ["playbookType"];
 }
 
 export class Playbook {

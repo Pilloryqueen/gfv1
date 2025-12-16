@@ -8,6 +8,7 @@
       "main": "Basic info",
       "pilot": "Pilot view",
       "frame": "Frame view",
+      "gorgon": "Gorgon view",
       "handler": "Handler view"
     },
     "item": {
@@ -36,7 +37,8 @@
         "heat": "Spend heat?",
         "high": "On a 11+",
         "med": "On an 8-10",
-        "low": "On a 7-"
+        "low": "On a 7-",
+        "roll": "Roll"
       },
       "tag": {
         "type": "Tags",
@@ -60,15 +62,26 @@
         "level": "Level",
         "edit": "Edit details",
         "delete": "Remove bond"
+      },
+      "gorgonClass": {
+        "type": "GorgonClass",
+        "apperance": "Apperance",
+        "maxAssets": "Max Assets"
       }
     },
-    "pilot": {
-      "name": "Callsign",
+    "actor": {
+      "pilot": {
+        "name": "Callsign"
+      },
+      "handler": {
+        "name": "Name"
+      },
+      "gorgon": {
+        "name": "Designation"
+      },
       "pronouns": "Pronouns",
       "heat": "Heat",
-      "permissions": "Permissions",
-      "pilotPlaybook": "Pilot Playbook",
-      "framePlaybook": "Frame Playbook"
+      "permissions": "Permissions"
     },
     "settings": {
       "showItemImages": {

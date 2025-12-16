@@ -28,7 +28,7 @@ class Migration {
   }
 }
 
-export async function migrateWorld(oldVersion = "0.0.0") {
+export default async function migrateWorld(oldVersion = "0.0.0") {
   ui.notifications.info(
     `Applying migrations for GIRLFRAME version ${game.system.version}. Please wait...`,
     { permanent: true }
@@ -54,7 +54,7 @@ async function runMigrations(oldVersion) {
 }
 
 // key: the version reached by migration
-export const migrations = {
+const migrations = {
   "0.3.0": new Migration({
     actors: (actor) => {
       if (actor.type === "girl") return actor.update({ type: "pilot" });
