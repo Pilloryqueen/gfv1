@@ -7,6 +7,7 @@ GFV1.bondLevels = {
   high: "GFv1.config.bondLevels.high",
 };
 
+GFV1.defaultPlaybook = "framePlaybook";
 GFV1.playbooks = {
   framePlaybook: "GFv1.config.playbooks.frame",
   pilotPlaybook: "GFv1.config.playbooks.pilot",

@@ -91,7 +91,8 @@
       "playbook": { "htmlFields": ["description"] },
       "tag": { "htmlFields": ["description"] },
       "bond": { "htmlFields": ["description"] },
-      "identity": { "htmlFields": ["description"] }
+      "identity": { "htmlFields": ["description"] },
+      "gorgonClass": { "htmlFields": ["description"] }
     }
   },
   "compatibility": {

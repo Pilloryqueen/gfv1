@@ -1,5 +1,5 @@
-import BaseActorDataModel from "./baseActorDataModel.mjs";
-import { Playbook } from "./playbookDataModel.mjs";
+import BaseActorDataModel from "../baseActorDataModel.mjs";
+import { Playbook } from "../items/playbookDataModel.mjs";
 
 const { BooleanField, HTMLField, NumberField, StringField } =
   foundry.data.fields;
@@ -15,7 +15,7 @@ const schema = {
   _pilotPlaybook: new StringField({ required: true, initial: "No Playbook" }),
 };
 
-export class PilotDataModel extends BaseActorDataModel {
+export default class PilotDataModel extends BaseActorDataModel {
   static defineSchema() {
     return schema;
   }

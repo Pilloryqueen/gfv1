@@ -1,4 +1,4 @@
-import BaseItemDataModel from "./baseItemDataModel.mjs";
+import BaseItemDataModel from "../baseItemDataModel.mjs";
 import { PlaybookTypeField } from "./playbookDataModel.mjs";
 
 const { HTMLField, BooleanField, StringField } = foundry.data.fields;
@@ -16,8 +16,10 @@ const schema = {
   low: new StringField(),
 };
 
-export class RuleDataModel extends BaseItemDataModel {
+export default class RuleDataModel extends BaseItemDataModel {
   static defineSchema() {
     return schema;
   }
+
+  _properties = ["playbookType"];
 }

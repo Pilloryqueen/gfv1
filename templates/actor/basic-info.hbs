@@ -2,13 +2,13 @@
   <div class="flex flexrow">
     {{#if system.heat includeZero=true}}
       <div class="field-heat">
-        <label>{{localize "GFv1.pilot.heat"}}</label>
+        <label>{{localize "GFv1.actor.heat"}}</label>
         {{formInput systemFields.heat value=system.heat}}
       </div>
     {{/if}}
-    {{#if system.heat includeZero=true}}
+    {{#if system.permissions includeZero=true}}
       <div class="field-perm">
-        <label>{{localize "GFv1.pilot.permissions"}}</label>
+        <label>{{localize "GFv1.actor.permissions"}}</label>
         {{formInput systemFields.permissions value=system.permissions}}
       </div>
     {{/if}}

@@ -1,4 +1,4 @@
-import BaseItemDataModel from "./baseItemDataModel.mjs";
+import BaseItemDataModel from "../baseItemDataModel.mjs";
 
 const { HTMLField, BooleanField } = foundry.data.fields;
 
@@ -7,8 +7,10 @@ const schema = {
   description: new HTMLField(),
 };
 
-export class IdentityDataModel extends BaseItemDataModel {
+export default class TagDataModel extends BaseItemDataModel {
   static defineSchema() {
     return schema;
   }
+
+  _properties = ["marked"];
 }

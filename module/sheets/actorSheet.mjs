@@ -37,7 +37,10 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
   }
 
   get title() {
-    return `${this.actor.name} (${this.actor.system.pronouns})`;
+    if (this.actor.system.pronouns) {
+      return `${this.actor.name} (${this.actor.system.pronouns})`;
+    }
+    return this.actor.name;
   }
 
   tabs = {};
