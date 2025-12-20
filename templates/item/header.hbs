@@ -9,7 +9,18 @@
   <div class="header-fields">
     <div>
       <label>{{localize "GFv1.item.name"}}</label>
-      <input type="text" name="name" value="{{item.name}}" />
+      {{formInput fields.name value=item.name disabled=(not editable)}}
     </div>
+    {{#if system.playbookType}}
+      <label>{{localize
+          (concat "GFv1.item." item.type ".playbookType")
+        }}</label>
+      {{formInput
+        systemFields.playbookType
+        value=system.playbookType
+        localize=true
+        disabled=(not editable)
+      }}
+    {{/if}}
   </div>
 </header>

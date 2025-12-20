@@ -17,6 +17,9 @@
 .gfv1.sheet.actor-sheet .basic-info .field-playbook input {
   flex: 80%;
 }
+.gfv1.sheet.actor-sheet .basic-info .edit-btn {
+  padding-left: 16px;
+}
 .gfv1.sheet.actor-sheet .gorgon-class img {
   height: 24px;
   width: 24px;
@@ -45,11 +48,25 @@
   min-height: 200px;
   max-height: 400px;
 }
-.gfv1.sheet.item-sheet .item-properties .item-property {
-  display: flex;
+.gfv1.sheet.item-sheet .items-list {
+  padding: 0;
 }
-.gfv1.sheet.item-sheet .item-properties .item-property label {
-  flex: 40%;
+.gfv1.sheet.item-sheet .items-list .item-img {
+  flex: 5%;
+}
+.gfv1.sheet.item-sheet .items-list .item-img img {
+  height: 24px;
+  width: 24px;
+}
+.gfv1.sheet.item-sheet .items-list .item-name {
+  flex: 50%;
+}
+.gfv1.sheet.item-sheet .items-list .item-props {
+  flex: 35%;
+}
+.gfv1.sheet.item-sheet .items-list .item-controls {
+  flex: 10%;
+  text-align: right;
 }
 .chat-card .roll-result-header {
   font-weight: bold;

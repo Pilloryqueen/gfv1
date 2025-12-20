@@ -1,5 +1,5 @@
 import BaseActorDataModel from "../baseActorDataModel.mjs";
-import { Playbook } from "../items/playbookDataModel.mjs";
+import { Playbook } from "../../sheets/elements/playbook.mjs";
 
 const { HTMLField, StringField } = foundry.data.fields;
 

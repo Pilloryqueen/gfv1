@@ -1,6 +1,11 @@
-import { DialogHelper } from "../util/dialogHelper.mjs";
-import { DocumentHelper } from "../util/documentHelper.mjs";
+import AssetDataModel from "../data-models/items/assetDataModel.mjs";
+import BondDataModel from "../data-models/items/bondDataModel.mjs";
+import IdentityDataModel from "../data-models/items/identityDataModel.mjs";
+import TagDataModel from "../data-models/items/tagDataModel.mjs";
+import DialogHelper from "../util/dialogHelper.mjs";
+import DocumentHelper from "../util/documentHelper.mjs";
 import fromUuid from "../util/uuid.mjs";
+import ItemList from "./elements/itemList.mjs";
 
 const HandlebarsApplicationMixin =
   foundry.applications.api.HandlebarsApplicationMixin;
@@ -20,7 +25,8 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
         createDoc: this._createDoc,
         viewDoc: DocumentHelper.viewDoc,
         deleteDoc: DocumentHelper.deleteDoc,
-        roll: this._roll,
+        makeRoll: this._roll,
+        toggleEdit: this._toggleEdit,
       },
       this.ACTIONS
     );
@@ -32,7 +38,6 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
         submitOnChange: true,
         closeOnSubmit: false,
       },
-      edit: true,
     };
   }
 
@@ -43,6 +48,7 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
     return this.actor.name;
   }
 
+  _locked = true;
   tabs = {};
 
   /** @override */
@@ -54,9 +60,8 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
 
-    context.editable = this.edit;
-    context.owned = this.isOwner;
-    context.limited = this.limited;
+    context.locked = this._locked;
+    context.editable = this.isEditable;
 
     context.actor = this.actor;
     context.system = this.actor.system;
@@ -67,9 +72,10 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
     context.tabs = this._prepareTabs(options.defaultTab);
 
     const items = this.document.itemTypes;
-    context.identities = items.identity;
-    context.tags = items.tag;
-    context.bonds = items.bond;
+    context.assets = new ItemList(AssetDataModel, items.asset);
+    context.identities = new ItemList(IdentityDataModel, items.identity);
+    context.tags = new ItemList(TagDataModel, items.tag);
+    context.bonds = new ItemList(BondDataModel, items.bond);
     return context;
   }
 
@@ -116,7 +122,7 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
     if (name.startsWith("item.")) {
       name = name.replace(/item\./, "");
     } else {
-      console.warn(`Prefer disambiguated name 'item.${name}'`);
+      console.warn(`GFV1 | Prefer disambiguated name 'item.${name}'`);
     }
     const updateData = {};
     updateData[name] = value;
@@ -153,7 +159,6 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
 
   async _onDragStart(event) {
     const data = await DocumentHelper.getItemFromHTML(event.currentTarget);
-    console.log(data);
     event.dataTransfer.setData("text/plain", JSON.stringify(data.toDragData()));
   }
 
@@ -162,11 +167,9 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
   async _onDrop(event, target) {
     if (!this.actor.isOwner) return false; // Cannot drag and drop into other people's sheets
     const data = TextEditor.getDragEventData(event);
-    console.log(data, event, target);
     const doc = await getDocumentClass(data.type).implementation.fromDropData(
       data
     );
-    console.log("Drop:", data);
 
     switch (data.type) {
       case "Item":
@@ -274,6 +277,12 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
     return Item.create(docData, { parent: this.actor });
   }
 
+  static _toggleEdit(event, _target) {
+    event.preventDefault();
+    this._locked = !this._locked;
+    this.render(false);
+  }
+
   /**
    * handles rolling
    *
@@ -283,6 +292,9 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
    * @protected
    */
   static async _roll(_event, target) {
+    if (target.dataset.noItem !== undefined) {
+      return DialogHelper.rollModifierQuery({ actor: this.actor });
+    }
     const item = await DocumentHelper.getItemFromHTML(target);
     DialogHelper.rollModifierQuery({ actor: this.actor, item });
   }

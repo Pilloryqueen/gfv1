@@ -1,4 +1,4 @@
-import { DialogHelper } from "../util/dialogHelper.mjs";
+import DialogHelper from "../util/dialogHelper.mjs";
 
 const TypeDataModel = foundry.abstract.TypeDataModel;
 

@@ -1,7 +1,7 @@
-import { DialogHelper } from "./dialogHelper.mjs";
+import DialogHelper from "./dialogHelper.mjs";
 import fromUuid from "./uuid.mjs";
 
-export class DocumentHelper {
+export default class DocumentHelper {
   /**
    * Fetches the document representing the containing HTML element
    *

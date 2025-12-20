@@ -8,9 +8,10 @@ const schema = {
 };
 
 export default class TagDataModel extends BaseItemDataModel {
+  static type = "tag";
   static defineSchema() {
     return schema;
   }
-
-  _properties = ["marked"];
+  static itemListProperties = ["marked"];
+  _properties = ["marked"]
 }

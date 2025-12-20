@@ -2,15 +2,14 @@ import BaseItemDataModel from "../baseItemDataModel.mjs";
 
 const { HTMLField, BooleanField } = foundry.data.fields;
 
-const schema = {
-  marked: new BooleanField({ required: true, initial: false }),
-  description: new HTMLField(),
-};
-
 export default class IdentityDataModel extends BaseItemDataModel {
+  static type = "identity";
   static defineSchema() {
-    return schema;
+    return {
+      marked: new BooleanField({ required: true, initial: false }),
+      description: new HTMLField(),
+    };
   }
-
+  static itemListProperties = ["marked"];
   _properties = ["marked"];
 }

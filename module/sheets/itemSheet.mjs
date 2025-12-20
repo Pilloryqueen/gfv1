@@ -1,4 +1,6 @@
-import { DocumentHelper } from "../util/documentHelper.mjs";
+import RuleDataModel from "../data-models/items/ruleDataModel.mjs";
+import DocumentHelper from "../util/documentHelper.mjs";
+import ItemList from "./elements/itemList.mjs";
 
 const HandlebarsApplicationMixin =
   foundry.applications.api.HandlebarsApplicationMixin;
@@ -24,6 +26,7 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
       deleteDoc: DocumentHelper.deleteDoc,
       removeRule: this._removeRule,
     },
+    edit: true,
   };
 
   get title() {
@@ -40,20 +43,11 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
     description: {
       template: "systems/gfv1/templates/item/description.hbs",
     },
-    rules: {
-      template: "systems/gfv1/templates/item/partials/rules-list.hbs",
-    },
-    assets: {
-      template: "systems/gfv1/templates/item/partials/assets-list.hbs",
-    },
-    bonds: {
-      template: "systems/gfv1/templates/item/partials/bonds-list.hbs",
-    },
-    playFields: {
-      template: "systems/gfv1/templates/item/partials/playFields.hbs",
-    },
     playbook: {
       template: "systems/gfv1/templates/item/playbook.hbs",
+    },
+    playFields: {
+      template: "systems/gfv1/templates/item/playFields.hbs",
     },
   };
 
@@ -79,6 +73,8 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
     const context = await super._prepareContext(options);
     await this.item.system.prepareContext(context);
 
+    context.editable = this.isEditable;
+
     context.fields = this.document.schema.fields;
     context.systemFields = this.document.system.schema.fields;
 
@@ -99,6 +95,9 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
           }
         );
         break;
+      case "playbook":
+        const rules = await this.item.system.getRules();
+        context.rules = new ItemList(RuleDataModel, rules);
     }
     return context;
   }
@@ -140,10 +139,11 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
     if (name.startsWith("item.")) {
       name = name.replace(/item\./, "");
     } else {
-      console.warn(`Prefer disambiguated name 'item.${name}'`);
+      console.warn(`GFV1 | Prefer disambiguated name 'item.${name}'`);
     }
     const updateData = {};
     updateData[name] = value;
+    console.log("updating");
     return item.update(updateData);
   }
 
@@ -169,7 +169,6 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
     const doc = await getDocumentClass(data.type).implementation.fromDropData(
       data
     );
-    console.log("Drop:", data);
 
     switch (data.type) {
       case "Item":

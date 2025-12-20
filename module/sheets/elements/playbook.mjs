@@ -1,0 +1,34 @@
+import AssetDataModel from "../../data-models/items/assetDataModel.mjs";
+import RuleDataModel from "../../data-models/items/ruleDataModel.mjs";
+import { preloadedTemplates } from "../../handlebars/preload.mjs";
+import ItemList from "./itemList.mjs";
+
+export class Playbook {
+  constructor(parent, type, itemTypes) {
+    this.name = parent.system[`_${type}`];
+    this.playbookType = type;
+    const filter = (item) => {
+      return item.system.playbookType === type;
+    };
+    for (const k in itemTypes) {
+      this[k] = parent.itemTypes[itemTypes[k]].filter(filter);
+    }
+  }
+
+  render({ locked, item, maxAssets, editable }) {
+    const rules = edit
+      ? this.rules
+      : this.rules.filter((item) => item.system.locked === false);
+    const context = {
+      rules: new ItemList(RuleDataModel, rules),
+      assets: new ItemList(AssetDataModel, this.assets),
+      name: this.name,
+      playbookType: this.playbookType,
+      locked,
+      item,
+      maxAssets,
+      editable,
+    };
+    return preloadedTemplates.playbook(context);
+  }
+}

@@ -1,0 +1,27 @@
+<section>
+  <ol class="items-list">
+    <li class="flexrow items-header">
+      <div class="item-img">
+      </div>
+      <div class="item-name">
+        {{name}}
+        {{#if max}}
+          <span class="item-count">
+            ({{items.length}}/{{max}})
+          </span>
+        {{/if}}
+      </div>
+      <div class="item-props flexrow">
+        {{#each properties as |property|}}
+          <div class="item-prop">{{property}}</div>
+        {{/each}}
+      </div>
+      <div class="item-controls">
+        {{#if editable}}
+          {{#if (not locked)}}{{render createDoc}}{{/if}}
+        {{/if}}
+      </div>
+    </li>
+    {{#each items as |item|}}{{render item}}{{/each}}
+  </ol>
+</section>

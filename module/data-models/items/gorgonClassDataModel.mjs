@@ -1,8 +1,9 @@
 import BaseItemDataModel from "../baseItemDataModel.mjs";
 
-const { HTMLField, StringField, NumberField, ArrayField } = foundry.data.fields;
+const { HTMLField, StringField, NumberField } = foundry.data.fields;
 
 export default class GorgonClassDataModel extends BaseItemDataModel {
+  static type = "gorgonClass";
   static defineSchema() {
     return {
       description: new HTMLField(),
@@ -15,6 +16,4 @@ export default class GorgonClassDataModel extends BaseItemDataModel {
       }),
     };
   }
-
-  _properties = ["apperance", "maxAssets"];
 }

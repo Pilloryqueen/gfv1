@@ -1,8 +1,13 @@
 <section class="item-properties">
   {{#each item.system.properties as |property|}}
-  <div class="item-property">
-    <label>{{localize property.label}}</label>
-    {{formInput property.field value=property.value localize=true}}
-  </div>
+    <div class="item-property">
+      <label>{{property.label}}</label>
+      {{formInput
+        property.field
+        value=property.value
+        localize=true
+        disabled=(not editable)
+      }}
+    </div>
   {{/each}}
 </section>

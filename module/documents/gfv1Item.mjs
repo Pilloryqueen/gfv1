@@ -1,1 +1,2 @@
-export default class Gfv1Actor extends Item {}
+export default class GFv1Item extends Item {
+}

@@ -1,7 +1,7 @@
 import BaseActorDataModel from "../baseActorDataModel.mjs";
-import { Playbook } from "../items/playbookDataModel.mjs";
+import { Playbook } from "../../sheets/elements/playbook.mjs";
 
-const { HTMLField, StringField, DocumentUUIDField } = foundry.data.fields;
+const { HTMLField, StringField } = foundry.data.fields;
 
 const schema = {
   bio: new HTMLField(),
