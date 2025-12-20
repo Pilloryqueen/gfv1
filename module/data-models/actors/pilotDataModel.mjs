@@ -1,5 +1,5 @@
 import BaseActorDataModel from "../baseActorDataModel.mjs";
-import { Playbook } from "../items/playbookDataModel.mjs";
+import { Playbook } from "../../sheets/elements/playbook.mjs";
 
 const { BooleanField, HTMLField, NumberField, StringField } =
   foundry.data.fields;
@@ -40,7 +40,7 @@ export default class PilotDataModel extends BaseActorDataModel {
     return playbook;
   }
 
-  async adoptTag(item) {
+  async embraceTag(item) {
     if (item.parent !== this.parent) {
       throw new Error(
         `${this.name} (id: ${this.id}) is not parent of ${item.id} (parent.id: ${item.parent?.id})`

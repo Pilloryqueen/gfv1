@@ -23,28 +23,6 @@ export default class GorgonSheet extends Gfv1ActorSheet {
     gorgon: {
       template: "systems/gfv1/templates/actor/tabs/gorgon.hbs",
     },
-    // Partials:
-    gorgonClass: {
-      template: "systems/gfv1/templates/actor/partials/gorgonClass.hbs",
-    },
-    playbook: {
-      template: "systems/gfv1/templates/actor/partials/playbook.hbs",
-    },
-    rules: {
-      template: "systems/gfv1/templates/actor/partials/rules-list.hbs",
-    },
-    assets: {
-      template: "systems/gfv1/templates/actor/partials/assets-list.hbs",
-    },
-    identities: {
-      template: "systems/gfv1/templates/actor/partials/identities-list.hbs",
-    },
-    tags: {
-      template: "systems/gfv1/templates/actor/partials/tags-list.hbs",
-    },
-    bonds: {
-      template: "systems/gfv1/templates/actor/partials/bonds-list.hbs",
-    },
   };
 
   _configureRenderOptions(options) {

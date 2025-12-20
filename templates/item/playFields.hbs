@@ -1,0 +1,28 @@
+<section>
+  <label>{{localize "GFv1.item.rule.locked"}}</label>
+  {{formInput systemFields.locked value=system.locked disabled=(not editable)}}
+  <label>{{localize "GFv1.item.rule.play"}}</label>
+  {{formInput systemFields.play value=system.play disabled=(not editable)}}
+  {{#if (eq system.play true)}}
+    <label>{{localize "GFv1.item.rule.heat"}}</label>
+    {{formInput systemFields.heat value=system.heat disabled=(not editable)}}
+    <div class="play-fields">
+      <div>
+        <label>{{localize "GFv1.item.rule.med"}}</label>
+        {{formInput systemFields.med value=system.med disabled=(not editable)}}
+      </div>
+      <div>
+        <label>{{localize "GFv1.item.rule.high"}}</label>
+        {{formInput
+          systemFields.high
+          value=system.high
+          disabled=(not editable)
+        }}
+      </div>
+      <div>
+        <label>{{localize "GFv1.item.rule.low"}}</label>
+        {{formInput systemFields.low value=system.low disabled=(not editable)}}
+      </div>
+    </div>
+  {{/if}}
+</section>

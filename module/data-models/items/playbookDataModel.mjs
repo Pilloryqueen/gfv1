@@ -1,29 +1,13 @@
 import BaseItemDataModel from "../baseItemDataModel.mjs";
-import { DialogHelper } from "../../util/dialogHelper.mjs";
+import DialogHelper from "../../util/dialogHelper.mjs";
 import fromUuid from "../../util/uuid.mjs";
-import { GFV1 } from "../../config.mjs";
+import PlaybookTypeField from "../fields/playbookTypeField.mjs";
 
 const { HTMLField, ArrayField, StringField, DocumentUUIDField } =
   foundry.data.fields;
 
-export class PlaybookTypeField extends StringField {
-  constructor(options) {
-    options.initial = PlaybookTypeField.defaultPlaybook;
-    options.choices = PlaybookTypeField.playbookTypes;
-
-    return super(options);
-  }
-
-  static playbookTypes() {
-    return GFV1.playbooks;
-  }
-
-  static defaultPlaybook() {
-    return GFV1.defaultPlaybook;
-  }
-}
-
 export default class PlaybookDataModel extends BaseItemDataModel {
+  static type = "playbook";
   static defineSchema() {
     return {
       description: new HTMLField(),
@@ -69,20 +53,5 @@ export default class PlaybookDataModel extends BaseItemDataModel {
     const _rules = this._rules;
     _rules.splice(index, 1);
     return this.parent.update({ system: { _rules } });
-  }
-
-  _properties = ["playbookType"];
-}
-
-export class Playbook {
-  constructor(item, type, itemTypes) {
-    this.name = item.system[`_${type}`];
-    this.playbookType = type;
-    const filter = (item) => {
-      return item.system.playbookType === type;
-    };
-    for (const k in itemTypes) {
-      this[k] = item.itemTypes[itemTypes[k]].filter(filter);
-    }
   }
 }

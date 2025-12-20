@@ -44,11 +44,11 @@
         "type": "Tags",
         "marked": "Marked?",
         "edit": "Edit details",
-        "accept": "Adopt tag as identity",
+        "embrace": "Embrace tag as identity",
         "delete": "Reject tag",
         "adopt": {
-          "title": "Adopt tag?",
-          "content": "Are you sure you want to adopt this tag as a new identity?"
+          "title": "Embrace tag?",
+          "content": "Are you sure you want to embrace this tag as a new identity?"
         }
       },
       "identity": {
@@ -133,6 +133,10 @@
         "abort": "Do not import",
         "continue": "Import anyway"
       }
+    },
+    "edit": {
+      "lock": "Lock sheet",
+      "unlock": "Unlock sheet"
     }
   }
 }

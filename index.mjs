@@ -17,6 +17,8 @@ import Gfv1ItemSheet from "./module/sheets/itemSheet.mjs";
 import { GFV1 } from "./module/config.mjs";
 import registerSettings from "./module/settings.mjs";
 import migrateWorld from "./module/migration.mjs";
+import registerHelpers from "./module/handlebars/helpers.mjs";
+import preloadTemplates from "./module/handlebars/preload.mjs";
 
 Hooks.once("init", async () => {
   console.log("GFV1 | Initializing Girlframe System");
@@ -24,12 +26,12 @@ Hooks.once("init", async () => {
 
   registerSettings();
 
-  CONFIG.Actor.DocumentClass = Gfv1Actor;
+  CONFIG.Actor.documentClass = Gfv1Actor;
   CONFIG.Actor.dataModels.gorgon = GorgonDataModel;
   CONFIG.Actor.dataModels.handler = HandlerDataModel;
   CONFIG.Actor.dataModels.pilot = PilotDataModel;
 
-  CONFIG.Item.DocumentClass = Gfv1Item;
+  CONFIG.Item.documentClass = Gfv1Item;
   CONFIG.Item.dataModels.asset = AssetDataModel;
   CONFIG.Item.dataModels.bond = BondDataModel;
   CONFIG.Item.dataModels.gorgonClass = GorgonClassDataModel;
@@ -44,7 +46,8 @@ Hooks.once("init", async () => {
   console.log("GFV1 | System Init Completed");
 });
 
-Hooks.once("ready", () => {
+Hooks.once("ready", async () => {
+  await preloadTemplates();
   if (game.user.isGM) {
     checkMigratons();
   }
@@ -81,28 +84,5 @@ function registerSheets() {
   Items.registerSheet("gfv1", Gfv1ItemSheet, {
     makeDefault: true,
     label: "GFV1.sheets.itemSheet",
-  });
-}
-
-function registerHelpers() {
-  Handlebars.registerHelper("list", function (...a) {
-    a.pop();
-    return a;
-  });
-
-  Handlebars.registerHelper("settings", function (namespace, key) {
-    return game.settings.get(namespace, key);
-  });
-
-  Handlebars.registerHelper("config", function (key) {
-    return CONFIG.GFV1[key];
-  });
-
-  Handlebars.registerHelper("defined", function (val) {
-    return val !== undefined && val !== null;
-  });
-
-  Handlebars.registerHelper("define", function (name, val) {
-    this[name] = val;
   });
 }

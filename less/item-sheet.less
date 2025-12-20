@@ -8,10 +8,29 @@
   }
   .item-properties {
     .item-property {
-      display: flex;
       label {
-        flex: 40%;
       }
+    }
+  }
+
+  .items-list {
+    padding: 0;
+    .item-img {
+      flex: 5%;
+      img {
+        height: 24px;
+        width: 24px;
+      }
+    }
+    .item-name {
+      flex: 50%;
+    }
+    .item-props {
+      flex: 35%;
+    }
+    .item-controls {
+      flex: 10%;
+      text-align: right;
     }
   }
 }

@@ -6,16 +6,22 @@ export default class BaseItemDataModel extends TypeDataModel {
     context.system = this;
   }
 
-  _properties = [];
+  // define which properites to use in lists of this type
+  static itemListProperties = [];
 
+  static get label() {
+    return this.propertyLabel("type");
+  }
+
+  static propertyLabel(property) {
+    return game.i18n.localize(`GFv1.item.${this.type}.${property}`);
+  }
+
+  _properties = [];
   get properties() {
-    const properties = {};
-    for (let p of this._properties) {
-      properties[p] = `GFv1.item.${this.parent.type}.${p}`;
-    }
     return this._properties.map((p) => {
       return {
-        label: `GFv1.item.${this.parent.type}.${p}`,
+        label: game.i18n.localize(`GFv1.item.${this.parent.type}.${p}`),
         field: this.schema.fields[p],
         value: this[p],
       };

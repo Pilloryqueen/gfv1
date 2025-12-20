@@ -3,7 +3,7 @@
   data-tab="{{tab.id}}"
   data-group="{{tab.group}}"
 >
-  {{> "systems/gfv1/templates/actor/partials/identities-list.hbs"}}
-  {{> "systems/gfv1/templates/actor/partials/tags-list.hbs"}}
-  {{> "systems/gfv1/templates/actor/partials/bonds-list.hbs"}}
+  {{render identities max=4}}
+  {{render tags}}
+  {{render bonds}}
 </section>

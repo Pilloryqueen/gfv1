@@ -1,7 +1,7 @@
 import { GFV1 } from "../config.mjs";
 import BasicRoll from "../rolls/basicRoll.mjs";
 
-export class DialogHelper {
+export default class DialogHelper {
   static async confirmAdopt() {
     return this._promptConfirm({
       title: game.i18n.localize("GFv1.item.tag.adopt.title"),
@@ -91,7 +91,6 @@ export class DialogHelper {
   }
 
   static async rollModifierQuery({ item, actor }) {
-    console.log(item);
     if (!actor) {
       actor = item.actor;
       if (!actor) throw Error("Who's rolling?!");
