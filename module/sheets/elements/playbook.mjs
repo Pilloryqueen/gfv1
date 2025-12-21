@@ -15,19 +15,19 @@ export class Playbook {
     }
   }
 
-  render({ locked, item, maxAssets, editable }) {
-    const rules = edit
-      ? this.rules
-      : this.rules.filter((item) => item.system.locked === false);
+  render({ locked, maxAssets, editable, actor }) {
+    const rules = locked
+      ? this.rules.filter((item) => item.system.locked === false)
+      : this.rules;
     const context = {
       rules: new ItemList(RuleDataModel, rules),
       assets: new ItemList(AssetDataModel, this.assets),
       name: this.name,
       playbookType: this.playbookType,
       locked,
-      item,
       maxAssets,
       editable,
+      actor,
     };
     return preloadedTemplates.playbook(context);
   }

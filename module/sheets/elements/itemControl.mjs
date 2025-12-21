@@ -32,7 +32,7 @@ export const createDoc = new ItemControl({
       "system.playbook-type": playbookType,
     };
   },
-  shouldRender: ({ editable }) => editable,
+  shouldRender: ({ editable, actor }) => editable && actor,
 });
 
 export const viewDoc = new ItemControl({

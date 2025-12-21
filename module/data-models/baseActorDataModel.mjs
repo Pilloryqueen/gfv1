@@ -4,53 +4,50 @@ const TypeDataModel = foundry.abstract.TypeDataModel;
 
 export default class BaseActorDataModel extends TypeDataModel {
   async addItems(items) {
-    this.parent.createEmbeddedDocuments("Item", items);
-  }
-
-  async createAssets(names, playbook) {
-    if (names.length === 0) return;
-    const selectedNames = await DialogHelper.selectImport(names, "assets");
-    return Promise.all(
-      selectedNames.map((name) => {
-        return Item.create(
-          {
-            name,
-            type: "asset",
-            "system.playbookType": playbook.system.playbookType,
-          },
-          { parent: this.parent }
-        );
-      })
-    );
-  }
-
-  async createBonds(names) {
-    if (names.length === 0) return;
-    const selectedNames = await DialogHelper.selectImport(names, "bonds");
-    return Promise.all(
-      selectedNames.map((name) => {
-        return Item.create({ name, type: "bond" }, { parent: this.parent });
-      })
-    );
+    if (!Array.isArray(items)) {
+      console.warn("addItems should be called with an array. Got:", items);
+      items = [items];
+    }
+    if (items.some((item) => !this.allowedPlaybook(item))) {
+      throw new Error(
+        `Cannot import ${items.map((i) => i.name)} into ${
+          this.parent.type
+        }, allowed playbooks: ${this.allowedPlaybookTypes}`
+      );
+    }
+    return this.parent.createEmbeddedDocuments("Item", items);
   }
 
   allowedPlaybookTypes = [];
+  allowedPlaybook(item, strict = false) {
+    if (item.system.playbookType === undefined) return !strict;
+    return this.allowedPlaybookTypes.includes(item.system.playbookType);
+  }
+
   async importPlaybook(item) {
     if (!item.type === "playbook") {
       throw new Error(`Expected playbook got ${item.type}`);
     }
-    if (!this.allowedPlaybookTypes.includes(item.system.playbookType)) {
+    if (!this.allowedPlaybook(item, true)) {
       throw new Error(
         `Cannot import ${item.system.playbookType} into ${this.parent.type}, allowed playbooks: ${this.allowedPlaybookTypes}`
       );
     }
-    await this.createAssets(item.system.assets, item);
+    const itemTypes = await item.system.getItemTypes();
+    await this.importItems("assets", itemTypes.asset);
+    await this.importItems("bonds", itemTypes.bond);
+    await this.importItems("identities", itemTypes.identity, true);
+    await this.importItems("rules", itemTypes.rule, true);
 
-    if (item.system.bonds) await this.createBonds(item.system.bonds);
-    this.addItems(await item.system.getRules());
     const system = {};
     system[`_${item.system.playbookType}`] = item.name;
     return this.parent.update({ system });
+  }
+
+  async importItems(type, items, preSelected = false) {
+    if (items.length === 0) return;
+    const selected = await DialogHelper.selectImport(items, type, preSelected);
+    return this.addItems(selected);
   }
 
   /**
