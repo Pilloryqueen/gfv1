@@ -5,7 +5,8 @@
     name="playbook.name"
     value="{{name}}"
     placeholder="playbook name"
-    {{disabled (locked) || (!editable)}}
+    {{disabled locked}}
+    {{disabled (not editable)}}
   />
   {{render rules}}
   {{render assets max=maxAssets}}

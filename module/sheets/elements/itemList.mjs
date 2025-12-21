@@ -8,7 +8,11 @@ export default class ItemList {
     this.dataModel = dataModel;
   }
 
-  render({ locked, max, playbookType, editable }) {
+  get empty() {
+    return this.items.length === 0;
+  }
+
+  render({ locked, max, playbookType, editable, actor }) {
     const context = {
       name: this.dataModel.label,
       items: this.items.map((item) => new ItemEntry(this.dataModel, item)),
@@ -21,6 +25,7 @@ export default class ItemList {
       max,
       playbookType,
       editable,
+      actor,
     };
     return preloadedTemplates.itemList(context);
   }

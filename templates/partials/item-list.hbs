@@ -17,9 +17,7 @@
         {{/each}}
       </div>
       <div class="item-controls">
-        {{#if editable}}
-          {{#if (not locked)}}{{render createDoc}}{{/if}}
-        {{/if}}
+        {{render createDoc}}
       </div>
     </li>
     {{#each items as |item|}}{{render item}}{{/each}}

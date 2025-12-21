@@ -1,6 +1,4 @@
-import RuleDataModel from "../data-models/items/ruleDataModel.mjs";
 import DocumentHelper from "../util/documentHelper.mjs";
-import ItemList from "./elements/itemList.mjs";
 
 const HandlebarsApplicationMixin =
   foundry.applications.api.HandlebarsApplicationMixin;
@@ -18,13 +16,8 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
     },
     actions: {
       editImage: this._onEditImage,
-      createBond: this._createBond,
-      deleteBond: this._deleteBond,
-      createAsset: this._createAsset,
-      deleteAsset: this._deleteAsset,
       viewDoc: DocumentHelper.viewDoc,
-      deleteDoc: DocumentHelper.deleteDoc,
-      removeRule: this._removeRule,
+      deleteDoc: this._deleteRef, // We only want to delete the reference not the doc itself
     },
     edit: true,
   };
@@ -95,9 +88,6 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
           }
         );
         break;
-      case "playbook":
-        const rules = await this.item.system.getRules();
-        context.rules = new ItemList(RuleDataModel, rules);
     }
     return context;
   }
@@ -106,13 +96,6 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
   _onRender(context, options) {
     this.element.querySelectorAll(".item-input").forEach((d) => {
       d.addEventListener("change", this._onResourceChange.bind(this));
-    });
-
-    this.element.querySelectorAll(".bond-name").forEach((d) => {
-      d.addEventListener("change", this._renameBond.bind(this));
-    });
-    this.element.querySelectorAll(".asset-name").forEach((d) => {
-      d.addEventListener("change", this._renameAsset.bind(this));
     });
 
     new DragDrop({
@@ -191,12 +174,7 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
   }
 
   async _onDropItem(item) {
-    switch (item.type) {
-      case "rule":
-        return this.item.system.addRule(item.uuid);
-      default:
-        throw new Error(`No drop handle for item type: ${item.type}`);
-    }
+    return this.item.system.addRef(item.uuid);
   }
 
   /**
@@ -240,52 +218,8 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
     await fp.browse();
   }
 
-  static _createBond(event, target) {
-    const bonds = this.document.system.bonds;
-    bonds.push(target.dataset.name);
-    this.document.update({ system: { bonds } });
-  }
-
-  async _renameBond(event) {
-    event.preventDefault();
-    const target = event.target;
-    const index = target.closest("li[data-index]").dataset.index;
-    const bonds = this.document.system.bonds;
-    bonds[index] = target.value;
-    return this.document.update({ system: { bonds } });
-  }
-
-  static _deleteBond(event, target) {
-    const index = target.closest("li[data-index]").dataset.index;
-    const bonds = this.document.system.bonds;
-    bonds.splice(index, 1);
-    return this.document.update({ system: { bonds } });
-  }
-
-  static _createAsset(event, target) {
-    const assets = this.document.system.assets;
-    assets.push(target.dataset.name);
-    this.document.update({ system: { assets } });
-  }
-
-  async _renameAsset(event) {
-    event.preventDefault();
-    const target = event.target;
-    const index = target.closest("li[data-index]").dataset.index;
-    const assets = this.document.system.assets;
-    assets[index] = target.value;
-    return this.document.update({ system: { assets } });
-  }
-
-  static _deleteAsset(event, target) {
-    const index = target.closest("li[data-index]").dataset.index;
-    const assets = this.document.system.assets;
-    assets.splice(index, 1);
-    return this.document.update({ system: { assets } });
-  }
-
-  static async _removeRule(event, target) {
-    const index = target.closest("li[data-index]").dataset.index;
-    this.document.system.deleteRule(index);
+  static async _deleteRef(evet, target) {
+    const uuid = DocumentHelper.getItemUuidFromHTML(target);
+    return this.item.system.deleteRef(uuid);
   }
 }

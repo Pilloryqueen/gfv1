@@ -9,9 +9,13 @@ export default class DocumentHelper {
    * @returns {Promise<Item>}       The referenced Item if found
    */
   static async getItemFromHTML(target) {
-    const uuid = target.closest("li[data-item-uuid]")?.dataset.itemUuid;
+    const uuid = this.getItemUuidFromHTML(target);
     if (!uuid) throw `Expected an item-uuid on ${target.closest("li")}`;
     return fromUuid(uuid);
+  }
+
+  static getItemUuidFromHTML(target) {
+    return target.closest("li[data-item-uuid]")?.dataset.itemUuid;
   }
 
   /**

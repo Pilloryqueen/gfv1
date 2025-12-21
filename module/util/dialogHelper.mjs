@@ -9,10 +9,11 @@ export default class DialogHelper {
     });
   }
 
-  static async selectImport(names, type) {
+  //
+  static async selectImport(items, type, preSelected = false) {
     const content = await renderTemplate(
       "systems/gfv1/templates/dialog/select.hbs",
-      { names, type }
+      { items, preSelected }
     );
     try {
       return await foundry.applications.api.DialogV2.prompt({
@@ -26,7 +27,7 @@ export default class DialogHelper {
           callback: (event, button, dialog) => {
             return Array.from(button.form.elements)
               .filter((e) => e.checked)
-              .map((e) => e.value);
+              .map((e) => items[e.value]);
           },
         },
       });

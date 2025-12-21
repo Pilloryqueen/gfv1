@@ -21,7 +21,7 @@
       "private": false,
       "flags": {
         "gfv1": {
-          "types": ["playbook", "rule"]
+          "playbookType": "framePlaybook"
         }
       }
     },
@@ -34,7 +34,7 @@
       "private": false,
       "flags": {
         "gfv1": {
-          "types": ["playbook", "rule", "identity"]
+          "playbookType": "pilotPlaybook"
         }
       }
     },
@@ -47,7 +47,7 @@
       "private": true,
       "flags": {
         "gfv1": {
-          "types": ["playbook", "rule"]
+          "playbookType": "handlerPlaybook"
         }
       }
     },
@@ -59,9 +59,7 @@
       "type": "Item",
       "private": true,
       "flags": {
-        "gfv1": {
-          "types": ["playbook", "rule"]
-        }
+        "gfv1": {}
       }
     }
   ],

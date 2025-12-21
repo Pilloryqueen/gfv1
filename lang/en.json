@@ -17,7 +17,8 @@
       "playbook": {
         "name": "Playbook",
         "edit": "Edit playbook",
-        "playbookType": "Playbook type"
+        "playbookType": "Playbook type",
+        "dragMoreItems": "Drag in some items to make your playbook"
       },
       "asset": {
         "type": "Assets",

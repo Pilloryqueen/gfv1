@@ -2,9 +2,13 @@ import BaseItemDataModel from "../baseItemDataModel.mjs";
 import DialogHelper from "../../util/dialogHelper.mjs";
 import fromUuid from "../../util/uuid.mjs";
 import PlaybookTypeField from "../fields/playbookTypeField.mjs";
+import RuleDataModel from "./ruleDataModel.mjs";
+import ItemList from "../../sheets/elements/itemList.mjs";
+import BondDataModel from "./bondDataModel.mjs";
+import AssetDataModel from "./assetDataModel.mjs";
+import IdentityDataModel from "./identityDataModel.mjs";
 
-const { HTMLField, ArrayField, StringField, DocumentUUIDField } =
-  foundry.data.fields;
+const { HTMLField, ArrayField, DocumentUUIDField } = foundry.data.fields;
 
 export default class PlaybookDataModel extends BaseItemDataModel {
   static type = "playbook";
@@ -14,15 +18,7 @@ export default class PlaybookDataModel extends BaseItemDataModel {
       playbookType: new PlaybookTypeField({
         required: true,
       }),
-      bonds: new ArrayField(new StringField({ required: true }), {
-        required: true,
-        initial: [],
-      }),
-      assets: new ArrayField(new StringField({ required: true }), {
-        required: true,
-        initial: [],
-      }),
-      _rules: new ArrayField(new DocumentUUIDField({ required: true }), {
+      items: new ArrayField(new DocumentUUIDField({ required: true }), {
         required: true,
         initial: [],
       }),
@@ -31,27 +27,53 @@ export default class PlaybookDataModel extends BaseItemDataModel {
 
   async prepareContext(context) {
     await super.prepareContext(context);
-
-    context.rules = await this.getRules();
+    context.items = await this.getItems();
+    const itemTyps = await this.getItemTypes();
+    context.rules = new ItemList(RuleDataModel, itemTyps.rule);
+    context.assets = new ItemList(AssetDataModel, itemTyps.asset);
+    context.bonds = new ItemList(BondDataModel, itemTyps.bond);
+    context.identities = new ItemList(IdentityDataModel, itemTyps.identity);
   }
 
-  async getRules() {
-    return Promise.all(this._rules.map((uuid) => fromUuid(uuid)));
-  }
-
-  async addRule(uuid) {
-    const rule = await fromUuid(uuid);
-    if (rule.system.playbookType !== this.playbookType) {
-      await DialogHelper.warn_playbook_import(rule, this.parent);
+  async getItemTypes() {
+    const items = await this.getItems();
+    const itemTypes = {
+      rule: [],
+      asset: [],
+      bond: [],
+      identity: [],
+    };
+    for (const i of items) {
+      itemTypes[i.type].push(i);
     }
-    const _rules = this._rules;
-    _rules.push(rule.uuid);
-    return this.parent.update({ system: { _rules } });
+    return itemTypes;
   }
 
-  async deleteRule(index) {
-    const _rules = this._rules;
-    _rules.splice(index, 1);
-    return this.parent.update({ system: { _rules } });
+  async getItems() {
+    return await Promise.all(this.items.map((uuid) => fromUuid(uuid)));
+  }
+
+  async addRef(uuid) {
+    const item = await fromUuid(uuid);
+    if (!["rule", "asset", "bond", "identity"].includes(item.type))
+      throw new Error(`Playbook doesn't currently support ${item.type}`);
+    if (
+      item.system.playbookType !== undefined &&
+      item.system.playbookType !== this.playbookType
+    ) {
+      await DialogHelper.warn_playbook_import(item, this.parent);
+    }
+    const items = this.items;
+    items.push(uuid);
+    return this.parent.update({ system: { items } });
+  }
+
+  async deleteRef(uuid) {
+    const index = this.items.indexOf(uuid);
+    if (index === -1)
+      throw new Error(`Cannot delete ${uuid} from playbook. Not Found`);
+    const items = this.items;
+    items.splice(index, 1);
+    return this.parent.update({ system: { items } });
   }
 }
