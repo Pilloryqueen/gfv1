@@ -59,23 +59,16 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
   /** @inheritDoc */
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
+    await this.document.system.prepareContext(context);
 
     context.locked = this._locked;
     context.editable = this.isEditable;
-
-    context.actor = this.actor;
-    context.system = this.actor.system;
 
     context.fields = this.document.schema.fields;
     context.systemFields = this.document.system.schema.fields;
 
     context.tabs = this._prepareTabs(options.defaultTab);
 
-    const items = this.document.itemTypes;
-    context.assets = new ItemList(AssetDataModel, items.asset);
-    context.identities = new ItemList(IdentityDataModel, items.identity);
-    context.tags = new ItemList(TagDataModel, items.tag);
-    context.bonds = new ItemList(BondDataModel, items.bond);
     return context;
   }
 

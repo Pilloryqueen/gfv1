@@ -1,8 +1,24 @@
+import ItemList from "../sheets/elements/itemList.mjs";
 import DialogHelper from "../util/dialogHelper.mjs";
+import AssetDataModel from "./items/assetDataModel.mjs";
+import BondDataModel from "./items/bondDataModel.mjs";
+import IdentityDataModel from "./items/identityDataModel.mjs";
+import TagDataModel from "./items/tagDataModel.mjs";
 
 const TypeDataModel = foundry.abstract.TypeDataModel;
 
 export default class BaseActorDataModel extends TypeDataModel {
+  async prepareContext(context) {
+    context.actor = this.parent;
+    context.system = this;
+
+    const items = this.parent.itemTypes;
+    context.assets = new ItemList(AssetDataModel, items.asset);
+    context.identities = new ItemList(IdentityDataModel, items.identity);
+    context.tags = new ItemList(TagDataModel, items.tag);
+    context.bonds = new ItemList(BondDataModel, items.bond);
+  }
+
   async addItems(items) {
     if (!Array.isArray(items)) {
       console.warn("addItems should be called with an array. Got:", items);

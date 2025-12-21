@@ -1,5 +1,6 @@
 import BaseActorDataModel from "../baseActorDataModel.mjs";
-import { Playbook } from "../../sheets/elements/playbook.mjs";
+import Playbook from "../../sheets/elements/playbook.mjs";
+import GorgonClass from "../../sheets/elements/gorgonClass.mjs";
 
 const { HTMLField, StringField } = foundry.data.fields;
 
@@ -14,19 +15,24 @@ export default class GorgonDataModel extends BaseActorDataModel {
     return schema;
   }
 
+  async prepareContext(context) {
+    await super.prepareContext(context);
+    const gorgonClass = this.gorgonClass;
+    if (gorgonClass) {
+      context.gorgonClass = gorgonClass;
+      context.maxAssets = gorgonClass.system.maxAssets;
+    }
+  }
+
   allowedPlaybookTypes = ["gorgonType"];
 
   get gorgonType() {
-    const playbook = new Playbook(this.parent, "gorgonType", {
-      rules: "rule",
-      assets: "asset",
-    });
-    return playbook;
+    return new Playbook(this.parent, "gorgonType");
   }
 
   get gorgonClass() {
     if (this.parent.itemTypes.gorgonClass)
-      return this.parent.itemTypes.gorgonClass[0];
+      return new GorgonClass(this.parent.itemTypes.gorgonClass[0]);
   }
 
   async setClass(item) {

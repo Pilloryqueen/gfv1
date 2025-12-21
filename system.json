@@ -59,7 +59,9 @@
       "type": "Item",
       "private": true,
       "flags": {
-        "gfv1": {}
+        "gfv1": {
+          "playbookType": "gorgonType"
+        }
       }
     }
   ],

@@ -1,5 +1,5 @@
 import BaseActorDataModel from "../baseActorDataModel.mjs";
-import { Playbook } from "../../sheets/elements/playbook.mjs";
+import Playbook from "../../sheets/elements/playbook.mjs";
 
 const { BooleanField, HTMLField, NumberField, StringField } =
   foundry.data.fields;
@@ -32,12 +32,7 @@ export default class PilotDataModel extends BaseActorDataModel {
   }
 
   get framePlaybook() {
-    const playbook = new Playbook(this.parent, "framePlaybook", {
-      rules: "rule",
-      assets: "asset",
-    });
-    playbook.maxAssets = CONFIG.GFV1.maxAssets.frame;
-    return playbook;
+    return new Playbook(this.parent, "framePlaybook");
   }
 
   async embraceTag(item) {
