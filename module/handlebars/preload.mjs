@@ -2,7 +2,12 @@ export const preloadedTemplates = {};
 
 export default async function preloadTemplates() {
   const templates = {};
-  const filenames = ["item-list-entry", "item-list", "playbook"];
+  const filenames = [
+    "item-list-entry",
+    "item-list",
+    "playbook",
+    "gorgon-class",
+  ];
 
   const keys = filenames.map((filename) => {
     let key = filename

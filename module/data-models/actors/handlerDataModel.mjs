@@ -1,5 +1,5 @@
 import BaseActorDataModel from "../baseActorDataModel.mjs";
-import { Playbook } from "../../sheets/elements/playbook.mjs";
+import Playbook from "../../sheets/elements/playbook.mjs";
 
 const { HTMLField, StringField } = foundry.data.fields;
 
@@ -18,10 +18,6 @@ export default class HandlerDataModel extends BaseActorDataModel {
   allowedPlaybookTypes = ["handlerPlaybook"];
 
   get handlerPlaybook() {
-    const playbook = new Playbook(this.parent, "handlerPlaybook", {
-      rules: "rule",
-      assets: "asset",
-    });
-    return playbook;
+    return new Playbook(this.parent, "handlerPlaybook");
   }
 }

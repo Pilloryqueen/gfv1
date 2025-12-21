@@ -20,7 +20,16 @@
 .gfv1.sheet.actor-sheet .basic-info .edit-btn {
   padding-left: 16px;
 }
-.gfv1.sheet.actor-sheet .gorgon-class img {
+.gfv1.sheet.actor-sheet .gorgon-class {
+  margin-bottom: 5px;
+}
+.gfv1.sheet.actor-sheet .gorgon-class .gorgon-class-header .item-img {
+  flex: 5%;
+}
+.gfv1.sheet.actor-sheet .gorgon-class .gorgon-class-header .item-name {
+  flex: 95%;
+}
+.gfv1.sheet.actor-sheet .item-img img {
   height: 24px;
   width: 24px;
 }
@@ -29,10 +38,6 @@
 }
 .gfv1.sheet.actor-sheet .items-list .item-img {
   flex: 5%;
-}
-.gfv1.sheet.actor-sheet .items-list .item-img img {
-  height: 24px;
-  width: 24px;
 }
 .gfv1.sheet.actor-sheet .items-list .item-name {
   flex: 50%;
@@ -48,15 +53,15 @@
   min-height: 200px;
   max-height: 400px;
 }
+.gfv1.sheet.item-sheet .item-img img {
+  height: 24px;
+  width: 24px;
+}
 .gfv1.sheet.item-sheet .items-list {
   padding: 0;
 }
 .gfv1.sheet.item-sheet .items-list .item-img {
   flex: 5%;
-}
-.gfv1.sheet.item-sheet .items-list .item-img img {
-  height: 24px;
-  width: 24px;
 }
 .gfv1.sheet.item-sheet .items-list .item-name {
   flex: 50%;

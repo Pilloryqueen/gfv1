@@ -64,14 +64,13 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
   /** @inheritDoc */
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
-    await this.item.system.prepareContext(context);
+    await this.document.system.prepareContext(context);
 
     context.editable = this.isEditable;
 
     context.fields = this.document.schema.fields;
     context.systemFields = this.document.system.schema.fields;
 
-    context.config = CONFIG.GFV1;
     return context;
   }
 

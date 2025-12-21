@@ -3,5 +3,12 @@
   data-tab="{{tab.id}}"
   data-group="{{tab.group}}"
 >
-  <p>TODO</p>
+  {{#if gorgonClass}}
+    {{render gorgonClass}}
+  {{else}}
+    <p class="gorgon-class-missing">{{localize
+        "GFv1.item.gorgonClass.dragIn"
+      }}</p>
+  {{/if}}
+  {{render system.gorgonType}}
 </section>

@@ -1,6 +1,6 @@
 <section>
   {{log items}}
-  {{#if (eq items.lenght 0)}}
+  {{#if (eq items.length 0)}}
     <p>{{localize "GFv1.item.playbook.dragMoreItems"}}</p>
   {{else}}
     {{#if (not assets.empty)}}{{render assets}}{{/if}}

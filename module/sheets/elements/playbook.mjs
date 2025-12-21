@@ -3,8 +3,12 @@ import RuleDataModel from "../../data-models/items/ruleDataModel.mjs";
 import { preloadedTemplates } from "../../handlebars/preload.mjs";
 import ItemList from "./itemList.mjs";
 
-export class Playbook {
-  constructor(parent, type, itemTypes) {
+export default class Playbook {
+  constructor(parent, type) {
+    const itemTypes = {
+      rules: "rule",
+      assets: "asset",
+    };
     this.name = parent.system[`_${type}`];
     this.playbookType = type;
     const filter = (item) => {
