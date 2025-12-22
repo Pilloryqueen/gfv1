@@ -16,4 +16,6 @@ export default class GorgonClassDataModel extends BaseItemDataModel {
       }),
     };
   }
+
+  _properties = ["apperance", "maxAssets"];
 }
