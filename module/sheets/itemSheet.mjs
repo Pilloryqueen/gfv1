@@ -19,7 +19,13 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
       viewDoc: DocumentHelper.viewDoc,
       deleteDoc: this._deleteRef, // We only want to delete the reference not the doc itself
     },
-    edit: true,
+    window: {
+      resizable: true,
+    },
+    position: {
+      width: 600,
+      height: 800,
+    },
   };
 
   get title() {

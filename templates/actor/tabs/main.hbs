@@ -3,7 +3,9 @@
   data-tab="{{tab.id}}"
   data-group="{{tab.group}}"
 >
-  {{render identities max=4}}
-  {{render tags}}
-  {{render bonds}}
+  <div class="item-list-group">
+    {{render identities max=4}}
+    {{render tags}}
+    {{render bonds}}
+  </div>
 </section>

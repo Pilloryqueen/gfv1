@@ -11,20 +11,12 @@
   }
 
   .basic-info {
-    .field-heat {
-      flex: 1;
-    }
-    .field-perm {
-      flex: 1;
-    }
-    .field-playbook {
-      flex: 2;
-      input {
-        flex: 80%;
+    .actor-controls {
+      position: relative;
+      .edit-btn {
+        position: absolute;
+        right: 0;
       }
-    }
-    .edit-btn {
-      padding-left: 16px;
     }
   }
 
@@ -40,29 +32,5 @@
     }
 
     margin-bottom: 5px;
-  }
-
-  .item-img {
-    img {
-      height: 24px;
-      width: 24px;
-    }
-  }
-
-  .items-list {
-    padding: 0;
-    .item-img {
-      flex: 5%;
-    }
-    .item-name {
-      flex: 50%;
-    }
-    .item-props {
-      flex: 35%;
-    }
-    .item-controls {
-      flex: 10%;
-      text-align: right;
-    }
   }
 }

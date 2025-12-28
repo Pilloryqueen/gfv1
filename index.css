@@ -5,20 +5,12 @@
 .gfv1.sheet.actor-sheet .sheet-header .header-fields {
   padding: auto;
 }
-.gfv1.sheet.actor-sheet .basic-info .field-heat {
-  flex: 1;
+.gfv1.sheet.actor-sheet .basic-info .actor-controls {
+  position: relative;
 }
-.gfv1.sheet.actor-sheet .basic-info .field-perm {
-  flex: 1;
-}
-.gfv1.sheet.actor-sheet .basic-info .field-playbook {
-  flex: 2;
-}
-.gfv1.sheet.actor-sheet .basic-info .field-playbook input {
-  flex: 80%;
-}
-.gfv1.sheet.actor-sheet .basic-info .edit-btn {
-  padding-left: 16px;
+.gfv1.sheet.actor-sheet .basic-info .actor-controls .edit-btn {
+  position: absolute;
+  right: 0;
 }
 .gfv1.sheet.actor-sheet .gorgon-class {
   margin-bottom: 5px;
@@ -29,48 +21,46 @@
 .gfv1.sheet.actor-sheet .gorgon-class .gorgon-class-header .item-name {
   flex: 95%;
 }
-.gfv1.sheet.actor-sheet .item-img img {
-  height: 24px;
-  width: 24px;
-}
-.gfv1.sheet.actor-sheet .items-list {
-  padding: 0;
-}
-.gfv1.sheet.actor-sheet .items-list .item-img {
-  flex: 5%;
-}
-.gfv1.sheet.actor-sheet .items-list .item-name {
-  flex: 50%;
-}
-.gfv1.sheet.actor-sheet .items-list .item-props {
-  flex: 35%;
-}
-.gfv1.sheet.actor-sheet .items-list .item-controls {
-  flex: 10%;
-  text-align: right;
-}
 .gfv1.sheet.item-sheet .item-description .item-description-editor {
-  min-height: 200px;
+  min-height: 100px;
   max-height: 400px;
 }
-.gfv1.sheet.item-sheet .item-img img {
+.gfv1.sheet .item-img img {
   height: 24px;
   width: 24px;
 }
-.gfv1.sheet.item-sheet .items-list {
+.gfv1.sheet .sheet-body {
+  overflow-y: auto;
+}
+.gfv1.sheet .item-list-group {
+  display: grid;
+  grid-template-columns: auto 2fr 1fr auto;
+  grid-auto-rows: auto;
+}
+.gfv1.sheet .item-list-group .items-list {
+  grid-template-columns: subgrid;
+}
+.gfv1.sheet .items-list {
+  grid-template-columns: auto 2fr 1fr auto;
+  grid-auto-rows: auto;
+  grid-column: 1/-1;
+  display: grid;
   padding: 0;
 }
-.gfv1.sheet.item-sheet .items-list .item-img {
-  flex: 5%;
+.gfv1.sheet .items-list .item {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1/-1;
+  align-items: center;
+  gap: 5px;
 }
-.gfv1.sheet.item-sheet .items-list .item-name {
-  flex: 50%;
+.gfv1.sheet .items-list .item .item-props {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  justify-items: center;
 }
-.gfv1.sheet.item-sheet .items-list .item-props {
-  flex: 35%;
-}
-.gfv1.sheet.item-sheet .items-list .item-controls {
-  flex: 10%;
+.gfv1.sheet .items-list .item .item-controls {
   text-align: right;
 }
 .chat-card .roll-result-header {
