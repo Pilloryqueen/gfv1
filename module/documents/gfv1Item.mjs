@@ -1,45 +1,28 @@
 export default class GFv1Item extends Item {
-  async _preCreate(data, options, user) {
-    await super._preCreate(data, options, user);
-    console.log(this);
-
+  static getDefaultArtwork(data) {
+    console.log("DefaultArtwork", data);
     switch (data.type) {
       case "asset":
-        if (!data.img) {
-          data.img = "icons/svg/chest.svg";
-        }
-        break;
+        return { img: "icons/svg/chest.svg" };
       case "bond":
-        if (!data.img) {
-          data.img = "icons/svg/cowled.svg";
-        }
-        break;
+        return { img: "icons/svg/cowled.svg" };
       case "gorgonClass":
-        if (!data.img) {
-          data.img = "icons/svg/radiation.svg";
-        }
-        break;
+        return { img: "icons/svg/radiation.svg" };
       case "identity":
-        if (!data.img) {
-          data.img = "icons/svg/aura.svg";
-        }
-        break;
+        return { img: "icons/svg/aura.svg" };
       case "playbook":
-        if (!data.img) {
-          data.img = "icons/svg/book.svg";
-        }
-        break;
+        return { img: "icons/svg/book.svg" };
       case "rule":
-        if (!data.img) {
-          data.img = "icons/svg/thrust.svg";
-        }
-        break;
+        return { img: "icons/svg/thrust.svg" };
       case "tag":
-        if (!data.img) {
-          data.img = "icons/svg/wingfoot.svg";
-        }
-        break;
+        return { img: "icons/svg/wingfoot.svg" };
+      default:
+        return Item.getDefaultArtwork(data);
     }
+  }
+
+  async _preCreate(data, options, user) {
+    await super._preCreate(data, options, user);
 
     if (this.pack) {
       const pack = game.packs.get(this.pack);
