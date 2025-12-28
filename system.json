@@ -55,7 +55,7 @@
       "name": "npc",
       "label": "NPCs",
       "system": "gfv1",
-      "path": "packs/npcPlaybooks",
+      "path": "packs/npc",
       "type": "Item",
       "private": true,
       "flags": {
