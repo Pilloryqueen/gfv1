@@ -1,4 +1,20 @@
 {
+  "TYPES": {
+    "Actor": {
+      "pilot": "Pilot",
+      "handler": "Handler",
+      "gorgon": "Gorgon"
+    },
+    "Item": {
+      "asset": "Asset",
+      "bond": "Bond",
+      "gorgonClass": "Gorgon Class",
+      "identity": "Identity",
+      "playbook": "Playbook",
+      "rule": "Rule",
+      "tag": "Tag"
+    }
+  },
   "GFv1": {
     "sheets": {
       "actorSheet": "Actor Sheet",
