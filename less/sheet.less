@@ -1,0 +1,51 @@
+// main: ./main.less
+.gfv1.sheet {
+  .item-img {
+    img {
+      height: 24px;
+      width: 24px;
+    }
+  }
+
+  .sheet-body {
+    overflow-y: auto;
+  }
+
+  .item-list-group {
+    display: grid;
+    grid-template-columns: auto 2fr 1fr auto;
+    grid-auto-rows: auto;
+
+    .items-list {
+      grid-template-columns: subgrid;
+    }
+  }
+
+  .items-list {
+    grid-template-columns: auto 2fr 1fr auto;
+    grid-auto-rows: auto;
+    grid-column: 1/-1;
+    display: grid;
+    padding: 0;
+
+    .item {
+      display: grid;
+      grid-template-columns: subgrid;
+      grid-column: 1/-1;
+
+      align-items: center;
+      gap: 5px;
+
+      .item-props {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 1fr;
+        justify-items: center;
+      }
+
+      .item-controls {
+        text-align: right;
+      }
+    }
+  }
+}

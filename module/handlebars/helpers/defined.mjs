@@ -1,3 +1,3 @@
-export default function defined(name) {
-  return this[name] !== undefined && this[name] !== null;
+export default function defined(prop) {
+  return prop !== undefined;
 }

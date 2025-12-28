@@ -38,6 +38,13 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
         submitOnChange: true,
         closeOnSubmit: false,
       },
+      window: {
+        resizable: true,
+      },
+      position: {
+        width: 600,
+        height: 800,
+      },
     };
   }
 

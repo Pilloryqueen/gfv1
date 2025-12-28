@@ -21,35 +21,37 @@
       </div>
     {{/if}}
   </div>
-  <a
-    class="roll-btn"
-    data-tooltip="{{localize 'GFv1.roll.tooltip'}}"
-    data-action="makeRoll"
-    data-no-item
-  >
-    {{#if system.heat includeZero=true}}
-      <i class="fas fa-dice-d20">{{localize "GFv1.roll.withHeat"}}</i>
-    {{else}}
-      <i class="fas fa-dice-d20">{{localize "GFv1.roll.withoutHeat"}}</i>
+  <div class="actor-controls">
+    <a
+      class="roll-btn"
+      data-tooltip="{{localize 'GFv1.roll.tooltip'}}"
+      data-action="makeRoll"
+      data-no-item
+    >
+      {{#if system.heat includeZero=true}}
+        <i class="fas fa-dice-d20">{{localize "GFv1.roll.withHeat"}}</i>
+      {{else}}
+        <i class="fas fa-dice-d20">{{localize "GFv1.roll.withoutHeat"}}</i>
+      {{/if}}
+    </a>
+    {{#if editable}}
+      {{#if locked}}
+        <a
+          class="edit-btn"
+          data-action="toggleEdit"
+          data-tooltip="{{localize 'GFv1.edit.unlock'}}"
+        >
+          <i class="fas fa-lock"></i>
+        </a>
+      {{else}}
+        <a
+          class="edit-btn"
+          data-action="toggleEdit"
+          data-tooltip="{{localize 'GFv1.edit.lock'}}"
+        >
+          <i class="fas fa-unlock-alt"></i>
+        </a>
+      {{/if}}
     {{/if}}
-  </a>
-  {{#if editable}}
-    {{#if locked}}
-      <a
-        class="edit-btn"
-        data-action="toggleEdit"
-        data-tooltip="{{localize 'GFv1.edit.unlock'}}"
-      >
-        <i class="fas fa-lock"></i>
-      </a>
-    {{else}}
-      <a
-        class="edit-btn"
-        data-action="toggleEdit"
-        data-tooltip="{{localize 'GFv1.edit.lock'}}"
-      >
-        <i class="fas fa-unlock-alt"></i>
-      </a>
-    {{/if}}
-  {{/if}}
+  </div>
 </section>

@@ -1,11 +1,13 @@
-<section>
+<section class="sheet-body">
   {{log items}}
   {{#if (eq items.length 0)}}
     <p>{{localize "GFv1.item.playbook.dragMoreItems"}}</p>
   {{else}}
-    {{#if (not assets.empty)}}{{render assets}}{{/if}}
-    {{#if (not bonds.empty)}}{{render bonds}}{{/if}}
-    {{#if (not identities.empty)}}{{render identities}}{{/if}}
-    {{#if (not rules.empty)}}{{render rules}}{{/if}}
+    <div class="item-list-group">
+      {{#if (not assets.empty)}}{{render assets}}{{/if}}
+      {{#if (not bonds.empty)}}{{render bonds}}{{/if}}
+      {{#if (not identities.empty)}}{{render identities}}{{/if}}
+      {{#if (not rules.empty)}}{{render rules}}{{/if}}
+    </div>
   {{/if}}
 </section>

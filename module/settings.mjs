@@ -6,7 +6,6 @@ export default function registerSettings() {
     config: true,
     type: Boolean,
     default: false,
-    requiresReload: true,
   });
 
   game.settings.register("gfv1", "migratedVersion", {
