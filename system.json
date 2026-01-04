@@ -76,13 +76,17 @@
   "documentTypes": {
     "Actor": {
       "pilot": {
-        "htmlFields": ["bio", "notes"]
+        "htmlFields": [
+          "description",
+          "framePlaybookDescription",
+          "pilotPlaybookDescription"
+        ]
       },
       "handler": {
-        "htmlFields": ["bio", "notes"]
+        "htmlFields": ["description", "handlerPlaybookDescription"]
       },
       "gorgon": {
-        "htmlFields": ["bio", "notes"]
+        "htmlFields": ["description", "gorgonTypeDescription"]
       }
     },
     "Item": {

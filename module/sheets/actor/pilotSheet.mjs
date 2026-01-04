@@ -1,64 +1,16 @@
 import DialogHelper from "../../util/dialogHelper.mjs";
 import DocumentHelper from "../../util/documentHelper.mjs";
+import Tab from "../../util/tabs.mjs";
 import Gfv1ActorSheet from "../actorSheet.mjs";
 
+const TABS = ["description", "actor", "pilot", "frame"];
 export default class PilotSheet extends Gfv1ActorSheet {
+  static TABS = TABS;
+  tabs = Tab.createGroup(TABS, "actor", "primary")
+
   static ACTIONS = {
     embraceTag: this._embraceTag,
   };
-
-  tabs = {
-    main: {
-      icon: "fa-house",
-      group: "primary",
-      label: "GFv1.tab.main",
-    },
-    pilot: {
-      icon: "fa-venus",
-      group: "primary",
-      label: "GFv1.tab.pilot",
-    },
-    frame: {
-      icon: "fa-car",
-      group: "primary",
-      label: "GFv1.tab.frame",
-    },
-  };
-
-  static PARTS = {
-    header: {
-      template: "systems/gfv1/templates/actor/header.hbs",
-    },
-    tabs: {
-      template: "systems/gfv1/templates/generic/tab-navigation.hbs",
-    },
-    basicInfo: {
-      template: "systems/gfv1/templates/actor/basic-info.hbs",
-    },
-    // Tabs:
-    main: {
-      template: "systems/gfv1/templates/actor/tabs/main.hbs",
-    },
-    pilot: {
-      template: "systems/gfv1/templates/actor/tabs/pilot.hbs",
-    },
-    frame: {
-      template: "systems/gfv1/templates/actor/tabs/frame.hbs",
-    },
-  };
-
-  _configureRenderOptions(options) {
-    super._configureRenderOptions(options);
-    options.parts = ["header", "basicInfo", "tabs"];
-    if (this.document.limited) {
-      // Any limited view only tabs
-    } else {
-      options.defaultTab = "main";
-      options.parts.push("main");
-      options.parts.push("pilot");
-      options.parts.push("frame");
-    }
-  }
 
   /**
    * Handle embracing a tag as an identity
