@@ -21,16 +21,18 @@
 .gfv1.sheet.actor-sheet .gorgon-class .gorgon-class-header .item-name {
   flex: 95%;
 }
-.gfv1.sheet.item-sheet .item-description .item-description-editor {
-  min-height: 100px;
-  max-height: 400px;
-}
 .gfv1.sheet .item-img img {
   height: 24px;
   width: 24px;
 }
 .gfv1.sheet .sheet-body {
   overflow-y: auto;
+  height: 100%;
+}
+.gfv1.sheet .sheet-body .item-description {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
 }
 .gfv1.sheet .item-list-group {
   display: grid;

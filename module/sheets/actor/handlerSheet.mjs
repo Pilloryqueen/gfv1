@@ -1,49 +1,8 @@
+import Tab from "../../util/tabs.mjs";
 import Gfv1ActorSheet from "../actorSheet.mjs";
 
+const TABS = ["description", "actor", "handler"];
 export default class HandlerSheet extends Gfv1ActorSheet {
-  static ACTIONS = {};
-
-  tabs = {
-    main: {
-      icon: "fa-house",
-      group: "primary",
-      label: "GFv1.tab.main",
-    },
-    handler: {
-      icon: "fa-venus",
-      group: "primary",
-      label: "GFv1.tab.handler",
-    },
-  };
-
-  static PARTS = {
-    header: {
-      template: "systems/gfv1/templates/actor/header.hbs",
-    },
-    tabs: {
-      template: "systems/gfv1/templates/generic/tab-navigation.hbs",
-    },
-    basicInfo: {
-      template: "systems/gfv1/templates/actor/basic-info.hbs",
-    },
-    // Tabs:
-    main: {
-      template: "systems/gfv1/templates/actor/tabs/main.hbs",
-    },
-    handler: {
-      template: "systems/gfv1/templates/actor/tabs/handler.hbs",
-    },
-  };
-
-  _configureRenderOptions(options) {
-    super._configureRenderOptions(options);
-    options.parts = ["header", "basicInfo", "tabs"];
-    if (this.document.limited) {
-      // Any limited view only tabs
-    } else {
-      options.defaultTab = "main";
-      options.parts.push("main");
-      options.parts.push("handler");
-    }
-  }
+  static TABS = TABS;
+  tabs = Tab.createGroup(TABS, "actor", "primary");
 }

@@ -1,11 +1,7 @@
-import AssetDataModel from "../data-models/items/assetDataModel.mjs";
-import BondDataModel from "../data-models/items/bondDataModel.mjs";
-import IdentityDataModel from "../data-models/items/identityDataModel.mjs";
-import TagDataModel from "../data-models/items/tagDataModel.mjs";
 import DialogHelper from "../util/dialogHelper.mjs";
 import DocumentHelper from "../util/documentHelper.mjs";
+import Tab from "../util/tabs.mjs";
 import fromUuid from "../util/uuid.mjs";
-import ItemList from "./elements/itemList.mjs";
 
 const HandlebarsApplicationMixin =
   foundry.applications.api.HandlebarsApplicationMixin;
@@ -15,8 +11,7 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
   ActorSheetV2
 ) {
   static ACTIONS = {};
-  static PARTLIST = [];
-  static LIMITED_PARTLIST = [];
+  static TABS = []; // ids of tabs used by sheet
 
   static get DEFAULT_OPTIONS() {
     const actions = foundry.utils.mergeObject(
@@ -48,6 +43,18 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
     };
   }
 
+  static get PARTS() {
+    return {
+      header: {
+        template: "systems/gfv1/templates/actor/header.hbs",
+      },
+      basicInfo: {
+        template: "systems/gfv1/templates/actor/basic-info.hbs",
+      },
+      ...Tab.templates(this.TABS),
+    };
+  }
+
   get title() {
     if (this.actor.system.pronouns) {
       return `${this.actor.name} (${this.actor.system.pronouns})`;
@@ -56,11 +63,17 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
   }
 
   _locked = true;
-  tabs = {};
 
   /** @override */
   _configureRenderOptions(options) {
     super._configureRenderOptions(options);
+    options.parts = ["header", "basicInfo", "tabs"];
+
+    if (this.tabs) {
+      Object.keys(this.tabs).forEach((id) => {
+        options.parts.push(id);
+      });
+    }
   }
 
   /** @inheritDoc */
@@ -74,16 +87,12 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
     context.fields = this.document.schema.fields;
     context.systemFields = this.document.system.schema.fields;
 
-    context.tabs = this._prepareTabs(options.defaultTab);
-
+    context.tabs = this.tabs;
     return context;
   }
 
   async _preparePartContext(partId, context) {
-    const tab = this.tabs[partId];
-    if (tab) {
-      context.tab = context.tabs[partId];
-    }
+    context.tab = this.tabs[partId];
     return context;
   }
 
@@ -127,22 +136,6 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
     const updateData = {};
     updateData[name] = value;
     return item.update(updateData);
-  }
-
-  /**
-   * Tabs
-   */
-  _prepareTabs(defaultTab, tabGroup = "primary") {
-    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = defaultTab;
-
-    return Object.keys(this.tabs).reduce((tabs, id) => {
-      const tab = { id: id };
-      const partial = this.tabs[id];
-      foundry.utils.mergeObject(tab, partial);
-      if (this.tabGroups[tabGroup] === id) tab.active = "active";
-      tabs[id] = tab;
-      return tabs;
-    }, {});
   }
 
   /**

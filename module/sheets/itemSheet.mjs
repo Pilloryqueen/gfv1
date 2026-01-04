@@ -1,8 +1,11 @@
 import DocumentHelper from "../util/documentHelper.mjs";
+import Tab from "../util/tabs.mjs";
 
 const HandlebarsApplicationMixin =
   foundry.applications.api.HandlebarsApplicationMixin;
 const ItemSheetV2 = foundry.applications.sheets.ItemSheetV2;
+
+const TABS = ["description", "item"];
 
 export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
   ItemSheetV2
@@ -32,39 +35,22 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
     return `${this.item.type}: ${this.item.name}`;
   }
 
-  static PARTS = {
-    header: {
-      template: "systems/gfv1/templates/item/header.hbs",
-    },
-    properties: {
-      template: "systems/gfv1/templates/item/properties.hbs",
-    },
-    description: {
-      template: "systems/gfv1/templates/item/description.hbs",
-    },
-    playbook: {
-      template: "systems/gfv1/templates/item/playbook.hbs",
-    },
-    playFields: {
-      template: "systems/gfv1/templates/item/playFields.hbs",
-    },
-  };
+  tabs = Tab.createGroup(TABS, "description", "primary");
+
+  static get PARTS() {
+    return {
+      header: {
+        template: "systems/gfv1/templates/item/header.hbs",
+      },
+      ...Tab.templates(TABS),
+    };
+  }
 
   /** @override */
   _configureRenderOptions(options) {
     super._configureRenderOptions(options);
-    options.parts = ["header", "properties", "description"];
-
-    if (this.document.limited) return;
-
-    switch (this.item.type) {
-      case "playbook":
-        options.parts.push("playbook");
-        break;
-      case "rule":
-        options.parts.push("playFields");
-        break;
-    }
+    options.parts = ["header", "tabs", "description", "item"];
+    options.defaultTab = "description";
   }
 
   /** @inheritDoc */
@@ -77,19 +63,22 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
     context.fields = this.document.schema.fields;
     context.systemFields = this.document.system.schema.fields;
 
+    context.tabs = this.tabs;
     return context;
   }
 
   /** @override */
   async _preparePartContext(partId, context) {
+    context.tab = this.tabs[partId];
+
     switch (partId) {
       case "description":
         context.enrichedDescription = await TextEditor.enrichHTML(
           this.item.system.description,
           {
             secrets: this.document.isOwner,
-            rollData: this.item.getRollData(),
-            relativeTo: this.item,
+            rollData: this.document.getRollData(),
+            relativeTo: this.document,
           }
         );
         break;
@@ -147,7 +136,10 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
     return true;
   }
 
-  _onDragStart(event) {}
+  async _onDragStart(event) {
+    const data = await DocumentHelper.getItemFromHTML(event.currentTarget);
+    event.dataTransfer.setData("text/plain", JSON.stringify(data.toDragData()));
+  }
 
   _onDragOver(event) {}
 
@@ -163,6 +155,8 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
         return this._onDropItem(doc);
       case "Folder":
         return this._onDropFolder(doc);
+      default:
+        throw new Error(`Unhandled data type: ${data.type}`);
     }
   }
 
@@ -223,7 +217,7 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
     await fp.browse();
   }
 
-  static async _deleteRef(evet, target) {
+  static async _deleteRef(event, target) {
     const uuid = DocumentHelper.getItemUuidFromHTML(target);
     return this.item.system.deleteRef(uuid);
   }

@@ -1,0 +1,71 @@
+<section
+  class="tab sheet-body {{tab.active}}"
+  data-tab="{{tab.id}}"
+  data-group="{{tab.group}}"
+>
+  {{#if (eq item.type "playbook")}}
+    {{#if (eq items.length 0)}}
+      <p>{{localize "GFv1.item.playbook.dragMoreItems"}}</p>
+    {{else}}
+      <div class="item-list-group">
+        {{#if (not assets.empty)}}{{render assets}}{{/if}}
+        {{#if (not bonds.empty)}}{{render bonds}}{{/if}}
+        {{#if (not identities.empty)}}{{render identities}}{{/if}}
+        {{#if (not rules.empty)}}{{render rules}}{{/if}}
+      </div>
+    {{/if}}
+  {{else if (eq item.type "rule")}}
+    <label>{{localize "GFv1.item.rule.locked"}}</label>
+    {{formInput
+      systemFields.locked
+      value=system.locked
+      disabled=(not editable)
+    }}
+    <label>{{localize "GFv1.item.rule.play"}}</label>
+    {{formInput systemFields.play value=system.play disabled=(not editable)}}
+    {{#if (eq system.play true)}}
+      <label>{{localize "GFv1.item.rule.heat"}}</label>
+      {{formInput systemFields.heat value=system.heat disabled=(not editable)}}
+      <div class="play-fields">
+        <div>
+          <label>{{localize "GFv1.item.rule.med"}}</label>
+          {{formInput
+            systemFields.med
+            value=system.med
+            disabled=(not editable)
+          }}
+        </div>
+        <div>
+          <label>{{localize "GFv1.item.rule.high"}}</label>
+          {{formInput
+            systemFields.high
+            value=system.high
+            disabled=(not editable)
+          }}
+        </div>
+        <div>
+          <label>{{localize "GFv1.item.rule.low"}}</label>
+          {{formInput
+            systemFields.low
+            value=system.low
+            disabled=(not editable)
+          }}
+        </div>
+      </div>
+    {{/if}}
+  {{else}}
+    <div class="item-properties">
+      {{#each item.system.properties as |property|}}
+        <div class="item-property">
+          <label>{{property.label}}</label>
+          {{formInput
+            property.field
+            value=property.value
+            localize=true
+            disabled=(not @root/editable)
+          }}
+        </div>
+      {{/each}}
+    </div>
+  {{/if}}
+</section>

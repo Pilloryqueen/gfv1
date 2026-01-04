@@ -4,8 +4,7 @@ import Playbook from "../../sheets/elements/playbook.mjs";
 const { HTMLField, StringField } = foundry.data.fields;
 
 const schema = {
-  bio: new HTMLField(),
-  notes: new HTMLField(),
+  description: new HTMLField(),
   pronouns: new StringField({ required: true, initial: "she/her" }),
   _handlerPlaybook: new StringField({ required: true, initial: "No Playbook" }),
 };

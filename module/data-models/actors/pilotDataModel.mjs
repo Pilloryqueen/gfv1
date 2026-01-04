@@ -5,8 +5,7 @@ const { BooleanField, HTMLField, NumberField, StringField } =
   foundry.data.fields;
 
 const schema = {
-  bio: new HTMLField(),
-  notes: new HTMLField(),
+  description: new HTMLField(),
   permissions: new NumberField({ required: true, min: 0, initial: 0, step: 1 }),
   heat: new NumberField({ required: true, min: 0, initial: 0, step: 1 }),
   pronouns: new StringField({ required: true, initial: "it/its" }),

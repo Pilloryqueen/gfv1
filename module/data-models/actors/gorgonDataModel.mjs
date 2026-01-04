@@ -5,8 +5,7 @@ import GorgonClass from "../../sheets/elements/gorgonClass.mjs";
 const { HTMLField, StringField } = foundry.data.fields;
 
 const schema = {
-  bio: new HTMLField(),
-  notes: new HTMLField(),
+  description: new HTMLField(),
   _gorgonType: new StringField({ required: true, initial: "No Playbook" }),
 };
 

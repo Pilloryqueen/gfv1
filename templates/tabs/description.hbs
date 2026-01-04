@@ -1,0 +1,18 @@
+<section
+  class="tab sheet-body {{tab.active}}"
+  data-tab="{{tab.id}}"
+  data-group="{{tab.group}}"
+>
+  <section class="item-description">
+    <prose-mirror
+      class="item-description-editor"
+      name="system.description"
+      data-document-u-u-i-d="{{item.uuid}}"
+      value="{{system.description}}"
+      toggled="true"
+      {{disabled (not editable)}}
+    >
+      {{{enrichedDescription}}}
+    </prose-mirror>
+  </section>
+</section>

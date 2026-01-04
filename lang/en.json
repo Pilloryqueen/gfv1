@@ -21,11 +21,13 @@
       "itemSheet": "Item Sheet"
     },
     "tab": {
-      "main": "Basic info",
+      "actor": "Basic info",
       "pilot": "Pilot view",
       "frame": "Frame view",
       "gorgon": "Gorgon view",
-      "handler": "Handler view"
+      "handler": "Handler view",
+      "description": "Description",
+      "item": "Item data"
     },
     "item": {
       "name": "Name",
