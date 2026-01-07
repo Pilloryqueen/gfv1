@@ -19,6 +19,10 @@ export default class RuleDataModel extends BaseItemDataModel {
       low: new StringField(),
     };
   }
+}
 
-  static itemListProperties = ["locked"];
+export class AdvancementDataModel extends RuleDataModel {
+  static get label() {
+    return this.propertyLabel("advancementType");
+  }
 }

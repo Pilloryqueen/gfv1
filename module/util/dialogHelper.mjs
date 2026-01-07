@@ -9,11 +9,14 @@ export default class DialogHelper {
     });
   }
 
-  //
-  static async selectImport(items, type, preSelected = false) {
+  static async selectImport(items, type, preSelect) {
+    const context = { items: [] };
+    for (const item of items) {
+      context.items.push({ selected: preSelect(item), ...item });
+    }
     const content = await renderTemplate(
       "systems/gfv1/templates/dialog/select.hbs",
-      { items, preSelected }
+      context
     );
     try {
       return await foundry.applications.api.DialogV2.prompt({

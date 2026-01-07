@@ -2,7 +2,7 @@ import BaseItemDataModel from "../baseItemDataModel.mjs";
 import DialogHelper from "../../util/dialogHelper.mjs";
 import fromUuid from "../../util/uuid.mjs";
 import PlaybookTypeField from "../fields/playbookTypeField.mjs";
-import RuleDataModel from "./ruleDataModel.mjs";
+import RuleDataModel, { AdvancementDataModel } from "./ruleDataModel.mjs";
 import ItemList from "../../sheets/elements/itemList.mjs";
 import BondDataModel from "./bondDataModel.mjs";
 import AssetDataModel from "./assetDataModel.mjs";
@@ -28,11 +28,22 @@ export default class PlaybookDataModel extends BaseItemDataModel {
   async prepareContext(context) {
     await super.prepareContext(context);
     context.items = await this.getItems();
-    const itemTyps = await this.getItemTypes();
-    context.rules = new ItemList(RuleDataModel, itemTyps.rule);
-    context.assets = new ItemList(AssetDataModel, itemTyps.asset);
-    context.bonds = new ItemList(BondDataModel, itemTyps.bond);
-    context.identities = new ItemList(IdentityDataModel, itemTyps.identity);
+    const itemTypes = await this.getItemTypes();
+    const rules = [];
+    const advancements = [];
+    for (const rule of itemTypes.rule) {
+      if (rule.system.locked) {
+        advancements.push(rule);
+      } else {
+        rules.push(rule);
+      }
+    }
+
+    context.rules = new ItemList(RuleDataModel, rules);
+    context.advancements = new ItemList(AdvancementDataModel, advancements);
+    context.assets = new ItemList(AssetDataModel, itemTypes.asset);
+    context.bonds = new ItemList(BondDataModel, itemTypes.bond);
+    context.identities = new ItemList(IdentityDataModel, itemTypes.identity);
   }
 
   async getItemTypes() {
@@ -56,7 +67,7 @@ export default class PlaybookDataModel extends BaseItemDataModel {
   async addRef(uuid) {
     const item = await fromUuid(uuid);
     if (!["rule", "asset", "bond", "identity"].includes(item.type))
-      throw new Error(`Playbook doesn't currently support ${item.type}`);
+      throw new Error(`Playbook doesn't currently support importing ${item.type}`);
     if (
       item.system.playbookType !== undefined &&
       item.system.playbookType !== this.playbookType

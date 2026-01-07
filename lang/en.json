@@ -49,10 +49,11 @@
       "rule": {
         "type": "Rules",
         "playbookType": "Associated Playbook",
-        "locked": "Locked",
+        "advancementType": "Advancements",
+        "isAdvancement": "Advancement?",
         "edit": "View Rule",
         "delete": "Delete Rule",
-        "play": "Play? (can be rolled)",
+        "play": "Can be rolled?",
         "heat": "Spend heat?",
         "high": "On a 11+",
         "med": "On an 8-10",
@@ -61,7 +62,7 @@
       },
       "tag": {
         "type": "Tags",
-        "marked": "Marked?",
+        "marked": "Marked",
         "edit": "Edit details",
         "embrace": "Embrace tag as identity",
         "delete": "Reject tag",
@@ -72,7 +73,7 @@
       },
       "identity": {
         "type": "Identities",
-        "marked": "Marked?",
+        "marked": "Marked",
         "edit": "Edit details",
         "delete": "Remove identity"
       },
