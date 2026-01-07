@@ -8,6 +8,36 @@ const icons = {
   pilot: "venus",
 };
 
+export class TabGroup {
+  constructor(ids, defaultTab, group) {
+    this.groupName = group;
+    this.defaultTab = defaultTab;
+    this.ids = ids;
+
+    this._tabs = ids.map((id) => {
+      const icon = icons[id];
+      if (!icon) throw new Error(`GFV1 | ${id} is not a valid tab`);
+      return new Tab(id, icon, group);
+    });
+  }
+
+  contextData(tabGroups) {
+    let activeTab = tabGroups[this.groupName];
+    if (!activeTab) {
+      activeTab = this.defaultTab;
+    }
+
+    return this._tabs.reduce((tabs, tab) => {
+      if (tab.id === activeTab) {
+        tabs[tab.id] = { active: "active", ...tab };
+      } else {
+        tabs[tab.id] = tab;
+      }
+      return tabs;
+    }, {});
+  }
+}
+
 export default class Tab {
   constructor(id, icon, group) {
     this.id = id;
@@ -17,6 +47,7 @@ export default class Tab {
   }
 
   static createGroup(ids, defaultTab, group) {
+    console.log("DEPRECATED use new TabGroup instead");
     const tabs = {};
     for (const id of ids) {
       const icon = icons[id];

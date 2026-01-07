@@ -63,6 +63,7 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
   }
 
   _locked = true;
+  tabGroups = {};
 
   /** @override */
   _configureRenderOptions(options) {
@@ -70,7 +71,7 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
     options.parts = ["header", "basicInfo", "tabs"];
 
     if (this.tabs) {
-      Object.keys(this.tabs).forEach((id) => {
+      this.tabs.ids.forEach((id) => {
         options.parts.push(id);
       });
     }
@@ -87,12 +88,12 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
     context.fields = this.document.schema.fields;
     context.systemFields = this.document.system.schema.fields;
 
-    context.tabs = this.tabs;
+    context.tabs = this.tabs.contextData(this.tabGroups);
     return context;
   }
 
   async _preparePartContext(partId, context) {
-    context.tab = this.tabs[partId];
+    context.tab = context.tabs[partId];
     return context;
   }
 
