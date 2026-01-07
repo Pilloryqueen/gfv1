@@ -1,5 +1,5 @@
 import DocumentHelper from "../util/documentHelper.mjs";
-import Tab from "../util/tabs.mjs";
+import Tab, { TabGroup } from "../util/tabs.mjs";
 
 const HandlebarsApplicationMixin =
   foundry.applications.api.HandlebarsApplicationMixin;
@@ -35,7 +35,7 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
     return `${this.item.type}: ${this.item.name}`;
   }
 
-  tabs = Tab.createGroup(TABS, "description", "primary");
+  tabs = new TabGroup(TABS, "description", "primary");
 
   static get PARTS() {
     return {
@@ -63,13 +63,13 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
     context.fields = this.document.schema.fields;
     context.systemFields = this.document.system.schema.fields;
 
-    context.tabs = this.tabs;
+    context.tabs = this.tabs.contextData(this.tabGroups);
     return context;
   }
 
   /** @override */
   async _preparePartContext(partId, context) {
-    context.tab = this.tabs[partId];
+    context.tab = context.tabs[partId];
 
     switch (partId) {
       case "description":

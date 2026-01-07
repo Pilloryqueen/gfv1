@@ -32,7 +32,7 @@
 .gfv1.sheet .sheet-body .item-description {
   height: 100%;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: 1fr;
 }
 .gfv1.sheet .item-list-group {
   display: grid;
