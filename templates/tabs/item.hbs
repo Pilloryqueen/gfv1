@@ -12,10 +12,11 @@
         {{#if (not bonds.empty)}}{{render bonds}}{{/if}}
         {{#if (not identities.empty)}}{{render identities}}{{/if}}
         {{#if (not rules.empty)}}{{render rules}}{{/if}}
+        {{#if (not advancements.empty)}}{{render advancements}}{{/if}}
       </div>
     {{/if}}
   {{else if (eq item.type "rule")}}
-    <label>{{localize "GFv1.item.rule.locked"}}</label>
+    <label>{{localize "GFv1.item.rule.isAdvancement"}}</label>
     {{formInput
       systemFields.locked
       value=system.locked

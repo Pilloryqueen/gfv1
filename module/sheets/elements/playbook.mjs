@@ -20,11 +20,8 @@ export default class Playbook {
   }
 
   render({ locked, maxAssets, editable, actor }) {
-    const rules = locked
-      ? this.rules.filter((item) => item.system.locked === false)
-      : this.rules;
     const context = {
-      rules: new ItemList(RuleDataModel, rules),
+      rules: new ItemList(RuleDataModel, this.rules),
       assets: new ItemList(AssetDataModel, this.assets),
       name: this.name,
       playbookType: this.playbookType,

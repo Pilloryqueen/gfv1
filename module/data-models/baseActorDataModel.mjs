@@ -51,18 +51,22 @@ export default class BaseActorDataModel extends TypeDataModel {
     }
     const itemTypes = await item.system.getItemTypes();
     await this.importItems("assets", itemTypes.asset);
-    await this.importItems("bonds", itemTypes.bond);
-    await this.importItems("identities", itemTypes.identity, true);
-    await this.importItems("rules", itemTypes.rule, true);
+    await this.importItems(
+      "bonds",
+      itemTypes.bond,
+      (b) => b.system.level !== "npc"
+    );
+    await this.importItems("identities", itemTypes.identity, () => true);
+    await this.importItems("rules", itemTypes.rule, (r) => !r.system.locked);
 
     const system = {};
     system[`_${item.system.playbookType}`] = item.name;
     return this.parent.update({ system });
   }
 
-  async importItems(type, items, preSelected = false) {
+  async importItems(type, items, preSelect = () => false) {
     if (items.length === 0) return;
-    const selected = await DialogHelper.selectImport(items, type, preSelected);
+    const selected = await DialogHelper.selectImport(items, type, preSelect);
     return this.addItems(selected);
   }
 
