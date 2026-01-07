@@ -19,6 +19,7 @@ import registerSettings from "./module/settings.mjs";
 import migrateWorld from "./module/migration.mjs";
 import registerHelpers from "./module/handlebars/helpers.mjs";
 import preloadTemplates from "./module/handlebars/preload.mjs";
+import { welcomeMessage } from "./module/util/chat.mjs";
 
 Hooks.once("init", async () => {
   console.log("GFV1 | Initializing Girlframe System");
@@ -58,6 +59,7 @@ async function checkMigratons() {
   const currentVersion = game.system.version;
 
   if (currentVersion !== previousVersion) {
+    await welcomeMessage(game.system.version);
     await migrateWorld(previousVersion);
     game.settings.set("gfv1", "migratedVersion", currentVersion);
   }
