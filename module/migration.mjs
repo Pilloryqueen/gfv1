@@ -28,7 +28,9 @@ class Migration {
   }
 }
 
-export default async function migrateWorld(oldVersion = "0.0.0") {
+export default async function migrateWorld(oldVersion) {
+  if(!oldVersion) return // Don't migrate clean installs
+
   ui.notifications.info(
     `Applying migrations for GIRLFRAME version ${game.system.version}. Please wait...`,
     { permanent: true }

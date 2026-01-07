@@ -38,12 +38,12 @@ export default class BasicRoll extends Roll {
       speaker: ChatMessage.getSpeaker({ actor }),
       sound: CONFIG.sounds.dice,
       content: await renderTemplate(
-        "systems/gfv1/templates/rolls/roll.hbs",
+        "systems/gfv1/templates/chat/roll.hbs",
         this
       ),
       roll: this,
     };
 
-    return getDocumentClass("ChatMessage").create(chatData);
+    return ChatMessage.create(chatData);
   }
 }
