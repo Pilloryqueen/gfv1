@@ -1,4 +1,5 @@
 import DocumentHelper from "../util/documentHelper.mjs";
+import { bindDragDrop } from "../util/dragDrop.mjs";
 import Tab, { TabGroup } from "../util/tabs.mjs";
 
 const HandlebarsApplicationMixin =
@@ -89,87 +90,10 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
   /** @override */
   _onRender(context, options) {
     this.element.querySelectorAll(".item-input").forEach((d) => {
-      d.addEventListener("change", this._onResourceChange.bind(this));
+      d.addEventListener("change", DocumentHelper.onResourceChange.bind(this));
     });
 
-    new DragDrop({
-      dragSelector: "[data-drag]",
-      dropSelector: null,
-      permissions: {
-        dragStart: this._canDragStart.bind(this),
-        drop: this._canDrop.bind(this),
-      },
-      callbacks: {
-        dragstart: this._onDragStart.bind(this),
-        dragover: this._onDragOver.bind(this),
-        drop: this._onDrop.bind(this),
-      },
-    }).bind(this.element);
-  }
-
-  async _onResourceChange(event) {
-    event.preventDefault();
-    const item = await DocumentHelper.getItemFromHTML(event.target, game.items);
-    let value = event.target.value;
-    if (event.target.type === "checkbox") value = event.target.checked;
-    let name = event.target.name;
-    if (name.startsWith("item.")) {
-      name = name.replace(/item\./, "");
-    } else {
-      console.warn(`GFV1 | Prefer disambiguated name 'item.${name}'`);
-    }
-    const updateData = {};
-    updateData[name] = value;
-    console.log("updating");
-    return item.update(updateData);
-  }
-
-  /**
-   * Drag and drop
-   */
-
-  _canDragStart(candidate) {
-    return true;
-  }
-
-  _canDrop(candidate) {
-    return true;
-  }
-
-  async _onDragStart(event) {
-    const data = await DocumentHelper.getItemFromHTML(event.currentTarget);
-    event.dataTransfer.setData("text/plain", JSON.stringify(data.toDragData()));
-  }
-
-  _onDragOver(event) {}
-
-  async _onDrop(event, target) {
-    if (!this.item.isOwner) return false; // Cannot drag and drop into other people's sheets
-    const data = TextEditor.getDragEventData(event);
-    const doc = await getDocumentClass(data.type).implementation.fromDropData(
-      data
-    );
-
-    switch (data.type) {
-      case "Item":
-        return this._onDropItem(doc);
-      case "Folder":
-        return this._onDropFolder(doc);
-      default:
-        throw new Error(`Unhandled data type: ${data.type}`);
-    }
-  }
-
-  async _onDropFolder(folder) {
-    if (folder.type !== "Item") {
-      throw new Error(`Cannot handle folder of ${folder.type}`);
-    }
-    folder.children.forEach(async (subFolder) => {
-      await this._onDropFolder(subFolder.folder);
-    });
-    folder.contents.map(async (item) => {
-      await this._onDropItem(item);
-    });
+    bindDragDrop(this, { item: this._onDropItem });
   }
 
   async _onDropItem(item) {
@@ -183,12 +107,12 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
   /**
    * Handle changing a Document's image.
    * @this Gfv1ItemSheet
-   * @param {PointerEvent} _event   The originating click event
+   * @param {PointerEvent} event   The originating click event
    * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
    * @returns {Promise}
    * @protected
    */
-  static async _onEditImage(_event, target) {
+  static async _onEditImage(event, target) {
     if (target.nodeName !== "IMG") {
       throw new Error(
         "The editImage action is available only for IMG elements."

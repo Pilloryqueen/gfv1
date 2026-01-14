@@ -109,6 +109,12 @@
       "showItemImages": {
         "name": "Show Item Images on Character Sheet",
         "hint": "Disable to reduce visual clutter in character sheets"
+      },
+      "observerEdit": {
+        "name": "Can Observers make limited changes to Girls?",
+        "hint": "If allowed, a user with Observer rights can make some specific changes such as marking tags, damaging assets, or deepening bonds",
+        "allow": "Allow",
+        "deny": "Deny"
       }
     },
     "config": {

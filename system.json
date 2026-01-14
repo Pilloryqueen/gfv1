@@ -73,6 +73,7 @@
       "flags": {}
     }
   ],
+  "socket": true,
   "documentTypes": {
     "Actor": {
       "pilot": {

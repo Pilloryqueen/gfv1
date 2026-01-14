@@ -1,3 +1,5 @@
+import DocumentHelper from "../../util/documentHelper.mjs";
+
 export default class ItemProperty {
   constructor(dataModel, item, property) {
     this.dataModel = dataModel;
@@ -6,6 +8,9 @@ export default class ItemProperty {
   }
 
   render({ editable }) {
+    if (DocumentHelper.canObserverEdit(this.item)) {
+      editable = true;
+    }
     const element = this.dataModel.schema.fields[this.property].toInput({
       label: `GFv1.item.${this.dataModel.type}.${this.property}`,
       field: this.dataModel.schema.fields[this.property],
@@ -15,7 +20,8 @@ export default class ItemProperty {
       localize: true,
       disabled: !editable,
     });
-    element.className += "item-input";
+    element.classList.add("item-input");
+    element.classList.add("item-prop");
     return element.outerHTML;
   }
 }

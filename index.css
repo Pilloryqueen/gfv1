@@ -25,6 +25,10 @@
   height: 24px;
   width: 24px;
 }
+.gfv1.sheet .item-input.pending {
+  cursor: wait;
+  opacity: 0.2;
+}
 .gfv1.sheet .sheet-body {
   overflow-y: auto;
   height: 100%;

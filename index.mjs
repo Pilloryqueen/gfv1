@@ -20,6 +20,7 @@ import migrateWorld from "./module/migration.mjs";
 import registerHelpers from "./module/handlebars/helpers.mjs";
 import preloadTemplates from "./module/handlebars/preload.mjs";
 import { welcomeMessage } from "./module/util/chat.mjs";
+import { registerSocketListen } from "./module/util/socket.mjs";
 
 Hooks.once("init", async () => {
   console.log("GFV1 | Initializing Girlframe System");
@@ -49,6 +50,7 @@ Hooks.once("init", async () => {
 
 Hooks.once("ready", async () => {
   await preloadTemplates();
+  registerSocketListen();
   if (game.user.isGM) {
     checkMigratons();
   }
