@@ -4,7 +4,7 @@ import ItemEntry from "./itemEntry.mjs";
 
 export default class ItemList {
   constructor(dataModel, items) {
-    this.items = items;
+    this.items = items.sort((a, b) => a.sort - b.sort);
     this.dataModel = dataModel;
   }
 

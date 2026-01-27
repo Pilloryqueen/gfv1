@@ -1,3 +1,5 @@
+import { TabError } from "./error.mjs";
+
 const icons = {
   description: "feather-pointed",
   frame: "car",
@@ -8,17 +10,36 @@ const icons = {
   pilot: "venus",
 };
 
-export class TabGroup {
-  constructor(ids, defaultTab, group) {
+export default class Tabs {
+  static templates(ids) {
+    return ids.reduce(
+      (templates, id) => {
+        templates[id] = { template: `systems/gfv1/templates/tabs/${id}.hbs` };
+        return templates;
+      },
+      {
+        tabs: {
+          template: "systems/gfv1/templates/tab-navigation.hbs",
+        },
+      },
+    );
+  }
+
+  constructor(ids, group) {
     this.groupName = group;
-    this.defaultTab = defaultTab;
+    this.defaultTab = ids[0];
     this.ids = ids;
 
     this._tabs = ids.map((id) => {
       const icon = icons[id];
-      if (!icon) throw new Error(`GFV1 | ${id} is not a valid tab`);
+      if (!icon) throw new TabError(id);
       return new Tab(id, icon, group);
     });
+  }
+
+  limitTabsTo(ids) {
+    this.ids = this.ids.filter((id) => ids.includes(id));
+    this._tabs = this._tabs.filter((tab) => ids.includes(tab.id));
   }
 
   contextData(tabGroups) {
@@ -38,37 +59,11 @@ export class TabGroup {
   }
 }
 
-export default class Tab {
+class Tab {
   constructor(id, icon, group) {
     this.id = id;
     this.icon = `fa-${icon}`;
     this.group = group;
     this.label = `GFv1.tab.${id}`;
-  }
-
-  static createGroup(ids, defaultTab, group) {
-    console.log("DEPRECATED use new TabGroup instead");
-    const tabs = {};
-    for (const id of ids) {
-      const icon = icons[id];
-      if (!icon) throw new Error(`GFV1 | ${id} is not a valid tab`);
-      tabs[id] = new Tab(id, icon, group);
-    }
-    tabs[defaultTab].active = "active";
-    return tabs;
-  }
-
-  static templates(ids) {
-    return ids.reduce(
-      (templates, id) => {
-        templates[id] = { template: `systems/gfv1/templates/tabs/${id}.hbs` };
-        return templates;
-      },
-      {
-        tabs: {
-          template: "systems/gfv1/templates/tab-navigation.hbs",
-        },
-      }
-    );
   }
 }

@@ -1,7 +1,7 @@
 <section class="basic-info">
-  <div class="flex flexrow">
+  <div class="fields">
     {{#if system.heat includeZero=true}}
-      <div class="field-heat">
+      <div class="field field-heat">
         <label>{{localize "GFv1.actor.heat"}}</label>
         {{formInput
           systemFields.heat
@@ -11,7 +11,7 @@
       </div>
     {{/if}}
     {{#if system.permissions includeZero=true}}
-      <div class="field-perm">
+      <div class="field field-perm">
         <label>{{localize "GFv1.actor.permissions"}}</label>
         {{formInput
           systemFields.permissions

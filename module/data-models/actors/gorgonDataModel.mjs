@@ -24,13 +24,14 @@ export default class GorgonDataModel extends BaseActorDataModel {
   }
 
   allowedPlaybookTypes = ["gorgonType"];
+  allowedItemTypes = ["rule", "asset", "gorgonClass"];
 
   get gorgonType() {
     return new Playbook(this.parent, "gorgonType");
   }
 
   get gorgonClass() {
-    if (this.parent.itemTypes.gorgonClass)
+    if (this.parent.itemTypes.gorgonClass.length > 0)
       return new GorgonClass(this.parent.itemTypes.gorgonClass[0]);
   }
 

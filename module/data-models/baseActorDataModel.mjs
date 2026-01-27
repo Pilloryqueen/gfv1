@@ -1,5 +1,5 @@
 import ItemList from "../sheets/elements/itemList.mjs";
-import DialogHelper from "../util/dialogHelper.mjs";
+import { ImportError } from "../util/error.mjs";
 import AssetDataModel from "./items/assetDataModel.mjs";
 import BondDataModel from "./items/bondDataModel.mjs";
 import IdentityDataModel from "./items/identityDataModel.mjs";
@@ -20,54 +20,38 @@ export default class BaseActorDataModel extends TypeDataModel {
   }
 
   async addItems(items) {
-    if (!Array.isArray(items)) {
-      console.warn("addItems should be called with an array. Got:", items);
-      items = [items];
-    }
-    if (items.some((item) => !this.allowedPlaybook(item))) {
-      throw new Error(
-        `Cannot import ${items.map((i) => i.name)} into ${
-          this.parent.type
-        }, allowed playbooks: ${this.allowedPlaybookTypes}`
+    if (items.some(this.invalidType.bind(this))) {
+      throw new ImportError(
+        items,
+        `has a type not allowed on ${this.parent.type}`,
+        this.invalidType.bind(this),
       );
     }
+    if (items.some(this.invalidPlaybook.bind(this))) {
+      throw new ImportError(
+        items,
+        `belongs in a playbook ${this.parent.type} does not support`,
+        this.invalidPlaybook.bind(this),
+      );
+    }
+
     return this.parent.createEmbeddedDocuments("Item", items);
   }
 
+  allowedItemTypes = [];
   allowedPlaybookTypes = [];
-  allowedPlaybook(item, strict = false) {
-    if (item.system.playbookType === undefined) return !strict;
-    return this.allowedPlaybookTypes.includes(item.system.playbookType);
+
+  invalidType(item) {
+    return !this.allowedItemTypes.includes(item.type);
   }
 
-  async importPlaybook(item) {
-    if (!item.type === "playbook") {
-      throw new Error(`Expected playbook got ${item.type}`);
-    }
-    if (!this.allowedPlaybook(item, true)) {
-      throw new Error(
-        `Cannot import ${item.system.playbookType} into ${this.parent.type}, allowed playbooks: ${this.allowedPlaybookTypes}`
-      );
-    }
-    const itemTypes = await item.system.getItemTypes();
-    await this.importItems("assets", itemTypes.asset);
-    await this.importItems(
-      "bonds",
-      itemTypes.bond,
-      (b) => b.system.level !== "npc"
-    );
-    await this.importItems("identities", itemTypes.identity, () => true);
-    await this.importItems("rules", itemTypes.rule, (r) => !r.system.locked);
-
-    const system = {};
-    system[`_${item.system.playbookType}`] = item.name;
-    return this.parent.update({ system });
+  invalidPlaybook(item) {
+    if (!item.system.playbookType) return false;
+    return !this.allowedPlaybookTypes.includes(item.system.playbookType);
   }
 
-  async importItems(type, items, preSelect = () => false) {
-    if (items.length === 0) return;
-    const selected = await DialogHelper.selectImport(items, type, preSelect);
-    return this.addItems(selected);
+  canImport(item) {
+    return !this.invalidType(item) && !this.invalidPlaybook(item);
   }
 
   /**

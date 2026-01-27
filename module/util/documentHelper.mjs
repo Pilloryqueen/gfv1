@@ -1,4 +1,5 @@
 import DialogHelper from "./dialogHelper.mjs";
+import { HtmlElementError } from "./error.mjs";
 import Socket from "./socket.mjs";
 import fromUuid from "./uuid.mjs";
 
@@ -9,13 +10,21 @@ export default class DocumentHelper {
    * @param {HTMLElement} target    The element subject to search
    * @returns {Promise<Item>}       The referenced Item if found
    */
-  static async getItemFromHTML(target) {
-    const uuid = this.getItemUuidFromHTML(target);
-    if (!uuid) throw "Expected an item-uuid on <li>";
+  static async getItemFromHtml(target) {
+    const uuid = this.getItemUuidFromHtml(target);
+    if (!uuid) {
+      if (target.closest("li")) {
+        throw new HtmlElementError(
+          target.closest("li"),
+          "Expected [data-item-uuid]",
+        );
+      }
+      throw new HtmlElementError(target, "Not part of an item list");
+    }
     return fromUuid(uuid);
   }
 
-  static getItemUuidFromHTML(target) {
+  static getItemUuidFromHtml(target) {
     return target.closest("li[data-item-uuid]")?.dataset.itemUuid;
   }
 
@@ -27,7 +36,7 @@ export default class DocumentHelper {
    * @protected
    */
   static async viewDoc(event, target) {
-    const doc = await DocumentHelper.getItemFromHTML(target);
+    const doc = await DocumentHelper.getItemFromHtml(target);
     return doc.sheet.render(true);
   }
 
@@ -39,7 +48,7 @@ export default class DocumentHelper {
    * @protected
    */
   static async deleteDoc(event, target) {
-    const doc = await DocumentHelper.getItemFromHTML(target);
+    const doc = await DocumentHelper.getItemFromHtml(target);
     const del = () => {
       return doc.delete();
     };
@@ -63,7 +72,8 @@ export default class DocumentHelper {
 
   static async onResourceChange(event) {
     event.preventDefault();
-    const item = await DocumentHelper.getItemFromHTML(event.target);
+    console.log("change");
+    const item = await DocumentHelper.getItemFromHtml(event.target);
     let value = event.target.value;
     if (event.target.type === "checkbox") value = event.target.checked;
     let propertyName = event.target.name;
@@ -88,5 +98,36 @@ export default class DocumentHelper {
         this.render();
       }
     }
+  }
+
+  /**
+   * @param {DragEvent} event
+   * @returns {Promise<{
+   *   documents: Array<Doc<T>>
+   *   type: string
+   * }>}
+   */
+  static async getDocumentsFromDropEvent(event) {
+    const data = TextEditor.getDragEventData(event);
+    let type = data.type;
+    const root = await getDocumentClass(type).implementation.fromDropData(data);
+    if (type !== "Folder") {
+      return { type, documents: [root] };
+    }
+    type = root.type;
+    const documents = this.documentsFromFolder(root);
+    return { type, documents };
+  }
+
+  /**
+   *
+   * @param {Folder<Doc<T>>} folder
+   * @returns {Array<Doc<T>>}
+   */
+  static documentsFromFolder(folder) {
+    const documents = folder.children.flatMap((child) => {
+      return this.documentsFromFolder(child.folder);
+    });
+    return documents.concat(folder.contents);
   }
 }

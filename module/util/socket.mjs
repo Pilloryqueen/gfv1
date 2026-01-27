@@ -1,4 +1,5 @@
 import DocumentHelper from "./documentHelper.mjs";
+import { SocketError } from "./error.mjs";
 import fromUuid from "./uuid.mjs";
 
 const socketName = "system.gfv1";
@@ -143,12 +144,4 @@ function sendRequest(msg, timeout = 5000) {
 
   game.socket.emit(socketName, msg);
   return promise;
-}
-
-class SocketError extends Error {
-  constructor(message) {
-    const m = String(message);
-    super(`GFV1 | Socket error: ${m}`);
-    this.originMessage = m;
-  }
 }

@@ -1,14 +1,15 @@
 import DialogHelper from "../util/dialogHelper.mjs";
 import DocumentHelper from "../util/documentHelper.mjs";
-import { bindDragDrop } from "../util/dragDrop.mjs";
-import Tab from "../util/tabs.mjs";
+import DragDropHandler from "../util/dragDrop.mjs";
+import Gfv1Error from "../util/error.mjs";
+import Tabs from "../util/tabs.mjs";
 
 const HandlebarsApplicationMixin =
   foundry.applications.api.HandlebarsApplicationMixin;
 const ActorSheetV2 = foundry.applications.sheets.ActorSheetV2;
 
 export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
-  ActorSheetV2
+  ActorSheetV2,
 ) {
   static ACTIONS = {};
   static TABS = []; // ids of tabs used by sheet
@@ -23,7 +24,7 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
         makeRoll: this._roll,
         toggleEdit: this._toggleEdit,
       },
-      this.ACTIONS
+      this.ACTIONS,
     );
     return {
       tag: "form",
@@ -51,7 +52,7 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
       basicInfo: {
         template: "systems/gfv1/templates/actor/basic-info.hbs",
       },
-      ...Tab.templates(this.TABS),
+      ...Tabs.templates(this.TABS),
     };
   }
 
@@ -70,11 +71,11 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
     super._configureRenderOptions(options);
     options.parts = ["header", "basicInfo", "tabs"];
 
-    if (this.tabs) {
-      this.tabs.ids.forEach((id) => {
-        options.parts.push(id);
-      });
-    }
+    if (this.document.limited) this.tabs.limitTabsTo(["description"]);
+
+    this.tabs.ids.forEach((id) => {
+      options.parts.push(id);
+    });
   }
 
   /** @inheritDoc */
@@ -105,25 +106,65 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
       d.addEventListener("change", DocumentHelper.onResourceChange.bind(this));
     });
 
-    bindDragDrop(this, { item: this._onDropItem });
+    new DragDropHandler(this, {
+      item: this._onDropItems,
+      internal: this._onItemSort,
+    });
   }
 
-  async _onDropItem(item) {
-    if (item.parent === this.actor) {
-      return; // TODO: Item sorting
+  async _onItemSort({ sourceElement, targetElement, sortBefore }) {
+    const source = await DocumentHelper.getItemFromHtml(sourceElement);
+    const target = await DocumentHelper.getItemFromHtml(targetElement);
+    const siblings = this.actor.itemTypes[source.type];
+    return await source.sortRelative({
+      target,
+      siblings,
+      sortBefore,
+    });
+  }
+
+  async _onDropItems(items) {
+    if (items.length === 1 && items[0].type === "playbook") {
+      return this._importPlaybook(items[0]);
     }
-    switch (item.type) {
-      case "rule":
-      case "tag":
-      case "identity":
-      case "asset":
-      case "bond":
-        return this.actor.system.addItems([item]);
-      case "playbook":
-        return this.actor.system.importPlaybook(item);
-      default:
-        throw new Error(`No drop handle for item type: ${item.type}`);
+    try {
+      return await this.actor.system.addItems(items);
+    } catch (error) {
+      if (!(error instanceof Gfv1Error)) {
+        throw error;
+      }
+      ui.notifications.error(error.originMessage);
     }
+  }
+
+  async _importPlaybook(playbook) {
+    const itemTypes = await playbook.system.getItemTypes();
+    const identities = await DialogHelper.selectImport({
+      items: itemTypes.identity,
+      type: "identities",
+      preSelect: (identity) => true,
+    });
+    const assets = await DialogHelper.selectImport({
+      items: itemTypes.asset,
+      type: "assets",
+      preSelect: (asset) => false,
+    });
+    const bonds = await DialogHelper.selectImport({
+      items: itemTypes.bond,
+      type: "bonds",
+      preSelect: (bond) => bond.system.level !== "npc",
+    });
+    const rules = await DialogHelper.selectImport({
+      items: itemTypes.rule,
+      type: "rules",
+      preSelect: (rule) => !rule.system.locked,
+    });
+    return this.actor.system.addItems([
+      ...identities,
+      ...bonds,
+      ...rules,
+      ...assets,
+    ]);
   }
 
   /**
@@ -140,8 +181,8 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
    */
   static async _onEditImage(event, target) {
     if (target.nodeName !== "IMG") {
-      throw new Error(
-        "The editImage action is available only for IMG elements."
+      throw new Gfv1Error(
+        "The editImage action is available only for IMG elements.",
       );
     }
     const attr = target.dataset.edit;
@@ -212,7 +253,7 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
     if (target.dataset.noItem !== undefined) {
       return DialogHelper.rollModifierQuery({ actor: this.actor });
     }
-    const item = await DocumentHelper.getItemFromHTML(target);
+    const item = await DocumentHelper.getItemFromHtml(target);
     DialogHelper.rollModifierQuery({ actor: this.actor, item });
   }
 }
