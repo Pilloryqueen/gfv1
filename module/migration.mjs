@@ -1,46 +1,30 @@
-class Migration {
-  noOp(_) {}
+// key: the version reached by migration
+const migrations = {};
 
-  constructor({ actors = undefined, items = undefined }) {
-    this.actorMigration = actors || this.noOp;
-    this.itemMigration = items || this.noOp;
-  }
+export class Migration {
+  /**
+   * @param {Object} callbacks
+   * @param {Patches} callbacks.all holds callbacks to apply to ALL documents of a certain type
+   * @param {Patches} callbacks.error holds callbacks to apply to documents of a certain type reporting ERRORs
+   */
+  constructor({ all, error }) {}
 
   apply() {
-    return Promise.all([
-      forInvalid(game.actors, this.actorMigration),
-      forInvalid(game.items, this.itemMigration),
-      ...game.actors.contents.map((actor) => {
-        return forInvalid(actor.items, this.itemMigration);
-      }),
-      ...game.packs.contents.map((pack) => {
-        return forInvalid(actor.pack, this.itemMigration);
-      }),
-    ]);
-  }
-
-  async forInvalid(collection, fn) {
-    return Promise.all(
-      Array.from(collection.invalidDocumentIds).map((id) => {
-        return fn(collection.getInvalid(id));
-      })
-    );
+    // TODO: Make better system for migrations
   }
 }
 
 export default async function migrateWorld(oldVersion) {
-  if(!oldVersion) return // Don't migrate clean installs
-
   ui.notifications.info(
     `Applying migrations for GIRLFRAME version ${game.system.version}. Please wait...`,
-    { permanent: true }
+    { permanent: true },
   );
 
   await runMigrations(oldVersion);
 
   ui.notifications.info(
     `Migrations for GIRLFRAME version ${game.system.version} completed!`,
-    { permanent: true }
+    { permanent: true },
   );
 }
 
@@ -55,23 +39,6 @@ async function runMigrations(oldVersion) {
   });
 }
 
-// key: the version reached by migration
-const migrations = {
-  "0.3.0": new Migration({
-    actors: (actor) => {
-      if (actor.type === "girl") return actor.update({ type: "pilot" });
-    },
-    items: (item) => {
-      if (
-        item.validationFailures.fields.fields.system.fields.playbookType
-          ?.invalidValue === "girlPlaybook"
-      ) {
-        item.update({ system: { playbookType: "pilotPlaybook" } });
-      }
-    },
-  }),
-};
-
 function semverCompare(v1, v2) {
   const p1 = v1.split(".").map(Number);
   const p2 = v2.split(".").map(Number);
@@ -83,3 +50,9 @@ function semverCompare(v1, v2) {
   }
   return 0;
 }
+
+/**
+ * @typedef {Object} Patches
+ * @property {Function} items
+ * @property {Function} actors
+ */

@@ -61,8 +61,8 @@ async function checkMigratons() {
   const currentVersion = game.system.version;
 
   if (currentVersion !== previousVersion) {
-    await welcomeMessage(game.system.version);
-    await migrateWorld(previousVersion);
+    await welcomeMessage(currentVersion);
+    if (previousVersion !== "NONE") await migrateWorld(previousVersion);
     game.settings.set("gfv1", "migratedVersion", currentVersion);
   }
 }
