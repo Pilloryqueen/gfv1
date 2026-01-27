@@ -1,5 +1,6 @@
 import BaseActorDataModel from "../baseActorDataModel.mjs";
 import Playbook from "../../sheets/elements/playbook.mjs";
+import Gfv1Error from "../../util/error.mjs";
 
 const { BooleanField, HTMLField, NumberField, StringField } =
   foundry.data.fields;
@@ -9,7 +10,6 @@ const schema = {
   permissions: new NumberField({ required: true, min: 0, initial: 0, step: 1 }),
   heat: new NumberField({ required: true, min: 0, initial: 0, step: 1 }),
   pronouns: new StringField({ required: true, initial: "it/its" }),
-  test: new BooleanField({ initial: true }),
   _framePlaybook: new StringField({ required: true, initial: "No Playbook" }),
   _pilotPlaybook: new StringField({ required: true, initial: "No Playbook" }),
 };
@@ -20,6 +20,7 @@ export default class PilotDataModel extends BaseActorDataModel {
   }
 
   allowedPlaybookTypes = ["pilotPlaybook", "framePlaybook"];
+  allowedItemTypes = ["tag", "identity", "bond", "rule", "asset", ];
 
   get pilotPlaybook() {
     const playbook = new Playbook(this.parent, "pilotPlaybook", {
@@ -36,7 +37,7 @@ export default class PilotDataModel extends BaseActorDataModel {
 
   async embraceTag(item) {
     if (item.parent !== this.parent) {
-      throw new Error(
+      throw new Gfv1Error(
         `${this.name} (id: ${this.id}) is not parent of ${item.id} (parent.id: ${item.parent?.id})`
       );
     }
@@ -44,10 +45,10 @@ export default class PilotDataModel extends BaseActorDataModel {
   }
 
   async spendHeat(amount) {
-    if (amount < 0) throw Error("Cannot spend negative heat!");
+    if (amount < 0) throw Gfv1Error("Cannot spend negative heat!");
     const doc = this.parent;
     const newHeat = doc.system.heat - amount;
-    if (newHeat < 0) throw Error("Spent too much heat!");
+    if (newHeat < 0) throw Gfv1Error("Spent too much heat!");
     return doc.update({ "system.heat": newHeat });
   }
 }

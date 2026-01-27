@@ -5,6 +5,12 @@
 .gfv1.sheet.actor-sheet .sheet-header .header-fields {
   padding: auto;
 }
+.gfv1.sheet.actor-sheet .basic-info .fields {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 5px;
+  padding: 5px;
+}
 .gfv1.sheet.actor-sheet .basic-info .actor-controls {
   position: relative;
 }
@@ -20,6 +26,9 @@
 }
 .gfv1.sheet.actor-sheet .gorgon-class .gorgon-class-header .item-name {
   flex: 95%;
+}
+.gfv1.sheet .item-img {
+  cursor: grab;
 }
 .gfv1.sheet .item-img img {
   height: 24px;

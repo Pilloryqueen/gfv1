@@ -1,5 +1,6 @@
 import { GFV1 } from "../config.mjs";
 import BasicRoll from "../rolls/basicRoll.mjs";
+import { RollError } from "./error.mjs";
 
 export default class DialogHelper {
   static async confirmAdopt() {
@@ -9,14 +10,18 @@ export default class DialogHelper {
     });
   }
 
-  static async selectImport(items, type, preSelect) {
-    const context = { items: [] };
+  static async selectImport({ items, type, preSelect }) {
+    if (!items || items.length === 0) return [];
+    const context = {
+      items: [],
+      header: `GFv1.dialog.selectImport.header.${type}`,
+    };
     for (const item of items) {
       context.items.push({ selected: preSelect(item), ...item });
     }
     const content = await renderTemplate(
       "systems/gfv1/templates/dialog/select.hbs",
-      context
+      context,
     );
     try {
       return await foundry.applications.api.DialogV2.prompt({
@@ -45,12 +50,12 @@ export default class DialogHelper {
       rule_type: game.i18n.localize(GFV1.playbooks[play.system.playbookType]),
       playbook_name: playbook.name,
       playbook_type: game.i18n.localize(
-        GFV1.playbooks[playbook.system.playbookType]
+        GFV1.playbooks[playbook.system.playbookType],
       ),
     };
     const content = game.i18n.format(
       "GFv1.dialog.warnPlaybookImport.content",
-      context
+      context,
     );
     const buttons = [
       {
@@ -63,7 +68,7 @@ export default class DialogHelper {
         action: "abort",
         label: game.i18n.format(
           "GFv1.dialog.warnPlaybookImport.abort",
-          context
+          context,
         ),
         callback: abort,
       },
@@ -71,7 +76,7 @@ export default class DialogHelper {
         action: "continue",
         label: game.i18n.format(
           "GFv1.dialog.warnPlaybookImport.continue",
-          context
+          context,
         ),
       },
     ];
@@ -97,7 +102,7 @@ export default class DialogHelper {
   static async rollModifierQuery({ item, actor }) {
     if (!actor) {
       actor = item.actor;
-      if (!actor) throw Error("Who's rolling?!");
+      if (!actor) throw RollError("Who is rolling?!");
     }
     const context = { maxHeat: actor.system.heat };
     const useHeat = (!item || item.system.heat) && actor.system.heat;
@@ -106,7 +111,7 @@ export default class DialogHelper {
     }
     const content = await renderTemplate(
       "systems/gfv1/templates/dialog/rollModifier.hbs",
-      context
+      context,
     );
     return await foundry.applications.api.DialogV2.prompt({
       window: {
@@ -161,7 +166,7 @@ export default class DialogHelper {
           return false;
         },
       },
-      options
+      options,
     );
 
     return foundry.applications.api.DialogV2.confirm({
@@ -188,7 +193,7 @@ export default class DialogHelper {
     const o = foundry.utils.mergeObject(defaults, options);
     const content = await renderTemplate(
       "systems/gfv1/templates/dialog/queryNumber.hbs",
-      o
+      o,
     );
     try {
       return await foundry.applications.api.DialogV2.prompt({

@@ -152,7 +152,13 @@
         "content": "Are you sure you want to delete this {type} from {parent}?"
       },
       "selectImport": {
-        "title": "Select {type} to import"
+        "title": "Select {type} to import",
+        "header": {
+          "identities": "Your starting Identities are:",
+          "assets": "Pick 2 assets and detail them:",
+          "bonds": "Pick 1 Girl to have a Personal Bond with. You have a Cadre Bond with everyone else. You also have a Bond with 1-2 NPCs:",
+          "rules": "You start with these plays and rules:"
+        }
       },
       "warnPlaybookImport": {
         "title": "Imported rule doesn't macth playbook",
@@ -161,6 +167,9 @@
         "abort": "Do not import",
         "continue": "Import anyway"
       }
+    },
+    "notification": {
+      "cannotImport": "Could not import {invalid_items}"
     },
     "edit": {
       "lock": "Lock sheet",

@@ -1,15 +1,21 @@
-<ul>
-  {{#each items as |item id|}}
-    <li>
-      <input
-        type="checkbox"
-        name="checkbox-{{id}}"
-        value="{{id}}"
-        {{checked item.selected}}
-      />
-      <label for="checkbox-{{id}}">
-        {{item.name}}
-      </label>
-    </li>
-  {{/each}}
-</ul>
+<section>
+  <p>
+    {{localize header}}
+  </p>
+  <ul>
+    {{#each items as |item id|}}
+      <li>
+        <input
+          type="checkbox"
+          name="checkbox-{{id}}"
+          value="{{id}}"
+          {{checked item.selected}}
+        />
+        <label for="checkbox-{{id}}">
+          {{item.name}}
+        </label>
+      </li>
+    {{/each}}
+  </ul>
+
+</section>

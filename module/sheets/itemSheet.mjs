@@ -1,6 +1,7 @@
 import DocumentHelper from "../util/documentHelper.mjs";
-import { bindDragDrop } from "../util/dragDrop.mjs";
-import Tab, { TabGroup } from "../util/tabs.mjs";
+import DragDropHandler from "../util/dragDrop.mjs";
+import Gfv1Error from "../util/error.mjs";
+import Tabs from "../util/tabs.mjs";
 
 const HandlebarsApplicationMixin =
   foundry.applications.api.HandlebarsApplicationMixin;
@@ -9,7 +10,7 @@ const ItemSheetV2 = foundry.applications.sheets.ItemSheetV2;
 const TABS = ["description", "item"];
 
 export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
-  ItemSheetV2
+  ItemSheetV2,
 ) {
   static DEFAULT_OPTIONS = {
     tag: "form",
@@ -36,14 +37,14 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
     return `${this.item.type}: ${this.item.name}`;
   }
 
-  tabs = new TabGroup(TABS, "description", "primary");
+  tabs = new Tabs(TABS, "description", "primary");
 
   static get PARTS() {
     return {
       header: {
         template: "systems/gfv1/templates/item/header.hbs",
       },
-      ...Tab.templates(TABS),
+      ...Tabs.templates(TABS),
     };
   }
 
@@ -51,7 +52,7 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
   _configureRenderOptions(options) {
     super._configureRenderOptions(options);
     options.parts = ["header", "tabs", "description", "item"];
-    options.defaultTab = "description";
+    if (this.document.limited) this.tabs.limitTabsTo(["description"]);
   }
 
   /** @inheritDoc */
@@ -80,7 +81,7 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
             secrets: this.document.isOwner,
             rollData: this.document.getRollData(),
             relativeTo: this.document,
-          }
+          },
         );
         break;
     }
@@ -93,11 +94,20 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
       d.addEventListener("change", DocumentHelper.onResourceChange.bind(this));
     });
 
-    bindDragDrop(this, { item: this._onDropItem });
+    new DragDropHandler(this, {
+      item: this._onDropItems,
+      internal: this._onItemSort,
+    });
   }
 
-  async _onDropItem(item) {
-    return this.item.system.addRef(item.uuid);
+  async _onItemSort({ sortedItems }) {
+    return this.item.system.reorderRefs(sortedItems);
+  }
+
+  async _onDropItems(items) {
+    for (const item of items) {
+      await this.item.system.addRefs(item.uuid);
+    }
   }
 
   /**
@@ -114,8 +124,8 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
    */
   static async _onEditImage(event, target) {
     if (target.nodeName !== "IMG") {
-      throw new Error(
-        "The editImage action is available only for IMG elements."
+      throw new Gfv1Error(
+        "The editImage action is available only for IMG elements.",
       );
     }
     const attr = target.dataset.edit;
@@ -142,7 +152,7 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
   }
 
   static async _deleteRef(event, target) {
-    const uuid = DocumentHelper.getItemUuidFromHTML(target);
+    const uuid = DocumentHelper.getItemUuidFromHtml(target);
     return this.item.system.deleteRef(uuid);
   }
 }

@@ -7,6 +7,7 @@ import ItemList from "../../sheets/elements/itemList.mjs";
 import BondDataModel from "./bondDataModel.mjs";
 import AssetDataModel from "./assetDataModel.mjs";
 import IdentityDataModel from "./identityDataModel.mjs";
+import Gfv1Error from "../../util/error.mjs";
 
 const { HTMLField, ArrayField, DocumentUUIDField } = foundry.data.fields;
 
@@ -67,7 +68,9 @@ export default class PlaybookDataModel extends BaseItemDataModel {
   async addRef(uuid) {
     const item = await fromUuid(uuid);
     if (!["rule", "asset", "bond", "identity"].includes(item.type))
-      throw new Error(`Playbook doesn't currently support importing ${item.type}`);
+      throw new Gfv1Error(
+        `Playbook doesn't currently support importing ${item.type}`,
+      );
     if (
       item.system.playbookType !== undefined &&
       item.system.playbookType !== this.playbookType
@@ -82,9 +85,28 @@ export default class PlaybookDataModel extends BaseItemDataModel {
   async deleteRef(uuid) {
     const index = this.items.indexOf(uuid);
     if (index === -1)
-      throw new Error(`Cannot delete ${uuid} from playbook. Not Found`);
+      throw new Gfv1Error(`Cannot delete ${uuid} from playbook. Not Found`);
     const items = this.items;
     items.splice(index, 1);
+    return this.parent.update({ system: { items } });
+  }
+
+  /**
+   * Reorder some references within the playbook. All refs not in orderedRefs should be left in their current position
+   * @param {Array<ref>} orderedRefs the refs to be reordered in the order they should be
+   */
+  async reorderRefs(orderedRefs) {
+    const indexes = [];
+    const items = this.items;
+    items.forEach((item, index) => {
+      if (orderedRefs.includes(item)) indexes.push(index);
+    });
+    if (orderedRefs.length !== indexes.length)
+      throw new Gfv1Error("Invalid reorder");
+
+    indexes.forEach((itemIndex, orderedIndex) => {
+      items[itemIndex] = orderedRefs[orderedIndex];
+    });
     return this.parent.update({ system: { items } });
   }
 }

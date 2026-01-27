@@ -1,5 +1,7 @@
 // This would be much nicer if we targeted v13 -.-
 
+import Gfv1Error from "./error.mjs";
+
 export default async function fromUuid(uuid) {
   const resolved = foundry.utils.parseUuid(uuid);
   const doc = resolved.collection.get(resolved.documentId);
@@ -13,5 +15,5 @@ export default async function fromUuid(uuid) {
     return doc.items.get(resolved.embedded[1]);
   }
 
-  throw new Error(` Could not resolve ${uuid}`);
+  throw new Gfv1Error(`Could not resolve uuid:${uuid}`);
 }
