@@ -5,7 +5,7 @@ export default function registerSettings() {
     scope: "client",
     config: true,
     type: Boolean,
-    default: false,
+    default: true,
   });
 
   game.settings.register("gfv1", "migratedVersion", {
@@ -13,7 +13,7 @@ export default function registerSettings() {
     scope: "world",
     config: false,
     type: String,
-    default: "0.0.0",
+    default: "NONE",
   });
 
   game.settings.register("gfv1", "observerEdit", {
