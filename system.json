@@ -18,7 +18,10 @@
       "system": "gfv1",
       "path": "packs/frame",
       "type": "Item",
-      "private": false,
+      "ownership": {
+        "ASSISTANT": "OWNER",
+        "PLAYER": "OBSERVER"
+      },
       "flags": {
         "gfv1": {
           "playbookType": "framePlaybook"
@@ -31,7 +34,10 @@
       "system": "gfv1",
       "path": "packs/girl",
       "type": "Item",
-      "private": false,
+      "ownership": {
+        "ASSISTANT": "OWNER",
+        "PLAYER": "OBSERVER"
+      },
       "flags": {
         "gfv1": {
           "playbookType": "pilotPlaybook"
@@ -44,7 +50,10 @@
       "system": "gfv1",
       "path": "packs/handler",
       "type": "Item",
-      "private": true,
+      "ownership": {
+        "ASSISTANT": "OWNER",
+        "PLAYER": "LIMITED"
+      },
       "flags": {
         "gfv1": {
           "playbookType": "handlerPlaybook"
@@ -52,12 +61,26 @@
       }
     },
     {
-      "name": "npc",
+      "name": "npcs",
       "label": "NPCs",
       "system": "gfv1",
-      "path": "packs/npc",
+      "path": "packs/npcs",
+      "type": "Actor",
+      "ownership": {
+        "ASSISTANT": "OWNER",
+        "PLAYER": "OBSERVER"
+      }
+    },
+    {
+      "name": "adversaries",
+      "label": "Adversaries",
+      "system": "gfv1",
+      "path": "packs/adversaries",
       "type": "Item",
-      "private": true,
+      "ownership": {
+        "ASSISTANT": "OWNER",
+        "PLAYER": "LIMITED"
+      },
       "flags": {
         "gfv1": {
           "playbookType": "gorgonType"
@@ -88,6 +111,9 @@
       },
       "gorgon": {
         "htmlFields": ["description", "gorgonTypeDescription"]
+      },
+      "npc": {
+        "htmlFields": ["description"]
       }
     },
     "Item": {

@@ -12,8 +12,9 @@ export default class ListItem {
     const context = {
       item: this.item,
       uuid: this.item.uuid,
+      tooltip: this.item.system.tooltip,
       properties: this.dataModel.itemListProperties.map(
-        (p) => new ItemProperty(this.dataModel, this.item, p)
+        (p) => new ItemProperty(this.dataModel, this.item, p),
       ),
       type: this.dataModel.type,
       controls: controls,

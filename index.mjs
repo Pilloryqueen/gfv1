@@ -21,6 +21,8 @@ import registerHelpers from "./module/handlebars/helpers.mjs";
 import preloadTemplates from "./module/handlebars/preload.mjs";
 import { welcomeMessage } from "./module/util/chat.mjs";
 import { registerSocketListen } from "./module/util/socket.mjs";
+import NpcSheet from "./module/sheets/actor/npcSheet.mjs";
+import NpcDataModel from "./module/data-models/actors/npcDataModel.mjs";
 
 Hooks.once("init", async () => {
   console.log("GFV1 | Initializing Girlframe System");
@@ -32,6 +34,7 @@ Hooks.once("init", async () => {
   CONFIG.Actor.dataModels.gorgon = GorgonDataModel;
   CONFIG.Actor.dataModels.handler = HandlerDataModel;
   CONFIG.Actor.dataModels.pilot = PilotDataModel;
+  CONFIG.Actor.dataModels.npc = NpcDataModel;
 
   CONFIG.Item.documentClass = Gfv1Item;
   CONFIG.Item.dataModels.asset = AssetDataModel;
@@ -72,21 +75,26 @@ function registerSheets() {
   Actors.registerSheet("gfv1", PilotSheet, {
     makeDefault: true,
     types: ["pilot"],
-    label: "GFV1.sheets.pilotSheet",
+    label: "GFv1.sheets.pilotSheet",
   });
   Actors.registerSheet("gfv1", HandlerSheet, {
     makeDefault: true,
     types: ["handler"],
-    label: "GFV1.sheets.handlerSheet",
+    label: "GFv1.sheets.handlerSheet",
+  });
+  Actors.registerSheet("gfv1", NpcSheet, {
+    makeDefault: true,
+    types: ["npc"],
+    label: "GFv1.sheets.npcSheet",
   });
   Actors.registerSheet("gfv1", GorgonSheet, {
     makeDefault: true,
     types: ["gorgon"],
-    label: "GFV1.sheets.gorgonSheet",
+    label: "GFv1.sheets.gorgonSheet",
   });
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("gfv1", Gfv1ItemSheet, {
     makeDefault: true,
-    label: "GFV1.sheets.itemSheet",
+    label: "GFv1.sheets.itemSheet",
   });
 }

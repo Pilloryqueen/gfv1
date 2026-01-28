@@ -39,11 +39,14 @@
   opacity: 0.2;
 }
 .gfv1.sheet .sheet-body {
-  overflow-y: auto;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
   height: 100%;
 }
-.gfv1.sheet .sheet-body .item-description {
-  height: 100%;
+.gfv1.sheet .sheet-body .description {
+  flex: 1 1 auto;
+  min-height: auto;
   display: grid;
   grid-template-rows: 1fr;
 }

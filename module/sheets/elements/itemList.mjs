@@ -4,7 +4,7 @@ import ItemEntry from "./itemEntry.mjs";
 
 export default class ItemList {
   constructor(dataModel, items) {
-    this.items = items.sort((a, b) => a.sort - b.sort);
+    this.items = items;
     this.dataModel = dataModel;
   }
 
@@ -12,12 +12,16 @@ export default class ItemList {
     return this.items.length === 0;
   }
 
-  render({ locked, max, playbookType, editable, actor }) {
+  render({ locked, max, playbookType, editable, actor, reorder }) {
+    let items = this.items;
+    if (reorder !== false) {
+      items = items.sort((a, b) => a.sort - b.sort);
+    }
     const context = {
       name: this.dataModel.label,
-      items: this.items.map((item) => new ItemEntry(this.dataModel, item)),
+      items: items.map((item) => new ItemEntry(this.dataModel, item)),
       properties: this.dataModel.itemListProperties.map(
-        this.dataModel.propertyLabel.bind(this.dataModel)
+        this.dataModel.propertyLabel.bind(this.dataModel),
       ),
       type: this.dataModel.type,
       createDoc,
