@@ -1,6 +1,6 @@
 {
   "id": "gfv1",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "title": "GIRL FRAME",
   "description": "Unofficial system for playing GIRL FRAME. System by Isabelle M. Ruebsaat",
   "authors": [
@@ -131,5 +131,5 @@
     "verified": "12"
   },
   "manifest": "https://raw.githubusercontent.com/Pilloryqueen/gfv1/refs/heads/master/system.json",
-  "download": "https://github.com/Pilloryqueen/gfv1/archive/refs/tags/0.3.0.zip"
+  "download": "https://github.com/Pilloryqueen/gfv1/archive/refs/tags/0.4.0.zip"
 }
