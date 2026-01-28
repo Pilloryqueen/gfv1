@@ -3,11 +3,16 @@
   data-tab="{{tab.id}}"
   data-group="{{tab.group}}"
 >
-  <section class="item-description">
+  {{#if (defined system.tooltip)}}
+    <div>
+      <label>{{localize "GFv1.item.tooltip"}}</label>
+      {{formInput systemFields.tooltip value=system.tooltip disabled=(not editable)}}
+    </div>
+  {{/if}}
+  <section class="description">
     <prose-mirror
-      class="item-description-editor"
+      class="description-editor"
       name="system.description"
-      data-document-u-u-i-d="{{item.uuid}}"
       value="{{system.description}}"
       toggled="true"
       {{disabled (not editable)}}

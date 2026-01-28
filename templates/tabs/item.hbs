@@ -8,11 +8,14 @@
       <p>{{localize "GFv1.item.playbook.dragMoreItems"}}</p>
     {{else}}
       <div class="item-list-group">
-        {{#if (not assets.empty)}}{{render assets}}{{/if}}
-        {{#if (not bonds.empty)}}{{render bonds}}{{/if}}
-        {{#if (not identities.empty)}}{{render identities}}{{/if}}
-        {{#if (not rules.empty)}}{{render rules}}{{/if}}
-        {{#if (not advancements.empty)}}{{render advancements}}{{/if}}
+        {{#if (not assets.empty)}}{{render assets reorder=false}}{{/if}}
+        {{#if (not bonds.empty)}}{{render bonds reorder=false}}{{/if}}
+        {{#if (not identities.empty)}}{{render identities reorder=false}}{{/if}}
+        {{#if (not rules.empty)}}{{render rules reorder=false}}{{/if}}
+        {{#if (not advancements.empty)}}{{render
+            advancements
+            reorder=false
+          }}{{/if}}
       </div>
     {{/if}}
   {{else if (eq item.type "rule")}}

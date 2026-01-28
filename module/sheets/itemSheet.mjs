@@ -76,7 +76,7 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
     switch (partId) {
       case "description":
         context.enrichedDescription = await TextEditor.enrichHTML(
-          this.item.system.description,
+          this.document.system.description,
           {
             secrets: this.document.isOwner,
             rollData: this.document.getRollData(),
@@ -106,7 +106,7 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
 
   async _onDropItems(items) {
     for (const item of items) {
-      await this.item.system.addRefs(item.uuid);
+      await this.item.system.addRef(item.uuid);
     }
   }
 

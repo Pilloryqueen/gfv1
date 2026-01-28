@@ -62,7 +62,22 @@ export default class PlaybookDataModel extends BaseItemDataModel {
   }
 
   async getItems() {
-    return await Promise.all(this.items.map((uuid) => fromUuid(uuid)));
+    const items = [];
+    const stale = [];
+    for (const uuid of this.items) {
+      const item = await fromUuid(uuid);
+      if (!item) {
+        stale.push(uuid);
+      } else {
+        items.push(item);
+      }
+    }
+    if (stale.length > 0) {
+      console.warn(
+        `GFV1: Stale references in ${this.parent.name}: ${stale.join(", ")} should be deleted`,
+      );
+    }
+    return items;
   }
 
   async addRef(uuid) {
@@ -79,6 +94,15 @@ export default class PlaybookDataModel extends BaseItemDataModel {
     }
     const items = this.items;
     items.push(uuid);
+    return this.parent.update({ system: { items } });
+  }
+
+  async deleteStaleRefs() {
+    const items = [];
+    for (const uuid of this.items) {
+      const item = await fromUuid(uuid);
+      if (item) items.push(uuid);
+    }
     return this.parent.update({ system: { items } });
   }
 
