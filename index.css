@@ -96,3 +96,26 @@
 .application .tab[data-tab]:not(.active) {
   display: none;
 }
+.description .handler {
+  animation: glow 4s linear infinite alternate;
+}
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 1rem #0004ff, 0 0 2rem #ff00ff, 0 0 3rem #7700ff;
+  }
+  20% {
+    text-shadow: 0 0 1rem #ff00ff, 0 0 2rem #7700ff, 0 0 3rem #ff00bf;
+  }
+  40% {
+    text-shadow: 0 0 1rem #7700ff, 0 0 2rem #ff00bf, 0 0 3rem #ff00c8;
+  }
+  60% {
+    text-shadow: 0 0 1rem #ff00bf, 0 0 2rem #ff00c8, 0 0 3rem #d9ff00;
+  }
+  80% {
+    text-shadow: 0 0 1rem #d9ff00, 0 0 2rem #ffe600, 0 0 3rem #0004ff;
+  }
+  100% {
+    text-shadow: 0 0 1rem #ffe600, 0 0 2rem #0004ff, 0 0 3rem #ff00ff;
+  }
+}
