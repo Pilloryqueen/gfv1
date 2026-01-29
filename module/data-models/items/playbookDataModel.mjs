@@ -74,8 +74,9 @@ export default class PlaybookDataModel extends BaseItemDataModel {
     }
     if (stale.length > 0) {
       console.warn(
-        `GFV1: Stale references in ${this.parent.name}: ${stale.join(", ")} should be deleted`,
+        `GFV1: Stale references in ${this.parent.name}: ${stale.join(", ")} will be deleted`,
       );
+      this.deleteStaleRefs();
     }
     return items;
   }
