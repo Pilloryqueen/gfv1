@@ -71,7 +71,7 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
     super._configureRenderOptions(options);
     options.parts = ["header", "basicInfo", "tabs"];
 
-    if (this.document.limited) this.tabs.limitTabsTo(["description"]);
+    if (this.document.limited) this.tabs.limitTabsTo(["description", "actor"]);
 
     this.tabs.ids.forEach((id) => {
       options.parts.push(id);
