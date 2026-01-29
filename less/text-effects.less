@@ -1,0 +1,55 @@
+// main: ./main.less
+
+@glow-color-1: #0004ff;
+@glow-color-2: #ff00ff;
+@glow-color-3: #7700ff;
+@glow-color-4: #ff00bf;
+@glow-color-5: #ff00c8;
+@glow-color-6: #d9ff00;
+@glow-color-7: #ffe600;
+@glow-color-8: #ff00d4;
+
+.description {
+  .handler {
+    animation: glow 4s linear infinite alternate;
+  }
+}
+
+@keyframes glow {
+  0% {
+    text-shadow:
+      0 0 1rem @glow-color-1,
+      0 0 2rem @glow-color-2,
+      0 0 3rem @glow-color-3;
+  }
+  20% {
+    text-shadow:
+      0 0 1rem @glow-color-2,
+      0 0 2rem @glow-color-3,
+      0 0 3rem @glow-color-4;
+  }
+  40% {
+    text-shadow:
+      0 0 1rem @glow-color-3,
+      0 0 2rem @glow-color-4,
+      0 0 3rem @glow-color-5;
+  }
+  60% {
+    text-shadow:
+      0 0 1rem @glow-color-4,
+      0 0 2rem @glow-color-5,
+      0 0 3rem @glow-color-6;
+  }
+  80% {
+    text-shadow:
+      0 0 1rem @glow-color-6,
+      0 0 2rem @glow-color-7,
+      0 0 3rem @glow-color-1;
+  }
+  100% {
+    text-shadow:
+      0 0 1rem @glow-color-7,
+      0 0 2rem @glow-color-1,
+      0 0 3rem @glow-color-2;
+  }
+}
