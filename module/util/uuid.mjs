@@ -4,6 +4,7 @@ import Gfv1Error from "./error.mjs";
 
 export default async function fromUuid(uuid) {
   const resolved = foundry.utils.parseUuid(uuid);
+  if (!resolved.collection) return null;
   const doc = resolved.collection.get(resolved.documentId);
   if (!doc) {
     return resolved.collection.getDocument(resolved.documentId); // compendium

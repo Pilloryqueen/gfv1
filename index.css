@@ -93,3 +93,6 @@
 .chat-card .roll-result-header .low {
   color: red;
 }
+.application .tab[data-tab]:not(.active) {
+  display: none;
+}
