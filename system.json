@@ -127,8 +127,8 @@
     }
   },
   "compatibility": {
-    "minimum": "12",
-    "verified": "12"
+    "minimum": "11",
+    "verified": "12.331"
   },
   "manifest": "https://raw.githubusercontent.com/Pilloryqueen/gfv1/refs/heads/master/system.json",
   "download": "https://github.com/Pilloryqueen/gfv1/archive/refs/tags/0.4.1.zip"
