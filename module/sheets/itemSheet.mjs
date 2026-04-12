@@ -140,10 +140,8 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
       redirectToRoot: defaultImage ? [defaultImage] : [],
       callback: (path) => {
         target.src = path;
-        if (this.options.form.submitOnChange) {
-          const submit = new Event("submit");
-          this.element.dispatchEvent(submit);
-        }
+
+        return this.document.update({ [target.dataset.edit]: path })
       },
       top: this.position.top + 40,
       left: this.position.left + 10,
