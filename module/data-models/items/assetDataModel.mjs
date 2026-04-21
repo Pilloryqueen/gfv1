@@ -1,12 +1,13 @@
 import BaseItemDataModel from "../baseItemDataModel.mjs";
 import PlaybookTypeField from "../fields/playbookTypeField.mjs";
 
-const { BooleanField, HTMLField } = foundry.data.fields;
+const { BooleanField, HTMLField, StringField } = foundry.data.fields;
 
 export default class AssetDataModel extends BaseItemDataModel {
   static type = "asset";
   static defineSchema() {
     return {
+      tooltip: new StringField({ required: true, initial: "" }),
       description: new HTMLField(),
       playbookType: new PlaybookTypeField({
         required: true,

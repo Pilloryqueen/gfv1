@@ -6,6 +6,7 @@ export default class GorgonClassDataModel extends BaseItemDataModel {
   static type = "gorgonClass";
   static defineSchema() {
     return {
+      tooltip: new StringField({ required: true, initial: "" }),
       description: new HTMLField(),
       apperance: new StringField(),
       maxAssets: new NumberField({
