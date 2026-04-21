@@ -20,7 +20,7 @@ export default class PilotDataModel extends BaseActorDataModel {
   }
 
   allowedPlaybookTypes = ["pilotPlaybook", "framePlaybook"];
-  allowedItemTypes = ["tag", "identity", "bond", "rule", "asset", ];
+  allowedItemTypes = ["tag", "identity", "bond", "rule", "asset"];
 
   get pilotPlaybook() {
     const playbook = new Playbook(this.parent, "pilotPlaybook", {
@@ -38,7 +38,7 @@ export default class PilotDataModel extends BaseActorDataModel {
   async embraceTag(item) {
     if (item.parent !== this.parent) {
       throw new Gfv1Error(
-        `${this.name} (id: ${this.id}) is not parent of ${item.id} (parent.id: ${item.parent?.id})`
+        `${this.name} (id: ${this.id}) is not parent of ${item.id} (parent.id: ${item.parent?.id})`,
       );
     }
     item.update({ type: "identity", system: { marked: "false" } });

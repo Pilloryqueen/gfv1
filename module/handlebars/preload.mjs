@@ -26,6 +26,6 @@ export default async function preloadTemplates() {
   return Promise.all(
     keys.map(async ({ key, templateName }) => {
       preloadedTemplates[key] = await getTemplate(templateName);
-    })
+    }),
   );
 }

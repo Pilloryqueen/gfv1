@@ -15,7 +15,7 @@ export default class HandlerDataModel extends BaseActorDataModel {
   }
 
   allowedPlaybookTypes = ["handlerPlaybook"];
-  allowedItemTypes = ["tag", "identity", "bond", "rule", "asset", ];
+  allowedItemTypes = ["tag", "identity", "bond", "rule", "asset"];
 
   get handlerPlaybook() {
     return new Playbook(this.parent, "handlerPlaybook");

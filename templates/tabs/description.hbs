@@ -6,7 +6,11 @@
   {{#if (defined system.tooltip)}}
     <div>
       <label>{{localize "GFv1.item.tooltip"}}</label>
-      {{formInput systemFields.tooltip value=system.tooltip disabled=(not editable)}}
+      {{formInput
+        systemFields.tooltip
+        value=system.tooltip
+        disabled=(not editable)
+      }}
     </div>
   {{/if}}
   <section class="description">

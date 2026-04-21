@@ -10,8 +10,8 @@ export default function partial(key, other) {
   if (!template)
     throw new Gfv1Error(
       `Template must be one of:\n * ${Object.keys(preloadedTemplates).join(
-        "\n * "
-      )}\n not ${key}`
+        "\n * ",
+      )}\n not ${key}`,
     );
   const context = {};
   foundry.utils.mergeObject(context, other.data.root);
