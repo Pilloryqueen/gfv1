@@ -7,9 +7,9 @@ export default class RuleDataModel extends BaseItemDataModel {
   static type = "rule";
   static defineSchema() {
     return {
+      tooltip: new StringField({ required: true, initial: "" }),
       description: new HTMLField(),
       play: new BooleanField({ required: true, initial: false }),
-      tooltip: new StringField({ required: true, initial: "" }),
       playbookType: new PlaybookTypeField({
         required: true,
       }),

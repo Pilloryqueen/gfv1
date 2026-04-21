@@ -7,12 +7,13 @@ export default class BondDataModel extends BaseItemDataModel {
   static type = "bond";
   static defineSchema() {
     return {
+      tooltip: new StringField({ required: true, initial: "" }),
+      description: new HTMLField(),
       level: new StringField({
         required: true,
         initial: "npc",
         choices: GFV1.bondLevels,
       }),
-      description: new HTMLField(),
     };
   }
 
