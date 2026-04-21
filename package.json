@@ -6,10 +6,12 @@
     "lint-staged": "^16.4.0"
   },
   "scripts": {
-    "prepare": "husky || true"
+    "prepare": "husky || true",
+    "less": "lessc less/main.less index.css",
+    "format": "prettier --write ."
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown",
-    "**/*.less": ""
+    "**/*.less": "lessc less/main.less index.css",
+    "**/*": "prettier --write --ignore-unknown"
   }
 }
