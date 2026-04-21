@@ -9,8 +9,8 @@ export default class TagDataModel extends BaseItemDataModel {
       tooltip: new StringField({ required: true, initial: "" }),
       description: new HTMLField(),
       marked: new BooleanField({ required: true, initial: false }),
-    }
+    };
   }
   static itemListProperties = ["marked"];
-  _properties = ["marked"]
+  _properties = ["marked"];
 }

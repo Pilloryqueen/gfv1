@@ -141,7 +141,7 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
       callback: (path) => {
         target.src = path;
 
-        return this.document.update({ [target.dataset.edit]: path })
+        return this.document.update({ [target.dataset.edit]: path });
       },
       top: this.position.top + 40,
       left: this.position.left + 10,

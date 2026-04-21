@@ -39,7 +39,7 @@ export default class BasicRoll extends Roll {
       sound: CONFIG.sounds.dice,
       content: await renderTemplate(
         "systems/gfv1/templates/chat/roll.hbs",
-        this
+        this,
       ),
       roll: this,
     };

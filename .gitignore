@@ -1,5 +1,6 @@
 packs/
 
+node_modules/
 .vscode/
 *.swp
 
