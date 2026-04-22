@@ -3,6 +3,16 @@
   data-tab="{{tab.id}}"
   data-group="{{tab.group}}"
 >
+  {{#if (defined system.tooltip)}}
+    <div>
+      <label>{{localize "GFv1.item.tooltip"}}</label>
+      {{formInput
+        systemFields.tooltip
+        value=system.tooltip
+        disabled=(not editable)
+      }}
+    </div>
+  {{/if}}
   {{#if (eq item.type "playbook")}}
     {{#if (eq items.length 0)}}
       <p>{{localize "GFv1.item.playbook.dragMoreItems"}}</p>
