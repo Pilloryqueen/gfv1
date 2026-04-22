@@ -53,8 +53,6 @@
       "rule": {
         "type": "Rules",
         "playbookType": "Associated Playbook",
-        "advancementType": "Advancements",
-        "isAdvancement": "Advancement?",
         "edit": "View Rule",
         "delete": "Delete Rule",
         "play": "Can be rolled?",

@@ -12,19 +12,9 @@
         {{#if (not bonds.empty)}}{{render bonds reorder=false}}{{/if}}
         {{#if (not identities.empty)}}{{render identities reorder=false}}{{/if}}
         {{#if (not rules.empty)}}{{render rules reorder=false}}{{/if}}
-        {{#if (not advancements.empty)}}{{render
-            advancements
-            reorder=false
-          }}{{/if}}
       </div>
     {{/if}}
   {{else if (eq item.type "rule")}}
-    <label>{{localize "GFv1.item.rule.isAdvancement"}}</label>
-    {{formInput
-      systemFields.locked
-      value=system.locked
-      disabled=(not editable)
-    }}
     <label>{{localize "GFv1.item.rule.play"}}</label>
     {{formInput systemFields.play value=system.play disabled=(not editable)}}
     {{#if (eq system.play true)}}
