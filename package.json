@@ -11,7 +11,10 @@
     "format": "prettier --write ."
   },
   "lint-staged": {
-    "**/*.less": "lessc less/main.less index.css",
+    "**/*.less": [
+      "npm run less",
+      "git add index.css"
+    ],
     "**/*": "prettier --write --ignore-unknown"
   }
 }
