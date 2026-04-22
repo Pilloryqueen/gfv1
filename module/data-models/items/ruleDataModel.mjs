@@ -13,17 +13,10 @@ export default class RuleDataModel extends BaseItemDataModel {
       playbookType: new PlaybookTypeField({
         required: true,
       }),
-      locked: new BooleanField({ required: true, initial: false }),
       heat: new BooleanField({ required: true, initial: true }),
       high: new StringField(),
       med: new StringField(),
       low: new StringField(),
     };
-  }
-}
-
-export class AdvancementDataModel extends RuleDataModel {
-  static get label() {
-    return this.propertyLabel("advancementType");
   }
 }
