@@ -3,6 +3,9 @@
   data-tab="{{tab.id}}"
   data-group="{{tab.group}}"
 >
+  {{#if system.play}}
+    {{partial "playDescription" system=system}}
+  {{/if}}
   <section class="description">
     <prose-mirror
       class="description-editor"

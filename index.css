@@ -27,6 +27,9 @@
 .gfv1.sheet.actor-sheet .gorgon-class .gorgon-class-header .item-name {
   flex: 95%;
 }
+.gfv1.sheet.item-sheet .play-description label {
+  font-weight: bold;
+}
 .gfv1.sheet .item-img {
   cursor: grab;
 }
@@ -44,11 +47,17 @@
   flex-direction: column;
   height: 100%;
 }
+.gfv1.sheet .sheet-body .play-description {
+  padding-bottom: 0.25rem;
+}
 .gfv1.sheet .sheet-body .description {
   flex: 1 1 auto;
   min-height: auto;
   display: grid;
   grid-template-rows: 1fr;
+}
+.gfv1.sheet .sheet-body .description .editor-content {
+  padding: 0;
 }
 .gfv1.sheet .item-list-group {
   display: grid;
@@ -81,18 +90,6 @@
 .gfv1.sheet .items-list .item .item-controls {
   text-align: right;
 }
-.chat-card .roll-result-header {
-  font-weight: bold;
-}
-.chat-card .roll-result-header .high {
-  color: blue;
-}
-.chat-card .roll-result-header .med {
-  color: green;
-}
-.chat-card .roll-result-header .low {
-  color: red;
-}
 .application .tab[data-tab]:not(.active) {
   display: none;
 }
@@ -118,4 +115,93 @@
   100% {
     text-shadow: 0 0 3rem #0004ff, 0 0 2rem #ff00ff, 0 0 1rem #7700ff;
   }
+}
+.roll-low {
+  text-shadow: 2px 2px black;
+  color: #772222;
+}
+.roll-med {
+  text-shadow: 2px 2px black;
+  color: #007744;
+}
+.roll-high {
+  text-shadow: 2px 2px black;
+  color: #777700;
+}
+.play-description label {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.play-result label {
+  font-weight: bold;
+  font-size: 1rem;
+}
+.roll-result {
+  text-align: center;
+}
+.roll-result .result-calculation {
+  display: grid;
+  grid-auto-flow: column;
+}
+.roll-result .result-calculation .value {
+  font-size: 1rem;
+}
+.roll-result .result-calculation .icon {
+  font-size: 2rem;
+  text-shadow: 2px 2px black;
+}
+.roll-result .result-calculation .icon.fa-fire {
+  color: #552222;
+}
+.roll-result .result-calculation .icon.fa-dice-one,
+.roll-result .result-calculation .icon.fa-dice-two,
+.roll-result .result-calculation .icon.fa-dice-three,
+.roll-result .result-calculation .icon.fa-dice-four,
+.roll-result .result-calculation .icon.fa-dice-five,
+.roll-result .result-calculation .icon.fa-dice-six {
+  color: #225522;
+}
+.roll-result .result-calculation .icon.fa-wrench {
+  color: #444444;
+}
+.roll-result .result-calculation .operator,
+.roll-result .result-calculation .operand,
+.roll-result .result-calculation .result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+.roll-result .result-calculation .result .value {
+  font-size: 3rem;
+}
+.roll-result .result-graphic .targets,
+.roll-result .result-graphic .results {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+}
+.roll-result .result-graphic .targets {
+  font-size: 1.5rem;
+}
+.roll-result .result-graphic .targets > * {
+  display: grid;
+}
+.roll-result .result-graphic .results {
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.roll-result .result-graphic .results > * {
+  font-size: 2rem;
+  color: var(--color-text-primary);
+  text-shadow: 2px 2px black;
+}
+.roll-result .result-graphic .results .roll-high {
+  background-color: #777700;
+}
+.roll-result .result-graphic .results .roll-med {
+  background-color: #007744;
+}
+.roll-result .result-graphic .results .roll-low {
+  background-color: #772222;
 }

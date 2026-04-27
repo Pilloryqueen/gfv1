@@ -25,12 +25,44 @@
       </div>
     {{/if}}
   {{else if (eq item.type "rule")}}
-    <label>{{localize "GFv1.item.rule.play"}}</label>
-    {{formInput systemFields.play value=system.play disabled=(not editable)}}
+    <div>
+      <label>{{localize "GFv1.item.rule.play"}}</label>
+      {{formInput systemFields.play value=system.play disabled=(not editable)}}
+    </div>
     {{#if (eq system.play true)}}
-      <label>{{localize "GFv1.item.rule.heat"}}</label>
-      {{formInput systemFields.heat value=system.heat disabled=(not editable)}}
-      <div class="play-fields">
+      <section class="play-fields">
+        <div>
+          <label>{{localize "GFv1.item.rule.when"}}</label>
+          {{formInput
+            systemFields.when
+            value=system.when
+            disabled=(not editable)
+          }}
+        </div>
+        <div>
+          <label>{{localize "GFv1.item.rule.then"}}</label>
+          {{formInput
+            systemFields.then
+            value=system.then
+            disabled=(not editable)
+          }}
+        </div>
+        <div>
+          <label>{{localize "GFv1.item.rule.heat"}}</label>
+          {{formInput
+            systemFields.heat
+            value=system.heat
+            disabled=(not editable)
+          }}
+        </div>
+        <div>
+          <label>{{localize "GFv1.item.rule.bonus"}}</label>
+          {{formInput
+            systemFields.bonus
+            value=system.bonus
+            disabled=(not editable)
+          }}
+        </div>
         <div>
           <label>{{localize "GFv1.item.rule.med"}}</label>
           {{formInput
@@ -47,15 +79,13 @@
             disabled=(not editable)
           }}
         </div>
+        <label>{{localize "GFv1.item.rule.low"}}</label>
+        {{formInput systemFields.low value=system.low disabled=(not editable)}}
         <div>
-          <label>{{localize "GFv1.item.rule.low"}}</label>
-          {{formInput
-            systemFields.low
-            value=system.low
-            disabled=(not editable)
-          }}
+          <label>Preview:</label>
+          {{partial "playDescription" system=system}}
         </div>
-      </div>
+      </section>
     {{/if}}
   {{else}}
     <div class="item-properties">
