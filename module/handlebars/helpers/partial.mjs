@@ -11,7 +11,9 @@ export default function partial(key, other) {
     throw new Gfv1Error(
       `Template must be one of:\n * ${Object.keys(preloadedTemplates).join(
         "\n * ",
-      )}\n not ${key}`,
+      )}\n not ${key}
+      
+      If this is a new template register it in preload.mjs`,
     );
   const context = {};
   foundry.utils.mergeObject(context, other.data.root);

@@ -29,9 +29,8 @@ export default class PlaybookDataModel extends BaseItemDataModel {
   async prepareContext(context) {
     await super.prepareContext(context);
     const itemTypes = await this.getItemTypes();
-    const rules = await this.getItems();
 
-    context.rules = new ItemList(RuleDataModel, rules);
+    context.rules = new ItemList(RuleDataModel, itemTypes.rule);
     context.assets = new ItemList(AssetDataModel, itemTypes.asset);
     context.bonds = new ItemList(BondDataModel, itemTypes.bond);
     context.identities = new ItemList(IdentityDataModel, itemTypes.identity);

@@ -60,7 +60,11 @@
         "high": "On a 11+",
         "med": "On an 8-10",
         "low": "On a 7-",
-        "roll": "Roll"
+        "roll": "Roll",
+        "when": "When",
+        "then": "Then",
+        "bonus": "Bonus",
+        "formatWhen": "When {when}"
       },
       "tag": {
         "type": "Tags",
@@ -141,8 +145,8 @@
       "med": "success",
       "high": "success with consequences",
       "spentHeat": "Spent {heat} heat",
-      "withHeat": "Spend heat and roll",
-      "withoutHeat": "Roll",
+      "withHeat": "spend heat and roll",
+      "withoutHeat": "roll",
       "tooltip": "Roll"
     },
     "dialog": {

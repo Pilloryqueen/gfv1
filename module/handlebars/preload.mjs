@@ -7,6 +7,7 @@ export default async function preloadTemplates() {
     "item-list",
     "playbook",
     "gorgon-class",
+    "play-description",
   ];
 
   const keys = filenames.map((filename) => {
