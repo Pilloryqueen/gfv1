@@ -3,13 +3,14 @@ export const preloadedTemplates = {};
 export default async function preloadTemplates() {
   const templates = {};
   const filenames = [
-    "item-list-entry",
-    "item-list",
-    "playbook",
     "gorgon-class",
+    "item-list",
+    "item-list-entry",
     "play-description",
+    "play-result",
+    "playbook",
+    "roll-result",
   ];
-
   const keys = filenames.map((filename) => {
     let key = filename
       .split("-")

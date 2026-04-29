@@ -23,6 +23,7 @@ import { welcomeMessage } from "./module/util/chat.mjs";
 import { registerSocketListen } from "./module/util/socket.mjs";
 import NpcSheet from "./module/sheets/actor/npcSheet.mjs";
 import NpcDataModel from "./module/data-models/actors/npcDataModel.mjs";
+import StrainDataModel from "./module/data-models/items/strainDataModel.mjs";
 
 Hooks.once("init", async () => {
   console.log("GFV1 | Initializing Girlframe System");
@@ -44,6 +45,7 @@ Hooks.once("init", async () => {
   CONFIG.Item.dataModels.playbook = PlaybookDataModel;
   CONFIG.Item.dataModels.rule = RuleDataModel;
   CONFIG.Item.dataModels.tag = TagDataModel;
+  CONFIG.Item.dataModels.strain = StrainDataModel;
 
   registerSheets();
   registerHelpers();

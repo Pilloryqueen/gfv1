@@ -14,6 +14,8 @@ export default class GFv1Item extends Item {
         return { img: "icons/svg/book.svg" };
       case "rule":
         return { img: "icons/svg/thrust.svg" };
+      case "strain":
+        return { img: "icons/svg/lever.svg" };
       case "tag":
         return { img: "icons/svg/wingfoot.svg" };
       default:
@@ -34,5 +36,13 @@ export default class GFv1Item extends Item {
       }
     }
     return this.updateSource(data);
+  }
+
+  async enrichedDescription(secrets) {
+    return TextEditor.enrichHTML(this.system.description, {
+      secrets,
+      rollData: this.getRollData(),
+      relativeTo: this,
+    });
   }
 }

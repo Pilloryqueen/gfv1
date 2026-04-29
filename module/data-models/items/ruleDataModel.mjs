@@ -17,6 +17,7 @@ export default class RuleDataModel extends BaseItemDataModel {
       when: new StringField({ required: true, initial: "" }),
       bonus: new StringField({ required: true, initial: "" }),
       then: new StringField({ required: true, initial: "" }),
+      condition: new StringField({ required: true, initial: "" }),
       high: new StringField({ required: true, initial: "" }),
       med: new StringField({ required: true, initial: "" }),
       low: new StringField({ required: true, initial: "" }),

@@ -46,7 +46,8 @@
       "tag": { "htmlFields": ["description"] },
       "bond": { "htmlFields": ["description"] },
       "identity": { "htmlFields": ["description"] },
-      "gorgonClass": { "htmlFields": ["description"] }
+      "gorgonClass": { "htmlFields": ["description"] },
+      "strain": { "htmlFields": ["description"] }
     }
   },
   "compatibility": {

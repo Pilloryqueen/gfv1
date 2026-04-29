@@ -1,10 +1,17 @@
 export const GFV1 = {};
 
 GFV1.bondLevels = {
+  none: "GFv1.config.bondLevels.none",
   npc: "GFv1.config.bondLevels.npc",
   low: "GFv1.config.bondLevels.low",
   med: "GFv1.config.bondLevels.med",
   high: "GFv1.config.bondLevels.high",
+};
+
+GFV1.strainLevels = {
+  none: "GFv1.config.strainLevels.none",
+  low: "GFv1.config.strainLevels.low",
+  high: "GFv1.config.strainLevels.high",
 };
 
 GFV1.defaultPlaybook = "framePlaybook";

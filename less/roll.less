@@ -1,0 +1,111 @@
+// main: ./main.less
+
+@roll-low-color: #772222;
+@roll-med-color: #007744;
+@roll-high-color: #777700;
+
+.roll-low {
+  text-shadow: 2px 2px black;
+  color: @roll-low-color;
+}
+.roll-med {
+  text-shadow: 2px 2px black;
+  color: @roll-med-color;
+}
+.roll-high {
+  text-shadow: 2px 2px black;
+  color: @roll-high-color;
+}
+
+.play-description {
+  label {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+}
+
+.play-result {
+  label {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+}
+
+.roll-result {
+  text-align: center;
+
+  .result-calculation {
+    display: grid;
+    grid-auto-flow: column;
+
+    .value {
+      font-size: 1rem;
+    }
+    .icon {
+      font-size: 2rem;
+      text-shadow: 2px 2px black;
+      &.fa-fire {
+        color: #552222;
+      }
+      &.fa-dice-one,
+      &.fa-dice-two,
+      &.fa-dice-three,
+      &.fa-dice-four,
+      &.fa-dice-five,
+      &.fa-dice-six {
+        color: #225522;
+      }
+      &.fa-wrench {
+        color: #444444;
+      }
+    }
+    .operator,
+    .operand,
+    .result {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+    }
+    .result .value {
+      font-size: 3rem;
+    }
+  }
+
+  .result-graphic {
+    .targets,
+    .results {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+    }
+
+    .targets {
+      font-size: 1.5rem;
+      & > * {
+        display: grid;
+      }
+    }
+
+    .results {
+      border-radius: 1rem;
+      overflow: hidden;
+
+      & > * {
+        font-size: 2rem;
+        color: var(--color-text-primary);
+        text-shadow: 2px 2px black;
+      }
+
+      .roll-high {
+        background-color: @roll-high-color;
+      }
+      .roll-med {
+        background-color: @roll-med-color;
+      }
+      .roll-low {
+        background-color: @roll-low-color;
+      }
+    }
+  }
+}

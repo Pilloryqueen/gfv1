@@ -9,6 +9,7 @@ export default class AssetDataModel extends BaseItemDataModel {
     return {
       tooltip: new StringField({ required: true, initial: "" }),
       description: new HTMLField(),
+      inLimit: new BooleanField({ required: true, initial: true }),
       playbookType: new PlaybookTypeField({
         required: true,
       }),
@@ -18,5 +19,5 @@ export default class AssetDataModel extends BaseItemDataModel {
   }
 
   static itemListProperties = ["damaged", "void"];
-  _properties = ["damaged", "void"];
+  _properties = ["damaged", "void", "inLimit"];
 }

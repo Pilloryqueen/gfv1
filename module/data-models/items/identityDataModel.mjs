@@ -7,10 +7,11 @@ export default class IdentityDataModel extends BaseItemDataModel {
   static defineSchema() {
     return {
       tooltip: new StringField({ required: true, initial: "" }),
+      inLimit: new BooleanField({ required: true, initial: true }),
       description: new HTMLField(),
       marked: new BooleanField({ required: true, initial: false }),
     };
   }
   static itemListProperties = ["marked"];
-  _properties = ["marked"];
+  _properties = ["marked", "inLimit"];
 }

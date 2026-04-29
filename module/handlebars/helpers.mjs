@@ -1,5 +1,6 @@
 import config from "./helpers/config.mjs";
 import defined from "./helpers/defined.mjs";
+import showRoll from "./helpers/showRoll.mjs";
 import partial from "./helpers/partial.mjs";
 import render from "./helpers/render.mjs";
 import settings from "./helpers/settings.mjs";
@@ -10,4 +11,5 @@ export default function registerHelpers() {
   Handlebars.registerHelper("defined", defined);
   Handlebars.registerHelper("render", render);
   Handlebars.registerHelper("partial", partial);
+  Handlebars.registerHelper("showRoll", showRoll);
 }

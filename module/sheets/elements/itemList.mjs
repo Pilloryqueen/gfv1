@@ -20,6 +20,7 @@ export default class ItemList {
     const context = {
       name: this.dataModel.label,
       items: items.map((item) => new ItemEntry(this.dataModel, item)),
+      itemCount: items.filter((item) => item.system.inLimit).length,
       properties: this.dataModel.itemListProperties.map(
         this.dataModel.propertyLabel.bind(this.dataModel),
       ),

@@ -17,6 +17,7 @@ export default class BaseItemDataModel extends TypeDataModel {
     return game.i18n.localize(`GFv1.item.${this.type}.${property}`);
   }
 
+  // properties listed here can be edited in edit item view
   _properties = [];
   get properties() {
     return this._properties.map((p) => {

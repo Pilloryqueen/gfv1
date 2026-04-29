@@ -8,6 +8,7 @@ import BondDataModel from "./bondDataModel.mjs";
 import AssetDataModel from "./assetDataModel.mjs";
 import IdentityDataModel from "./identityDataModel.mjs";
 import Gfv1Error from "../../util/error.mjs";
+import StrainDataModel from "./strainDataModel.mjs";
 
 const { HTMLField, ArrayField, DocumentUUIDField } = foundry.data.fields;
 
@@ -34,6 +35,7 @@ export default class PlaybookDataModel extends BaseItemDataModel {
     context.assets = new ItemList(AssetDataModel, itemTypes.asset);
     context.bonds = new ItemList(BondDataModel, itemTypes.bond);
     context.identities = new ItemList(IdentityDataModel, itemTypes.identity);
+    context.strains = new ItemList(StrainDataModel, itemTypes.strain);
   }
 
   async getItemTypes() {
@@ -43,6 +45,7 @@ export default class PlaybookDataModel extends BaseItemDataModel {
       asset: [],
       bond: [],
       identity: [],
+      strain: [],
     };
     for (const i of items) {
       itemTypes[i.type].push(i);
@@ -72,7 +75,7 @@ export default class PlaybookDataModel extends BaseItemDataModel {
 
   async addRef(uuid) {
     const item = await fromUuid(uuid);
-    if (!["rule", "asset", "bond", "identity"].includes(item.type))
+    if (!["rule", "asset", "bond", "identity", "strain"].includes(item.type))
       throw new Gfv1Error(
         `Playbook doesn't currently support importing ${item.type}`,
       );

@@ -1,21 +1,11 @@
-<section class="play-description">
-  <label>{{localize "GFv1.item.rule.formatWhen" when=system.when}}</label>,
-  {{#if system.then}}<span>{{system.then}}</span>,{{/if}}
-  <span>{{#if system.heat}}{{localize "GFv1.roll.withHeat"}}{{else}}{{localize
+{{#if system.play}}
+  <section class="play-description">
+    <label>{{localize "GFv1.item.rule.formatWhen" when=system.when}}</label>,
+    {{#if system.then}}{{system.then}},{{/if}}
+    {{#if system.heat}}{{localize "GFv1.roll.withHeat"}}{{else}}{{localize
         "GFv1.roll.withoutHeat"
-      }}{{/if}}</span>{{#if system.bonus}} {{system.bonus}}{{/if}}.
-  <div class="play-result">
-    <div class="result-line med">
-      <label>{{localize "GFv1.item.rule.med"}}</label>
-      <span>{{{system.med}}}</span>
-    </div>
-    <div class="result-line high">
-      <label>{{localize "GFv1.item.rule.high"}}</label>
-      <span>{{{system.high}}}</span>
-    </div>
-    <div class="result-line low">
-      <label>{{localize "GFv1.item.rule.low"}}</label>
-      <span>{{{system.low}}}</span>
-    </div>
-  </div>
-</section>
+      }}{{/if}}{{#if system.bonus}} {{system.bonus}}{{/if}}.{{#if
+      system.condition
+    }} {{system.condition}}.{{/if}}
+  </section>
+{{/if}}

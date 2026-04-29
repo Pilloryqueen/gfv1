@@ -3,6 +3,7 @@ import { ImportError } from "../util/error.mjs";
 import AssetDataModel from "./items/assetDataModel.mjs";
 import BondDataModel from "./items/bondDataModel.mjs";
 import IdentityDataModel from "./items/identityDataModel.mjs";
+import StrainDataModel from "./items/strainDataModel.mjs";
 import TagDataModel from "./items/tagDataModel.mjs";
 
 const TypeDataModel = foundry.abstract.TypeDataModel;
@@ -17,6 +18,7 @@ export default class BaseActorDataModel extends TypeDataModel {
     context.identities = new ItemList(IdentityDataModel, items.identity);
     context.tags = new ItemList(TagDataModel, items.tag);
     context.bonds = new ItemList(BondDataModel, items.bond);
+    context.strains = new ItemList(StrainDataModel, items.strain);
   }
 
   async addItems(items) {

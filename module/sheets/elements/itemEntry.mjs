@@ -1,5 +1,11 @@
 import { preloadedTemplates } from "../../handlebars/preload.mjs";
-import { deleteDoc, embraceTag, makeRoll, viewDoc } from "./itemControl.mjs";
+import {
+  deleteDoc,
+  embraceTag,
+  makeRoll,
+  rollStrain,
+  viewDoc,
+} from "./itemControl.mjs";
 import ItemProperty from "./itemProperty.mjs";
 
 export default class ListItem {
@@ -27,4 +33,4 @@ export default class ListItem {
   }
 }
 
-const controls = [makeRoll, embraceTag, viewDoc, deleteDoc];
+const controls = [makeRoll, rollStrain, embraceTag, viewDoc, deleteDoc];
