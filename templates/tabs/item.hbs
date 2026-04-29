@@ -22,6 +22,7 @@
         {{#if (not bonds.empty)}}{{render bonds reorder=false}}{{/if}}
         {{#if (not identities.empty)}}{{render identities reorder=false}}{{/if}}
         {{#if (not rules.empty)}}{{render rules reorder=false}}{{/if}}
+        {{#if (not strains.empty)}}{{render strains reorder=false}}{{/if}}
       </div>
     {{/if}}
   {{else if (eq item.type "rule")}}
@@ -44,6 +45,14 @@
           {{formInput
             systemFields.then
             value=system.then
+            disabled=(not editable)
+          }}
+        </div>
+        <div>
+          <label>{{localize "GFv1.item.rule.condition"}}</label>
+          {{formInput
+            systemFields.condition
+            value=system.condition
             disabled=(not editable)
           }}
         </div>
@@ -84,6 +93,7 @@
         <div>
           <label>Preview:</label>
           {{partial "playDescription" system=system}}
+          {{partial "playResult" system=system}}
         </div>
       </section>
     {{/if}}

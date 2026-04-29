@@ -70,6 +70,18 @@ export const embraceTag = new ItemControl({
   shouldRender: ({ type, editable }) => type === "tag" && editable,
 });
 
+export const rollStrain = new ItemControl({
+  cssClass: "item-roll",
+  icon: "fa-dice",
+  dataset: (_) => {
+    return {
+      action: "rollStrain",
+      tooltip: game.i18n.localize("GFv1.item.strain.roll"),
+    };
+  },
+  shouldRender: ({ type, actor }) => type === "strain" && actor,
+});
+
 export const makeRoll = new ItemControl({
   cssClass: "item-roll",
   icon: "fa-dice",

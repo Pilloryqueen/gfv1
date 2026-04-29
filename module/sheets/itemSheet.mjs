@@ -62,6 +62,10 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
 
     context.editable = this.isEditable;
 
+    context.description = await this.document.enrichedDescription(
+      this.document.isOwner,
+    );
+
     context.fields = this.document.schema.fields;
     context.systemFields = this.document.system.schema.fields;
 
@@ -72,19 +76,6 @@ export default class Gfv1ItemSheet extends HandlebarsApplicationMixin(
   /** @override */
   async _preparePartContext(partId, context) {
     context.tab = context.tabs[partId];
-
-    switch (partId) {
-      case "description":
-        context.enrichedDescription = await TextEditor.enrichHTML(
-          this.document.system.description,
-          {
-            secrets: this.document.isOwner,
-            rollData: this.document.getRollData(),
-            relativeTo: this.document,
-          },
-        );
-        break;
-    }
     return context;
   }
 

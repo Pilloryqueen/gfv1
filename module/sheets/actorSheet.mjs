@@ -86,6 +86,10 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
     context.locked = this._locked;
     context.editable = this.isEditable;
 
+    context.description = await this.document.enrichedDescription(
+      this.document.isOwner,
+    );
+
     context.fields = this.document.schema.fields;
     context.systemFields = this.document.system.schema.fields;
 
@@ -95,19 +99,6 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
 
   async _preparePartContext(partId, context) {
     context.tab = context.tabs[partId];
-
-    switch (partId) {
-      case "description":
-        context.enrichedDescription = await TextEditor.enrichHTML(
-          this.document.system.description,
-          {
-            secrets: this.document.isOwner,
-            rollData: this.document.getRollData(),
-            relativeTo: this.document,
-          },
-        );
-        break;
-    }
     return context;
   }
 
@@ -160,7 +151,7 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
     const assets = await DialogHelper.selectImport({
       items: itemTypes.asset,
       type: "assets",
-      preSelect: (asset) => false,
+      preSelect: (asset) => asset.system.inLimit === false,
     });
     const bonds = await DialogHelper.selectImport({
       items: itemTypes.bond,

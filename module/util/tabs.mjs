@@ -8,6 +8,7 @@ const icons = {
   item: "gears",
   actor: "house",
   pilot: "venus",
+  strain: "alarm-clock",
 };
 
 export default class Tabs {

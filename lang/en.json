@@ -13,6 +13,7 @@
       "identity": "Identity",
       "playbook": "Playbook",
       "rule": "Rule",
+      "strain": "Strain",
       "tag": "Tag"
     }
   },
@@ -29,6 +30,7 @@
       "frame": "Frame view",
       "gorgon": "Gorgon view",
       "handler": "Handler view",
+      "strain": "Strain view",
       "description": "Description",
       "item": "Item data"
     },
@@ -36,6 +38,7 @@
       "name": "Name",
       "description": "Description",
       "tooltip": "Tooltip",
+      "inLimit": "Counts towards limit?",
       "playbook": {
         "name": "Playbook",
         "edit": "Edit playbook",
@@ -63,6 +66,7 @@
         "roll": "Roll",
         "when": "When",
         "then": "Then",
+        "condition": "Condition",
         "bonus": "Bonus",
         "formatWhen": "When {when}"
       },
@@ -94,14 +98,25 @@
         "apperance": "Apperance",
         "maxAssets": "Max Assets",
         "dragIn": "Drag in a class to show here"
+      },
+      "strain": {
+        "type": "Strain",
+        "level": "Severity",
+        "options": "Table options",
+        "secret": "Roll in secret?",
+        "edit": "Edit details",
+        "roll": "Roll strain",
+        "delete": "Remove strain"
       }
     },
     "actor": {
       "pilot": {
-        "name": "Callsign"
+        "name": "Callsign",
+        "permissions": "Permissions"
       },
       "handler": {
-        "name": "Name"
+        "name": "Name",
+        "permissions": "Advancements"
       },
       "npc": {
         "name": "Name"
@@ -111,8 +126,7 @@
         "apperance": "Apperance"
       },
       "pronouns": "Pronouns",
-      "heat": "Heat",
-      "permissions": "Permissions"
+      "heat": "Heat"
     },
     "settings": {
       "showItemImages": {
@@ -128,10 +142,16 @@
     },
     "config": {
       "bondLevels": {
+        "none": "No bond",
         "npc": "NPC",
         "low": "Cadre",
         "med": "Personal",
         "high": "Intense"
+      },
+      "strainLevels": {
+        "none": "Not applicable",
+        "low": "Low",
+        "high": "High"
       },
       "playbooks": {
         "pilot": "Pilot Playbook",
@@ -144,6 +164,7 @@
       "low": "failure",
       "med": "success",
       "high": "success with consequences",
+      "result": "Result",
       "spentHeat": "Spent {heat} heat",
       "withHeat": "spend heat and roll",
       "withoutHeat": "roll",

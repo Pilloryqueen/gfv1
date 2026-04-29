@@ -3,9 +3,8 @@
   data-tab="{{tab.id}}"
   data-group="{{tab.group}}"
 >
-  {{#if system.play}}
-    {{partial "playDescription" system=system}}
-  {{/if}}
+  {{partial "playDescription" system=system}}
+  {{partial "playResult" system=system}}
   <section class="description">
     <prose-mirror
       class="description-editor"
@@ -14,7 +13,7 @@
       toggled="true"
       {{disabled (not editable)}}
     >
-      {{{enrichedDescription}}}
+      {{{description}}}
     </prose-mirror>
   </section>
 </section>

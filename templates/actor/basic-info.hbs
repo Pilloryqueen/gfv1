@@ -12,7 +12,9 @@
     {{/if}}
     {{#if system.permissions includeZero=true}}
       <div class="field field-perm">
-        <label>{{localize "GFv1.actor.permissions"}}</label>
+        <label>{{localize
+            (concat "GFv1.actor." actor.type ".permissions")
+          }}</label>
         {{formInput
           systemFields.permissions
           value=system.permissions

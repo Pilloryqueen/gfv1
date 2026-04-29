@@ -27,9 +27,6 @@
 .gfv1.sheet.actor-sheet .gorgon-class .gorgon-class-header .item-name {
   flex: 95%;
 }
-.gfv1.sheet.item-sheet .play-description label {
-  font-weight: bold;
-}
 .gfv1.sheet .item-img {
   cursor: grab;
 }
@@ -93,6 +90,7 @@
 .application .tab[data-tab]:not(.active) {
   display: none;
 }
+.description .glowing,
 .description .handler {
   animation: glow 4s linear infinite;
 }
