@@ -187,7 +187,8 @@
           "identities": "Your starting Identities are:",
           "assets": "Pick 2 assets and detail them:",
           "bonds": "Pick 1 Girl to have a Personal Bond with. You have a Cadre Bond with everyone else. You also have a Bond with 1-2 NPCs:",
-          "rules": "You start with these plays and rules:"
+          "rules": "You start with these plays and rules:",
+          "strains": "You will be managing these strain trackers:"
         }
       },
       "warnPlaybookImport": {
