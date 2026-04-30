@@ -163,11 +163,17 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
       type: "rules",
       preSelect: (rule) => !rule.system.locked,
     });
+    const strains = await DialogHelper.selectImport({
+      items: itemTypes.strain,
+      type: "strains",
+      preSelect: (rule) => !rule.system.locked,
+    });
     return this.actor.system.addItems([
       ...identities,
       ...bonds,
       ...rules,
       ...assets,
+      ...strains,
     ]);
   }
 
