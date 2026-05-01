@@ -115,15 +115,12 @@
   }
 }
 .roll-low {
-  text-shadow: 2px 2px black;
   color: #772222;
 }
 .roll-med {
-  text-shadow: 2px 2px black;
   color: #007744;
 }
 .roll-high {
-  text-shadow: 2px 2px black;
   color: #777700;
 }
 .play-description label {
@@ -140,12 +137,18 @@
 .roll-result .result-calculation {
   display: grid;
   grid-auto-flow: column;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--color-border-light-2);
+  border-radius: 3px;
+  box-shadow: 0 0 2px white inset;
+  margin: 1px;
+  overflow: hidden;
 }
 .roll-result .result-calculation .value {
   font-size: 1rem;
 }
 .roll-result .result-calculation .icon {
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-shadow: 2px 2px black;
 }
 .roll-result .result-calculation .icon.fa-fire {
@@ -169,9 +172,10 @@
   flex-direction: column;
   justify-content: center;
   align-content: center;
+  word-break: normal;
 }
 .roll-result .result-calculation .result .value {
-  font-size: 3rem;
+  font-size: 2rem;
 }
 .roll-result .result-graphic .targets,
 .roll-result .result-graphic .results {
