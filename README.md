@@ -12,7 +12,7 @@ All rights to GIRL FRAME belong to Isabelle M. Ruebsaat
 
 To install the latest version of the system in Foundry go to Game Systems, Install System and simply provide it this Manifest URL: `https://raw.githubusercontent.com/Pilloryqueen/gfv1/refs/heads/master/system.json`
 
-Please note that the system does not contain any playbooks from the core rule book. If you've bought the book you may be able to get content packs for this system by asking around on the [official GIRL FRAME discord](https://discord.gg/yEFEGyVWmS). You'll find a thread dedicated to this system under the channel "the-office"
+Please note that the system does not contain any playbooks from the core rule book. If you've bought the book you may be able to get content packs for this system check out the resources channel on the [official GIRL FRAME discord](https://discord.gg/yEFEGyVWmS). You'll also find a thread dedicated to this system under the channel "the-office"
 
 ## Development
 
