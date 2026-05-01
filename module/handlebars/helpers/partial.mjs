@@ -18,6 +18,5 @@ export default function partial(key, other) {
   const context = {};
   foundry.utils.mergeObject(context, other.data.root);
   foundry.utils.mergeObject(context, other.hash);
-  console.log("Parital rendered: " + key);
   return new Handlebars.SafeString(template(context));
 }

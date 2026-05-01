@@ -1,6 +1,5 @@
 export default class GFv1Item extends Item {
   static getDefaultArtwork(data) {
-    console.log("DefaultArtwork", data);
     switch (data.type) {
       case "asset":
         return { img: "icons/svg/chest.svg" };
