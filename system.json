@@ -1,6 +1,5 @@
 {
   "id": "gfv1",
-  "version": "0.4.2",
   "title": "GIRL FRAME",
   "description": "Unofficial system for playing GIRL FRAME. System by Isabelle M. Ruebsaat",
   "authors": [
@@ -9,6 +8,9 @@
       "discord": "ladynova"
     }
   ],
+  "version": "0.5.0",
+  "download": "https://github.com/Pilloryqueen/gfv1/archive/refs/tags/0.5.0.zip",
+  "manifest": "https://raw.githubusercontent.com/Pilloryqueen/gfv1/refs/heads/master/system.json",
   "esmodules": ["index.mjs"],
   "styles": ["index.css"],
   "languages": [
@@ -53,7 +55,5 @@
   "compatibility": {
     "minimum": "12",
     "verified": "12.331"
-  },
-  "manifest": "https://raw.githubusercontent.com/Pilloryqueen/gfv1/refs/heads/master/system.json",
-  "download": "https://github.com/Pilloryqueen/gfv1/archive/refs/tags/0.4.2.zip"
+  }
 }
