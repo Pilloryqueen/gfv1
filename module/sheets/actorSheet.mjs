@@ -3,6 +3,7 @@ import DocumentHelper from "../util/documentHelper.mjs";
 import DragDropHandler from "../util/dragDrop.mjs";
 import Gfv1Error from "../util/error.mjs";
 import Tabs from "../util/tabs.mjs";
+import { embraceTag } from "./elements/itemControl.mjs";
 
 const HandlebarsApplicationMixin =
   foundry.applications.api.HandlebarsApplicationMixin;
@@ -23,6 +24,7 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
         deleteDoc: DocumentHelper.deleteDoc,
         makeRoll: this._roll,
         toggleEdit: this._toggleEdit,
+        embraceTag: this._embraceTag,
       },
       this.ACTIONS,
     );
@@ -247,6 +249,23 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
     event.preventDefault();
     this._locked = !this._locked;
     this.render(false);
+  }
+
+  /**
+   * Handle embracing a tag as an identity
+   *
+   * @this Gfv1ActorSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @private
+   */
+  static async _embraceTag(event, target) {
+    const doc = await DocumentHelper.getItemFromHtml(target, this.actor.items);
+    if (event.shiftKey) return this.actor.embraceTag(doc);
+
+    if (await DialogHelper.confirmAdopt()) {
+      this.actor.embraceTag(doc);
+    }
   }
 
   /**

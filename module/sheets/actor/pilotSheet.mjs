@@ -8,25 +8,4 @@ const TABS = ["description", "actor", "pilot", "frame"];
 export default class PilotSheet extends Gfv1ActorSheet {
   static TABS = TABS;
   tabs = new Tabs(TABS, "primary");
-
-  static ACTIONS = {
-    embraceTag: this._embraceTag,
-  };
-
-  /**
-   * Handle embracing a tag as an identity
-   *
-   * @this PilotSheet
-   * @param {PointerEvent} event   The originating click event
-   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
-   * @private
-   */
-  static async _embraceTag(event, target) {
-    const doc = await DocumentHelper.getItemFromHtml(target, this.actor.items);
-    if (event.shiftKey) return this.actor.system.embraceTag(doc);
-
-    if (await DialogHelper.confirmAdopt()) {
-      this.actor.system.embraceTag(doc);
-    }
-  }
 }

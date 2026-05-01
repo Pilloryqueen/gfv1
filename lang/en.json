@@ -38,7 +38,6 @@
       "name": "Name",
       "description": "Description",
       "tooltip": "Tooltip",
-      "inLimit": "Counts towards limit?",
       "playbook": {
         "name": "Playbook",
         "edit": "Edit playbook",
@@ -48,6 +47,7 @@
       "asset": {
         "type": "Assets",
         "playbookType": "Associated Playbook",
+        "inLimit": "Counts towards limit?",
         "edit": "View Asset",
         "delete": "Delete Asset",
         "damaged": "Damaged",
@@ -73,6 +73,7 @@
       "tag": {
         "type": "Tags",
         "marked": "Marked",
+        "inLimit": "Counts towards limit?",
         "edit": "Edit details",
         "embrace": "Embrace tag as identity",
         "delete": "Reject tag",

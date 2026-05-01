@@ -35,15 +35,6 @@ export default class PilotDataModel extends BaseActorDataModel {
     return new Playbook(this.parent, "framePlaybook");
   }
 
-  async embraceTag(item) {
-    if (item.parent !== this.parent) {
-      throw new Gfv1Error(
-        `${this.name} (id: ${this.id}) is not parent of ${item.id} (parent.id: ${item.parent?.id})`,
-      );
-    }
-    item.update({ type: "identity", system: { marked: "false" } });
-  }
-
   async spendHeat(amount) {
     if (amount < 0) throw Gfv1Error("Cannot spend negative heat!");
     const doc = this.parent;

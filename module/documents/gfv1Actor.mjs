@@ -6,4 +6,24 @@ export default class Gfv1Actor extends Actor {
       relativeTo: this,
     });
   }
+
+  async embraceTag(tag) {
+    if (tag.parent !== this) {
+      throw new Gfv1Error(
+        `${this.name} (id: ${this.id}) is not parent of ${tag.id} (parent.id: ${tag.parent?.id})`,
+      );
+    }
+
+    const identity = {
+      ...tag,
+      type: "identity",
+      system: {
+        ...tag.system,
+        marked: false,
+        inLimit: true,
+      },
+    };
+    await Item.create(identity, { parent: this });
+    await tag.delete();
+  }
 }
