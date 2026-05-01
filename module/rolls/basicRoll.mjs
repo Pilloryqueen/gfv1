@@ -33,7 +33,6 @@ export default class BasicRoll extends Roll {
 
   async toMessage(actor) {
     if (!this._evaluated) await this.evaluate();
-    console.log(this);
     const description = await this.item.enrichedDescription(false);
     const chatData = {
       speaker: ChatMessage.getSpeaker({ actor }),

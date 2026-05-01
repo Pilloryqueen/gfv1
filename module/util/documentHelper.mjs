@@ -72,7 +72,6 @@ export default class DocumentHelper {
 
   static async onResourceChange(event) {
     event.preventDefault();
-    console.log("change");
     const item = await DocumentHelper.getItemFromHtml(event.target);
     let value = event.target.value;
     if (event.target.type === "checkbox") value = event.target.checked;
