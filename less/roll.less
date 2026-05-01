@@ -5,15 +5,12 @@
 @roll-high-color: #777700;
 
 .roll-low {
-  text-shadow: 2px 2px black;
   color: @roll-low-color;
 }
 .roll-med {
-  text-shadow: 2px 2px black;
   color: @roll-med-color;
 }
 .roll-high {
-  text-shadow: 2px 2px black;
   color: @roll-high-color;
 }
 
@@ -38,11 +35,19 @@
     display: grid;
     grid-auto-flow: column;
 
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--color-border-light-2);
+    border-radius: 3px;
+    box-shadow: 0 0 2px white inset;
+    margin: 1px;
+
+    overflow: hidden;
+
     .value {
       font-size: 1rem;
     }
     .icon {
-      font-size: 2rem;
+      font-size: 1.5rem;
       text-shadow: 2px 2px black;
       &.fa-fire {
         color: #552222;
@@ -66,9 +71,10 @@
       flex-direction: column;
       justify-content: center;
       align-content: center;
+      word-break: normal;
     }
     .result .value {
-      font-size: 3rem;
+      font-size: 2rem;
     }
   }
 

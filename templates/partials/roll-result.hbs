@@ -1,57 +1,60 @@
 <section class="roll-result">
   <div class="result-calculation">
     <i class="operand">
-      <div class="value">1</div>
+      <div class="value">{{heat}}</div>
       <i class="icon fa-solid fa-fire"></i>
     </i>
     <i class="operator icon fa-solid fa-plus"></i>
     <i class="operand">
-      <div class="value">3</div>
-      <i class="icon fa-solid fa-dice-three"></i>
+      <div class="value">{{d1}}</div>
+      <i class="icon {{d1icon}}"></i>
     </i>
     <i class="operator icon fa-solid fa-plus"></i>
     <i class="operand">
-      <div class="value">2</div>
-      <i class="icon fa-solid fa-dice-two"></i>
+      <div class="value">{{d2}}</div>
+      <i class="icon {{d2icon}}"></i>
     </i>
     <i class="operator icon fa-solid fa-plus"></i>
     <i class="operand">
-      <div class="value">1</div>
+      <div class="value">{{mod}}</div>
       <i class="icon fa-solid fa-wrench"></i>
     </i>
     <i class="operator icon fa-solid fa-equals"></i>
-    <i class="result">
-      <div class="value">7</div>
+    <i class="result roll-{{result}}">
+      <div class="value">{{total}}</div>
     </i>
   </div>
 
-  <div class="result-graphic">
-    <div class="targets">
-      <div class="roll-low"></div>
-      <div class="roll-low result">
-        <i class="val">7</i>
-        <i class="fa-solid fa-chevron-down"></i>
+  <!-- TODO: add result timeline graphic-->
+  {{#if false}}
+    <div class="result-graphic">
+      <div class="targets">
+        <div class="roll-low"></div>
+        <div class="roll-low result">
+          <i class="val">7</i>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="roll-med">
+          <i class="val">+ 1</i>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="roll-med"></div>
+        <div class="roll-med"></div>
+        <div class="roll-high breakpoint">
+          <i class="val">+ 4</i>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="roll-high"></div>
       </div>
-      <div class="roll-med">
-        <i class="val">+ 1</i>
-        <i class="fa-solid fa-chevron-down"></i>
+      <div class="results">
+        <label class="roll-low outer">...</label>
+        <label class="roll-low">7</label>
+        <label class="roll-med">8</label>
+        <label class="roll-med">9</label>
+        <label class="roll-med">10</label>
+        <label class="roll-high">11</label>
+        <label class="roll-high outer">...</label>
       </div>
-      <div class="roll-med"></div>
-      <div class="roll-med"></div>
-      <div class="roll-high breakpoint">
-        <i class="val">+ 4</i>
-        <i class="fa-solid fa-chevron-down"></i>
-      </div>
-      <div class="roll-high"></div>
     </div>
-    <div class="results">
-      <label class="roll-low outer">...</label>
-      <label class="roll-low">7</label>
-      <label class="roll-med">8</label>
-      <label class="roll-med">9</label>
-      <label class="roll-med">10</label>
-      <label class="roll-high">11</label>
-      <label class="roll-high outer">...</label>
-    </div>
-  </div>
+  {{/if}}
 </section>

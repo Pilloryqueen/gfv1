@@ -25,8 +25,15 @@ export default class BasicRoll extends Roll {
     return "med";
   }
 
+  get diceResults() {
+    if (!this._evaluated) return;
+
+    return this.dice[0].results.map((d) => d.result);
+  }
+
   async toMessage(actor) {
     if (!this._evaluated) await this.evaluate();
+    console.log(this);
     const description = await this.item.enrichedDescription(false);
     const chatData = {
       speaker: ChatMessage.getSpeaker({ actor }),
@@ -37,6 +44,8 @@ export default class BasicRoll extends Roll {
           roll: {
             total: this.total,
             heat: this.heat,
+            d1: this.diceResults[0],
+            d2: this.diceResults[1],
             mod: this.mod,
             result: this.resultType,
           },
