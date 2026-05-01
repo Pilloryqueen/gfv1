@@ -1,11 +1,13 @@
 {{#if system.play}}
   <section class="play-description">
     <label>{{localize "GFv1.item.rule.formatWhen" when=system.when}}</label>,
-    {{#if system.then}}{{system.then}},{{/if}}
-    {{#if system.heat}}{{localize "GFv1.roll.withHeat"}}{{else}}{{localize
-        "GFv1.roll.withoutHeat"
-      }}{{/if}}{{#if system.bonus}} {{system.bonus}}{{/if}}.{{#if
-      system.condition
-    }} {{system.condition}}.{{/if}}
+    <div>
+      {{#if system.then}}{{system.then}},{{/if}}
+      {{#if system.heat}}{{localize "GFv1.roll.withHeat"}}{{else}}{{localize
+          "GFv1.roll.withoutHeat"
+        }}{{/if}}{{#if system.bonus}} {{system.bonus}}{{/if}}.{{#if
+        system.condition
+      }} {{system.condition}}.{{/if}}
+    </div>
   </section>
 {{/if}}
