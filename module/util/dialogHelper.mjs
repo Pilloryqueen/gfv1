@@ -40,7 +40,7 @@ export default class DialogHelper {
         },
       });
     } catch {
-      return [];
+      return;
     }
   }
 
