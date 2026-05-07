@@ -90,8 +90,9 @@
 .application .tab[data-tab]:not(.active) {
   display: none;
 }
-.description .glowing,
-.description .handler {
+.glow,
+.glowing,
+.handler {
   animation: glow 4s linear infinite;
 }
 @keyframes glow {
