@@ -8,8 +8,8 @@
       "discord": "ladynova"
     }
   ],
-  "version": "0.5.1",
-  "download": "https://github.com/Pilloryqueen/gfv1/archive/refs/tags/0.5.1.zip",
+  "version": "0.5.2",
+  "download": "https://github.com/Pilloryqueen/gfv1/archive/refs/tags/0.5.2.zip",
   "manifest": "https://raw.githubusercontent.com/Pilloryqueen/gfv1/refs/heads/master/system.json",
   "esmodules": ["index.mjs"],
   "styles": ["index.css"],

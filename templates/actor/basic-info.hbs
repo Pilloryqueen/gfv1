@@ -1,6 +1,6 @@
 <section class="basic-info">
   <div class="fields">
-    {{#if system.heat includeZero=true}}
+    {{#if (defined system.heat)}}
       <div class="field field-heat">
         <label>{{localize "GFv1.actor.heat"}}</label>
         {{formInput
@@ -10,7 +10,7 @@
         }}
       </div>
     {{/if}}
-    {{#if system.permissions includeZero=true}}
+    {{#if (defined system.permissions)}}
       <div class="field field-perm">
         <label>{{localize
             (concat "GFv1.actor." actor.type ".permissions")
@@ -30,7 +30,7 @@
       data-action="makeRoll"
       data-no-item
     >
-      {{#if system.heat includeZero=true}}
+      {{#if (defined system.heat)}}
         <i class="fas fa-dice-d20">{{localize "GFv1.roll.withHeat"}}</i>
       {{else}}
         <i class="fas fa-dice-d20">{{localize "GFv1.roll.withoutHeat"}}</i>

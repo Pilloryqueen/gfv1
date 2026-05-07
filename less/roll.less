@@ -1,8 +1,8 @@
 // main: ./main.less
 
-@roll-low-color: #772222;
+@roll-low-color: #0c58a5;
 @roll-med-color: #007744;
-@roll-high-color: #777700;
+@roll-high-color: #962d2b;
 
 .roll-low {
   color: @roll-low-color;
@@ -17,7 +17,7 @@
 .play-description {
   label {
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 }
 
@@ -39,7 +39,7 @@
     border: 1px solid var(--color-border-light-2);
     border-radius: 3px;
     box-shadow: 0 0 2px white inset;
-    margin: 1px;
+    padding-bottom: 3px;
 
     overflow: hidden;
 
@@ -48,9 +48,8 @@
     }
     .icon {
       font-size: 1.5rem;
-      text-shadow: 2px 2px black;
       &.fa-fire {
-        color: #552222;
+        color: #730d0d;
       }
       &.fa-dice-one,
       &.fa-dice-two,
@@ -75,6 +74,7 @@
     }
     .result .value {
       font-size: 2rem;
+      margin-right: 5px;
     }
   }
 

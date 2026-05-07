@@ -90,8 +90,9 @@
 .application .tab[data-tab]:not(.active) {
   display: none;
 }
-.description .glowing,
-.description .handler {
+.glow,
+.glowing,
+.handler {
   animation: glow 4s linear infinite;
 }
 @keyframes glow {
@@ -115,17 +116,17 @@
   }
 }
 .roll-low {
-  color: #772222;
+  color: #0c58a5;
 }
 .roll-med {
   color: #007744;
 }
 .roll-high {
-  color: #777700;
+  color: #962d2b;
 }
 .play-description label {
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 .play-result label {
   font-weight: bold;
@@ -141,7 +142,7 @@
   border: 1px solid var(--color-border-light-2);
   border-radius: 3px;
   box-shadow: 0 0 2px white inset;
-  margin: 1px;
+  padding-bottom: 3px;
   overflow: hidden;
 }
 .roll-result .result-calculation .value {
@@ -149,10 +150,9 @@
 }
 .roll-result .result-calculation .icon {
   font-size: 1.5rem;
-  text-shadow: 2px 2px black;
 }
 .roll-result .result-calculation .icon.fa-fire {
-  color: #552222;
+  color: #730d0d;
 }
 .roll-result .result-calculation .icon.fa-dice-one,
 .roll-result .result-calculation .icon.fa-dice-two,
@@ -176,6 +176,7 @@
 }
 .roll-result .result-calculation .result .value {
   font-size: 2rem;
+  margin-right: 5px;
 }
 .roll-result .result-graphic .targets,
 .roll-result .result-graphic .results {
@@ -199,11 +200,11 @@
   text-shadow: 2px 2px black;
 }
 .roll-result .result-graphic .results .roll-high {
-  background-color: #777700;
+  background-color: #962d2b;
 }
 .roll-result .result-graphic .results .roll-med {
   background-color: #007744;
 }
 .roll-result .result-graphic .results .roll-low {
-  background-color: #772222;
+  background-color: #0c58a5;
 }

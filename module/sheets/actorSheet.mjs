@@ -150,31 +150,41 @@ export default class Gfv1ActorSheet extends HandlebarsApplicationMixin(
       type: "identities",
       preSelect: (identity) => true,
     });
+    if (identities === undefined) return;
+
     const assets = await DialogHelper.selectImport({
       items: itemTypes.asset,
       type: "assets",
       preSelect: (asset) => asset.system.inLimit === false,
     });
+    if (assets === undefined) return;
+
     const bonds = await DialogHelper.selectImport({
       items: itemTypes.bond,
       type: "bonds",
       preSelect: (bond) => bond.system.level !== "npc",
     });
+    if (bonds === undefined) return;
+
     const rules = await DialogHelper.selectImport({
       items: itemTypes.rule,
       type: "rules",
       preSelect: (rule) => !rule.system.locked,
     });
+    if (rules === undefined) return;
+
     const strains = await DialogHelper.selectImport({
       items: itemTypes.strain,
       type: "strains",
       preSelect: (rule) => !rule.system.locked,
     });
-    return this.actor.system.addItems([
+    if (strains === undefined) return;
+
+    return this.actor.importPlaybook(playbook, [
       ...identities,
+      ...assets,
       ...bonds,
       ...rules,
-      ...assets,
       ...strains,
     ]);
   }
