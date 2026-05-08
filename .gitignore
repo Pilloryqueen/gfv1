@@ -1,7 +1,7 @@
-packs/
-
 node_modules/
 .vscode/
 *.swp
 
 .DS_Store
+
+dist/

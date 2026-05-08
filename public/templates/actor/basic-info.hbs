@@ -1,0 +1,58 @@
+<section class="basic-info">
+  <div class="fields">
+    {{#if (defined system.heat)}}
+      <div class="field field-heat">
+        <label>{{localize "GFv1.actor.heat"}}</label>
+        {{formInput
+          systemFields.heat
+          value=system.heat
+          disabled=(not editable)}}
+      </div>
+    {{/if}}
+    {{#if (defined system.permissions)}}
+      <div class="field field-perm">
+        <label>{{localize
+            (concat "GFv1.actor." actor.type ".permissions")}}</label>
+        {{
+          formInput
+          systemFields.permissions
+          value=system.permissions
+          disabled=(not editable)
+        }}
+      </div>
+    {{/if}}
+  </div>
+  <div class="actor-controls">
+    <a
+      class="roll-btn"
+      data-tooltip="{{localize 'GFv1.roll.tooltip'}}"
+      data-action="makeRoll"
+      data-no-item
+    >
+      {{#if (defined system.heat)}}
+        <i class="fas fa-dice-d20">{{localize "GFv1.roll.withHeat"}}</i>
+      {{else}}
+        <i class="fas fa-dice-d20">{{localize "GFv1.roll.withoutHeat"}}</i>
+      {{/if}}
+    </a>
+    {{#if editable}}
+      {{#if locked}}
+        <a
+          class="edit-btn"
+          data-action="toggleEdit"
+          data-tooltip="{{localize 'GFv1.edit.unlock'}}"
+        >
+          <i class="fas fa-lock"></i>
+        </a>
+      {{else}}
+        <a
+          class="edit-btn"
+          data-action="toggleEdit"
+          data-tooltip="{{localize 'GFv1.edit.lock'}}"
+        >
+          <i class="fas fa-unlock-alt"></i>
+        </a>
+      {{/if}}
+    {{/if}}
+  </div>
+</section>

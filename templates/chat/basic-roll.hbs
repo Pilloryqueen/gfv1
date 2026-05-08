@@ -1,8 +1,0 @@
-<div class="chat-card roll">
-  {{partial "playDescription" system=item.system}}
-  {{showRoll roll}}
-  {{partial "playResult" system=item.system result=roll.result}}
-  {{#if item.system.description}}
-    <div class="item-description">{{{description}}}</div>
-  {{/if}}
-</div>
