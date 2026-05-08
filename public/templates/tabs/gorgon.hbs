@@ -1,0 +1,13 @@
+<section
+  class="tab sheet-body {{tab.active}}"
+  data-tab="{{tab.id}}"
+  data-group="{{tab.group}}"
+>
+  {{#if gorgonClass}}
+    {{render gorgonClass}}
+  {{else}}
+    <p class="gorgon-class-missing">{{localize
+        "GFv1.item.gorgonClass.dragIn"}}</p>
+  {{/if}}
+  {{render system.gorgonType}}
+</section>

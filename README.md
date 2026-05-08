@@ -12,20 +12,20 @@ All rights to GIRL FRAME belong to Isabelle M. Ruebsaat
 
 To install the latest version of the system in Foundry go to Game Systems, Install System and simply provide it this Manifest URL: `https://raw.githubusercontent.com/Pilloryqueen/gfv1/refs/heads/master/system.json`
 
-Please note that the system does not contain any playbooks from the core rule book. If you've bought the book you may be able to get content packs for this system check out the resources channel on the [official GIRL FRAME discord](https://discord.gg/yEFEGyVWmS). You'll also find a thread dedicated to this system under the channel "the-office"
+Please note that the system does not contain any playbooks from the core rule book. If you've bought the book you may be able to get content packs for this system on the [official GIRL FRAME discord](https://discord.gg/yEFEGyVWmS).
+You'll also find a thread dedicated to this system under the channel "the-office"
 
 ## Development
 
-The easiest way to test changes made to the system is to have your local files in your foundry `systems` folder. In windows this is usually located at `%LocalAppData%/FoundryVTT/Data/systems/` - Note that the folder for the system MUST have the name `gfv1` exactly as the `id` in `system.json`
+Install nodejs and clone this repo. Optionally install [the fvtt cli](https://www.npmjs.com/package/@foundryvtt/foundryvtt-cli) globally with `npm i -g @foundryvtt/foundryvtt-cli` - this will allow you to use `fvtt` without `npx` and from anywhere.
 
-To ensure consistency in all commits please run the command `npm install` to setup all development dependencies. This enables automatic formatting and
-ensures that `index.css` is compiled from [less](<https://en.wikipedia.org/wiki/Less_(style_sheet_language)>) rather than manually updated.
+Optionally configure `fvtt` with `npx fvtt configure` and follow the instructions.
 
-If your system does not have an `npm` command you need to install [node.js](https://nodejs.org/en)
+Use `npm run build` to build the project. This will create a `dist` folder, which you can link to your foundry systems folder with `ln -s /path/to/repo/gfv1/dist /path/to/userData/Data/systems/gfv1`
 
-With the dependencies installed you can use the command `npm run format` to automatically format all files, and `npm run less` to compile changes to `.less` files
+With `fvtt` configured you will be able to start your local foundry with `npm run foundry`, or launch it however you prefer.
 
-These are automatically run before commit as necceasry
+With foundry running on port `30000` you can start a dev server with `npm run dev` the dev sever runs on port `30001`
 
 ## Contributions
 

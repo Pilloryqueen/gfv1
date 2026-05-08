@@ -1,0 +1,59 @@
+{
+  "id": "gfv1",
+  "title": "GIRL FRAME",
+  "description": "Unofficial system for playing GIRL FRAME. System by Isabelle M. Ruebsaat",
+  "authors": [
+    {
+      "name": "Nova",
+      "discord": "ladynova"
+    }
+  ],
+  "version": "0.5.2",
+  "download": "https://github.com/Pilloryqueen/gfv1/archive/refs/tags/0.5.2.zip",
+  "manifest": "https://raw.githubusercontent.com/Pilloryqueen/gfv1/refs/heads/master/system.json",
+  "esmodules": ["gfv1.js"],
+  "styles": ["styles/gfv1.css"],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json",
+      "flags": {}
+    }
+  ],
+  "socket": true,
+  "documentTypes": {
+    "Actor": {
+      "pilot": {
+        "htmlFields": [
+          "description",
+          "framePlaybookDescription",
+          "pilotPlaybookDescription"
+        ]
+      },
+      "handler": {
+        "htmlFields": ["description", "handlerPlaybookDescription"]
+      },
+      "gorgon": {
+        "htmlFields": ["description", "gorgonTypeDescription"]
+      },
+      "npc": {
+        "htmlFields": ["description"]
+      }
+    },
+    "Item": {
+      "rule": { "htmlFields": ["description"] },
+      "asset": { "htmlFields": ["description"] },
+      "playbook": { "htmlFields": ["description"] },
+      "tag": { "htmlFields": ["description"] },
+      "bond": { "htmlFields": ["description"] },
+      "identity": { "htmlFields": ["description"] },
+      "gorgonClass": { "htmlFields": ["description"] },
+      "strain": { "htmlFields": ["description"] }
+    }
+  },
+  "compatibility": {
+    "minimum": "12",
+    "verified": "12.331"
+  }
+}

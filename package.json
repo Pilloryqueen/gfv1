@@ -1,20 +1,30 @@
 {
   "devDependencies": {
-    "prettier": "^3.8.3",
+    "@foundryvtt/foundryvtt-cli": "^3.0.3",
+    "@types/node": "^25.6.1",
+    "dprint": "^0.54.0",
+    "fvtt-types": "github:League-of-Foundry-Developers/foundry-vtt-types#main",
     "husky": "^9.1.7",
     "less": "^4.6.4",
-    "lint-staged": "^16.4.0"
+    "lint-staged": "^16.4.0",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.11",
+    "vite-plugin-foundryvtt": "^3.0.0"
   },
   "scripts": {
     "prepare": "husky || true",
-    "less": "lessc less/main.less index.css",
-    "format": "prettier --write ."
+    "format": "dprint fmt",
+    "foundry": "fvtt launch",
+    "dev": "vite",
+    "build": "vite build",
+    "build:watch": "vite build --watch",
+    "preview": "vite preview"
   },
   "lint-staged": {
-    "**/*.less": [
-      "npm run less",
-      "git add index.css"
-    ],
-    "**/*": "prettier --write --ignore-unknown"
+    "*.ts": "dprint fmt --allow-no-files",
+    "*.mjs": "dprint fmt --allow-no-files",
+    "*.less": "dprint fmt --allow-no-files",
+    "*.hbs": "dprint fmt --allow-no-files",
+    "*.json": "dprint fmt --allow-no-files"
   }
 }

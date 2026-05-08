@@ -1,0 +1,16 @@
+<div class="chat-card roll">
+  <h1 class="roll-headline">{{item.name}}</h1>
+  {{#if item.system.showLevel}}
+    <label class="strain-level">{{localize "GFv1.item.strain.level"}}</label>
+    <span class="strain-level">{{localize item.system.level}}</span>
+  {{/if}}
+  <div>
+    <label>{{localize "GFv1.roll.result"}}</label>
+    <span>{{roll.total}}</span>
+  </div>
+  {{#if outcome}}
+    <div class="strain-outcome">{{{outcome}}}</div>
+    {{else if description}}
+    <div class="item-description">{{{description}}}</div>
+  {{/if}}
+</div>

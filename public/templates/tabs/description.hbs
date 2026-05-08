@@ -1,0 +1,19 @@
+<section
+  class="tab sheet-body {{tab.active}}"
+  data-tab="{{tab.id}}"
+  data-group="{{tab.group}}"
+>
+  {{partial "playDescription" system=system}}
+  {{partial "playResult" system=system}}
+  <section class="description">
+    <prose-mirror
+      class="description-editor"
+      name="system.description"
+      value="{{system.description}}"
+      toggled="true"
+      {{disabled (not editable)}}
+    >
+      {{{description}}}
+    </prose-mirror>
+  </section>
+</section>
