@@ -1,0 +1,7 @@
+{
+  "editor.defaultFormatter": "dprint.dprint",
+  "explorer.excludeGitIgnore": true,
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2
+}
