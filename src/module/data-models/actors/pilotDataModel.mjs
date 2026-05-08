@@ -1,6 +1,7 @@
 import BaseActorDataModel from "../baseActorDataModel.mjs";
 import Playbook from "../../sheets/elements/playbook.mjs";
 import Gfv1Error from "../../util/error.mjs";
+import { GFV1 } from "../../config";
 
 const { BooleanField, HTMLField, NumberField, StringField } = foundry.data.fields;
 
@@ -26,7 +27,7 @@ export default class PilotDataModel extends BaseActorDataModel {
       rules: "rule",
       assets: "asset",
     });
-    playbook.maxAssets = CONFIG.GFV1.maxAssets.pilot;
+    playbook.maxAssets = GFV1.maxAssets.pilot;
     return playbook;
   }
 

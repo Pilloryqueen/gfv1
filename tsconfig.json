@@ -12,5 +12,5 @@
     "esModuleInterop": true,
     "noEmit": true
   },
-  "include": ["src/**.*.ts", "vite.config.mts", "gfv1.js"]
+  "include": ["src/**/*.d.ts", "src/**/*.ts", "vite.config.mts", "gfv1.js"]
 }

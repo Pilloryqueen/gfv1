@@ -1,5 +1,5 @@
 import BaseItemDataModel from "../baseItemDataModel.mjs";
-import { GFV1 } from "../../config.mjs";
+import { GFV1 } from "../../config";
 
 const { HTMLField, StringField } = foundry.data.fields;
 

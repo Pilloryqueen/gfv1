@@ -1,3 +1,4 @@
+// JS imports TODO: make them typescript!
 import GorgonDataModel from "./module/data-models/actors/gorgonDataModel.mjs";
 import HandlerDataModel from "./module/data-models/actors/handlerDataModel.mjs";
 import PilotDataModel from "./module/data-models/actors/pilotDataModel.mjs";
@@ -14,7 +15,6 @@ import PilotSheet from "./module/sheets/actor/pilotSheet.mjs";
 import HandlerSheet from "./module/sheets/actor/handlerSheet.mjs";
 import GorgonSheet from "./module/sheets/actor/gorgonSheet.mjs";
 import Gfv1ItemSheet from "./module/sheets/itemSheet.mjs";
-import { GFV1 } from "./module/config.mjs";
 import registerSettings from "./module/settings.mjs";
 import migrateWorld from "./module/migration.mjs";
 import registerHelpers from "./module/handlebars/helpers.mjs";
@@ -30,7 +30,6 @@ import "./gfv1.less";
 
 Hooks.once("init", async () => {
   console.log("GFV1 | Initializing Girlframe System");
-  CONFIG.GFV1 = GFV1;
 
   registerSettings();
 

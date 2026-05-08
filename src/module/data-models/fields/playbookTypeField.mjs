@@ -1,4 +1,5 @@
-import { GFV1 } from "../../config.mjs";
+import { GFV1 } from "../../config";
+
 const { StringField } = foundry.data.fields;
 
 export default class PlaybookTypeField extends StringField {

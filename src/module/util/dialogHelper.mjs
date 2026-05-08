@@ -1,4 +1,4 @@
-import { GFV1 } from "../config.mjs";
+import { GFV1 } from "../config";
 import BasicRoll from "../rolls/basicRoll.mjs";
 import { RollError } from "./error.mjs";
 
