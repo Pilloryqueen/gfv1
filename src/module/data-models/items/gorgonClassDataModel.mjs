@@ -8,7 +8,7 @@ export default class GorgonClassDataModel extends BaseItemDataModel {
     return {
       tooltip: new StringField({ required: true, initial: "" }),
       description: new HTMLField(),
-      apperance: new StringField(),
+      appearance: new StringField(),
       maxAssets: new NumberField({
         required: true,
         initial: 0,
@@ -18,5 +18,5 @@ export default class GorgonClassDataModel extends BaseItemDataModel {
     };
   }
 
-  _properties = ["apperance", "maxAssets"];
+  _properties = ["appearance", "maxAssets"];
 }

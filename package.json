@@ -14,7 +14,7 @@
   "scripts": {
     "prepare": "husky || true",
     "format": "dprint fmt",
-    "foundry": "fvtt launch",
+    "foundry": "fvtt config && fvtt launch",
     "dev": "vite",
     "build": "vite build",
     "build:watch": "vite build --watch",

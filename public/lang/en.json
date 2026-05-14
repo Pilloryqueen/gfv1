@@ -96,7 +96,7 @@
       },
       "gorgonClass": {
         "type": "GorgonClass",
-        "apperance": "Apperance",
+        "appearance": "Appearance",
         "maxAssets": "Max Assets",
         "dragIn": "Drag in a class to show here"
       },
@@ -124,7 +124,7 @@
       },
       "gorgon": {
         "name": "Designation",
-        "apperance": "Apperance"
+        "appearance": "Appearance"
       },
       "pronouns": "Pronouns",
       "heat": "Heat"
