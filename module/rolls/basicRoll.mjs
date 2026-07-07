@@ -31,8 +31,35 @@ export default class BasicRoll extends Roll {
     return this.dice[0].results.map((d) => d.result);
   }
 
+  async show3dDice(results){
+	const data = {
+		throws: [
+			{
+				dice: [
+					{
+						result: results[0],
+						resultLabel: results[0],
+						type: 'd6',
+						vectors: [],
+						options: {}
+					},
+					{
+						result: results[1],
+						resultLabel: results[1],
+						type: 'd6',
+						vectors: [],
+						options: {}
+					},
+				]
+			}
+		]
+	};
+	await game.dice3d.show(data);
+  }
+
   async toMessage(actor) {
     if (!this._evaluated) await this.evaluate();
+    if(game.dice3d) await this.show3dDice(this.diceResults);
     const description = await this.item.enrichedDescription(false);
     const chatData = {
       speaker: ChatMessage.getSpeaker({ actor }),
